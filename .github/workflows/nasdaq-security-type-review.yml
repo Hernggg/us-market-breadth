@@ -5,6 +5,7 @@ on:
   push:
     paths:
       - 'nasdaq_candidate_security_review.py'
+      - 'nasdaq_comp_candidate.py'
       - '.github/workflows/nasdaq-security-type-review.yml'
 
 permissions:
