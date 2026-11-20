@@ -68,11 +68,11 @@ def annual_file(year):
                 except ValueError:
                     rec[tag+"_index_level"] = None
         cleaned[date] = rec
-    if len(cleaned) < (100 if year == dt.date.today().year else 200):
-        # A file that abruptly loses most sessions should not be called a full archive.
-        # Today() is UTC runner date; a user can choose a partial year and the
-        # expected latest-year check is applied in main().
-        raise AuditError(f"{year}: only {len(cleaned)} valid sessions; investigate")
+    # On the first market days of January, a valid YTD file can have <100
+    # trading sessions. Distinguish incomplete currently published years from
+    # previously archived full years in main(); never assert a complete year.
+    if not cleaned:
+        raise AuditError(f"{year}: no valid Nasdaq A/D data")
     return url, cleaned, warnings, header
 
 
@@ -108,7 +108,8 @@ def windows_for(daily):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--first-year", type=int, default=2024)
+    parser.add_argument("--first-year", type=int, default=2026,
+                        help="Earliest LOCAL archived year; historical Nasdaq Trader CSV links are not guaranteed")
     parser.add_argument("--calendar", type=Path, default=Path("public/sp500_pit_daily.csv"))
     parser.add_argument("--outdir", type=Path, default=Path("research/nasdaq_comp"))
     args = parser.parse_args()
@@ -116,19 +117,46 @@ def main():
     if not EARLIEST_YEAR <= args.first_year <= requested.year:
         raise AuditError("Invalid starting year")
     annuals, all_days, warnings, headers = {}, {}, {}, {}
-    for year in range(args.first_year, requested.year+1):
-        url, items, warn, header = annual_file(year)
-        annuals[str(year)] = {"url":url, "sessions":len(items),
-                              "first":min(items).isoformat(), "last":max(items).isoformat()}
-        headers[str(year)] = header
-        warnings[str(year)] = warn
-        for d, rec in items.items():
-            if d in all_days:
-                raise AuditError("Duplicate day across source years")
-            all_days[d] = rec
+    old_archive = args.outdir / "official_nasdaq_issues_daily_history.csv"
+    past_rows = 0
+    if old_archive.exists():
+        with old_archive.open(encoding="utf-8-sig",newline="") as f:
+            for rec in csv.DictReader(f):
+                day=dt.date.fromisoformat(rec["date"])
+                if day > requested:
+                    raise AuditError("Old archive contains future trading dates")
+                if day in all_days:
+                    raise AuditError("Duplicate dates in previously saved archive")
+                try:
+                    a,d,u=(int(rec[k]) for k in ("advances","declines","unchanged"))
+                    if min(a,d,u)<0 or not 1500<=a+d+u<=10000:
+                        raise ValueError("Implausible prior issue counts")
+                    stored={"date":day.isoformat(),"advances":a,"declines":d,"unchanged":u}
+                    for tag in ("composite","computer"):
+                        value=rec.get(tag+"_index_level")
+                        stored[tag+"_index_level"]=float(value) if value not in (None,"") else None
+                    all_days[day]=stored
+                    past_rows+=1
+                except (ValueError,KeyError) as exc:
+                    raise AuditError("Corrupt historical archive: "+str(exc)) from exc
+    # The public Nasdaq Trader annual index lists ONLY THE CURRENT YEAR.
+    # Persist the current YTD file into Git for post-December archive continuity.
+    year=requested.year
+    url,items,warn,header=annual_file(year)
+    annuals[str(year)]={"url":url,"sessions":len(items),
+                        "first":min(items).isoformat(),"last":max(items).isoformat()}
+    warnings[str(year)]=warn
+    headers[str(year)]=header
+    changed_prior_dates=[]
+    for day,rec in items.items():
+        if day in all_days and all_days[day]!=rec:
+            changed_prior_dates.append(day.isoformat())
+        all_days[day]=rec
     dates = sorted(d for d in all_days if d <= requested)
-    if len(dates) < 300 or dates[-1] < requested - dt.timedelta(days=14):
-        raise AuditError("Archive too short or older than two weeks")
+    if len(dates) < 60 or dates[-1] < requested - dt.timedelta(days=14):
+        raise AuditError("Archive too short for rolling 60 day analysis or older than two weeks")
+    # A revision across existing dates should be visible in the source audit;
+    # the annual provider is authoritative for the active calendar year.
     # Source will sometimes lag 1-2 sessions behind SP500's validated dates.
     # Refuse GAPS INSIDE the last source-overlapping 60 sessions.
     recent_calendar = load_calendar(args.calendar, None)
@@ -150,6 +178,10 @@ def main():
         "requested_missing_sessions":[d.isoformat() for d in recent_calendar if d>asof],
         "first_source_day":dates[0].isoformat(), "source_trading_sessions":len(dates),
         "annual_files":annuals, "headers":headers, "warnings":warnings,
+        "previously_archived_rows":past_rows,
+        "official_revision_count":len(changed_prior_dates),
+        "official_revised_dates_sample":changed_prior_dates[:20],
+        "historical_backfill_limitation":"Nasdaq Trader public page currently exposes current-year CSV only. Prior years only if archived previously; do not assume public historical annual file URLs exist.",
         "last_day":daily[-1], "windows":windows,
         "note":"Nasdaq Trader NASDAQ-listed issues A/D, NOT verified member-only Nasdaq Composite index A/D. Includes ETFs in listing universe. Composite and Computer index levels are performance context, NOT breadth.",
     }
