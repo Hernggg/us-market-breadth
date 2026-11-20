@@ -33,8 +33,14 @@ def publish(out:Path):
         if row.get('status') != 'HIGH_COVERAGE_PROVISIONAL':
             raise ValueError('Data not high-coverage: refusing to replace public results')
     freshness='STALE_BEFORE_REQUESTED_DATE' if 'FRESHNESS: STALE_BEFORE_REQUESTED_DATE' in status_text else 'DATE_MATCHED' if 'FRESHNESS: DATE_MATCHED' in status_text else 'UNVERIFIED'
-    report={'market':'S&P500', 'method':'third-party point-in-time member reconstruction, adjusted closes',
-            'official_data':False, 'verified_status':'HIGH_COVERAGE_PROVISIONAL_NOT_OFFICIAL',
+    bridged='BRIDGE: YAHOO_ADJUSTED_RETURN_ONE_SESSION' in status_text
+    source_method=('third-party historical PIT adjusted closes plus one-session Yahoo Finance adjusted-return bridge'
+                   if bridged else 'third-party point-in-time member reconstruction, adjusted closes')
+    report={'market':'S&P500', 'method':source_method,
+            'official_data':False,
+            'verified_status':('HIGH_COVERAGE_PROVISIONAL_MIXED_SOURCE_NOT_OFFICIAL' if bridged else 'HIGH_COVERAGE_PROVISIONAL_NOT_OFFICIAL'),
+            'latest_session_source':('Yahoo Finance adjusted-return bridge (provisional)' if bridged else 'Third-party PIT historical price release'),
+            'bridged_last_session':bridged,
             'source':'https://github.com/Johnbrick123/sp500-data',
             'asof_actual':dates[-1], 'freshness':freshness, 'last_60_sessions':60,
             'note':'52W is adjusted-close extremes vs prior 251 sessions, NOT intraday 52-week highs/lows.',
@@ -45,6 +51,7 @@ def publish(out:Path):
     md=['# S&P 500 market breadth — @us-market V2.0',
         f'Actual data date: **{dates[-1]}** | Freshness: **{freshness}**',
         '', '**HIGH-COVERAGE PROVISIONAL. NOT official S&P Dow Jones Indices statistics.**',
+        '', '**Latest-session methodology:** '+source_method,
         '', '| Metric | Today | 5 sessions | 10 sessions | 20 sessions | 60 sessions |',
         '|---|---:|---:|---:|---:|---:|']
     fields=[('Avg advances','avg_advances'),('Avg declines','avg_declines'),('A/D','ad_ratio'),('Above 50 DMA %','avg_ma50_pct'),('Above 200 DMA %','avg_ma200_pct'),('New 52W highs (adjusted close)','avg_new_highs'),('New 52W lows (adjusted close)','avg_new_lows')]
