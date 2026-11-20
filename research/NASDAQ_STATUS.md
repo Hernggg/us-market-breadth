@@ -86,3 +86,20 @@ Do not merge into production main until validated. S&P production remains unchan
 4. Compute actual COMP-member 1/5/10/20/60 day A/D, MA50/200 and adjusted-close 52W NH/NL and cross-check against exchange-level A/D statistics (which remain a DIFFERENT universe).
 
 **Branch safeguard:** all source experiments are under draft research PR #1. The original S&P 500 main branch and public/latest.json are untouched.
+
+## G. Nasdaq GIW official COMP identity research and legal gate (2026-11-20)
+
+### Technical validation (not a production authorization)
+- Unauthenticated Nasdaq Global Index Watch COMP EOD Excel exports were technically accessible for the Nov 19 and Nov 18 2026 trading dates, producing spreadsheets with **3,393** and **3,394** unique member records respectively. On Nov 19 the count agrees with the public GIW Overview component count.
+- A five-session prototype and then a single **60-session (2026-08-27..2026-11-19)** identity-level comparison technically executed successfully. These findings established that a no-survivorship-bias official historical roster *exists* and that some of our listing-type candidates differ from official membership.
+- Raw member names, rosters and price quotes were NEVER committed to GitHub.
+- **IMPORTANT POST-TEST LEGAL REVIEW**: Nasdaq's Global Index Watch/index data policy and Nasdaq legal site restrict automated extraction, non-display uses, creation/redistribution of derived index data, and external distribution of historical component data absent appropriate contractual permission. A publicly downloadable file does not establish the needed right to build a recurring automated index-data product.
+- Primary sources: https://www.nasdaq.com/legal and https://www.nasdaq.com/products/global-indexes/policies and https://www.nasdaq.com/products/global-indexes/data/giw
+- Consequently, the GIW component-fetching GitHub Actions workflows have been **deleted from this research branch**. The source-research prototype scripts are now **blocked by default** unless their executor has confirmed vendor entitlement and explicitly sets NASDAQ_GIW_PERMISSION_CONFIRMED=yes.
+- Draft-branch counts-only experimental GIW component reconciliation JSON files were removed from the *current tree* to avoid ongoing public distribution of unlicensed Nasdaq-derived results. **Earlier commits may still preserve those files in public Git history**; deleting the files from HEAD is not equivalent to purging Git history. We must not claim full revocation of historical exposure.
+- **Do NOT merge any unlicensed GIW automation into production** or treat this experiment as authorization to auto-export 60 official daily component sets.
+
+### Practical next licensed/unlicensed routes
+1. **Free/clearly permitted route**: continue NasdaqTrader listed-issues aggregate A/D (its scope differs from COMP); maintain the PIT Nasdaq listing directory as an explicit research *approximation* with source quality disclosure and available trial data allowed for private analytics; never call it true Composite membership.
+2. **Accurate COMP route**: obtain written data usage permission/licensed historical member API from Nasdaq Global Index Watch (or use Norgate's appropriately licensed historical COMP membership), and verify output/derived-data rights before re-enabling daily automatic analysis.
+3. **Prices**: MarketParquet's stated standard license allows personal research and derivative non-reconstructable aggregate statistics, but its complete archive may require payment. Licensed 311-session daily prices and corporate-action continuity remain to be audited; do not publish raw bars.
