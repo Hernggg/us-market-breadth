@@ -1,0 +1,130 @@
+{
+  "market": "NASDAQ_LISTED_ISSUES_STATISTICS_NOT_STRICT_COMP",
+  "official_data": true,
+  "official_nasdaq_composite_constituents": false,
+  "eligible_for_us_market_comp_publication": false,
+  "asof_actual": "2026-11-17",
+  "requested_session": "2026-11-19",
+  "freshness": "SOURCE_LAGGED",
+  "requested_missing_sessions": [
+    "2026-11-18",
+    "2026-11-19"
+  ],
+  "first_source_day": "2026-01-02",
+  "source_trading_sessions": 220,
+  "annual_files": {
+    "2026": {
+      "url": "https://nasdaqtrader.com/dynamic/dailyfiles/daily2026.csv",
+      "sessions": 220,
+      "first": "2026-01-02",
+      "last": "2026-11-17"
+    }
+  },
+  "headers": {
+    "2026": [
+      "Date",
+      "N100",
+      "Financial100",
+      "Composite",
+      "Composite_Hi",
+      "Composite_Low",
+      "N100_Hi",
+      "N100_Low",
+      "Industrial",
+      "Bank",
+      "Insurance",
+      "Financial",
+      "Transportation",
+      "Telecom",
+      "Biotech",
+      "Computer",
+      "NasdaqTrades",
+      "Volume",
+      "DolVol",
+      "MktVal",
+      "Advances",
+      "Declines",
+      "Unchanged"
+    ]
+  },
+  "warnings": {
+    "2026": [
+      "2026-03-09: invalid A/D: Missing numeric data"
+    ]
+  },
+  "previously_archived_rows": 0,
+  "official_revision_count": 0,
+  "official_revised_dates_sample": [],
+  "historical_backfill_limitation": "Nasdaq Trader public page currently exposes current-year CSV only. Prior years only if archived previously; do not assume public historical annual file URLs exist.",
+  "last_day": {
+    "date": "2026-11-17",
+    "advances": 1329,
+    "declines": 3679,
+    "unchanged": 210,
+    "composite_index_level": 24328.38,
+    "computer_index_level": 24234.94
+  },
+  "windows": [
+    {
+      "sessions": 1,
+      "asof_actual": "2026-11-17",
+      "avg_advances": 1329.0,
+      "avg_declines": 3679.0,
+      "avg_unchanged": 210.0,
+      "ad_ratio": 0.36124,
+      "avg_net_advances": -2350.0,
+      "index_return_reference_date": "2026-11-16",
+      "composite_index_return_pct": -0.74,
+      "computer_index_return_pct": -0.8295
+    },
+    {
+      "sessions": 5,
+      "asof_actual": "2026-11-17",
+      "avg_advances": 1750.6,
+      "avg_declines": 3251.4,
+      "avg_unchanged": 227.4,
+      "ad_ratio": 0.53841,
+      "avg_net_advances": -1500.8,
+      "index_return_reference_date": "2026-11-10",
+      "composite_index_return_pct": -2.9422,
+      "computer_index_return_pct": -3.153
+    },
+    {
+      "sessions": 10,
+      "asof_actual": "2026-11-17",
+      "avg_advances": 2131.5,
+      "avg_declines": 2894.5,
+      "avg_unchanged": 209.5,
+      "ad_ratio": 0.7364,
+      "avg_net_advances": -763.0,
+      "index_return_reference_date": "2026-11-03",
+      "composite_index_return_pct": -4.1133,
+      "computer_index_return_pct": -6.003
+    },
+    {
+      "sessions": 20,
+      "asof_actual": "2026-11-17",
+      "avg_advances": 2291.2,
+      "avg_declines": 2718.75,
+      "avg_unchanged": 230.35,
+      "ad_ratio": 0.84274,
+      "avg_net_advances": -427.55,
+      "index_return_reference_date": "2026-10-20",
+      "composite_index_return_pct": -7.9336,
+      "computer_index_return_pct": -11.992
+    },
+    {
+      "sessions": 60,
+      "asof_actual": "2026-11-17",
+      "avg_advances": 2259.467,
+      "avg_declines": 2741.95,
+      "avg_unchanged": 255.717,
+      "ad_ratio": 0.82404,
+      "avg_net_advances": -482.483,
+      "index_return_reference_date": "2026-08-24",
+      "composite_index_return_pct": -6.358,
+      "computer_index_return_pct": -8.7815
+    }
+  ],
+  "note": "Nasdaq Trader NASDAQ-listed issues A/D, NOT verified member-only Nasdaq Composite index A/D. Includes ETFs in listing universe. Composite and Computer index levels are performance context, NOT breadth."
+}
