@@ -1,0 +1,32 @@
+name: Nasdaq unresolved listing security type review (research only)
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'nasdaq_candidate_security_review.py'
+      - '.github/workflows/nasdaq-security-type-review.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Inspect PIT candidate classifications without asserting index inclusion
+        run: python nasdaq_candidate_security_review.py
+      - name: Save small review sample in research tree only
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add research/nasdaq_comp/ambiguous_security_review.json
+          if ! git diff --cached --quiet; then
+            git commit -m "Update Nasdaq ambiguous security types review sample"
+            git push
+          fi
