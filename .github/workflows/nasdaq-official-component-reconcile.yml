@@ -16,8 +16,8 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Analyze 2 official historic EOD component sets and PIT directory membership
-        run: python nasdaq_comp_official_reconcile.py --sessions 2
+      - name: Analyze 5 official historic EOD component sets and PIT directory membership
+        run: python nasdaq_comp_official_reconcile.py --sessions 5
       - name: Commit counts-only reconciliation without Nasdaq constituent identities
         run: |
           git config user.name "github-actions[bot]"
