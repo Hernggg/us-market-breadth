@@ -24,6 +24,29 @@ class SecurityClassificationTests(unittest.TestCase):
     def test_unclear_type_not_silently_assumed(self):
         self.assertEqual(classification(self.item("Example Holdings")), "UNRESOLVED_TYPE")
 
+    def test_spac_units_rights_and_notes_are_excluded(self):
+        for name in ("Example Acquisition Corp. - Unit",
+                     "Example Acquisition Corp. - Units",
+                     "Example Acquisition Corp. - Right",
+                     "Example Acquisition Corp. - Rights",
+                     "Example Holdings - 6.75% Notes due 2028"):
+            with self.subTest(name=name):
+                self.assertEqual(classification(self.item(name)), "EXCLUDED_SECURITY_TYPE")
+
+    def test_eligible_nonstandard_common_share_descriptions(self):
+        for name in ("Example AG - Registered Shares",
+                     "Example - Subordinate Voting Shares",
+                     "Example - Class A Shares representing limited partner interests",
+                     "Example - Non-Voting Shares"):
+            with self.subTest(name=name):
+                self.assertEqual(classification(self.item(name)), "LIKELY_ELIGIBLE_TYPE")
+
+    def test_issuer_name_not_confused_with_type(self):
+        self.assertEqual(
+            classification(self.item("Rights Management Inc. - Common Stock")),
+            "LIKELY_ELIGIBLE_TYPE"
+        )
+
 
 class HistoricalIntegrityTests(unittest.TestCase):
     def setUp(self):
