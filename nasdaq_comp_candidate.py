@@ -30,13 +30,15 @@ MAX_BYTES = 5_000_000
 CLEAR_TYPES = re.compile(
     r"\b(common stock|common shares|ordinary shares?|american depositary|"
     r"depositary shares representing common|adrs?\b|ads\b|"
-    r"limited partnership interests?|beneficial interests?)\b", re.I
+    r"limited partnership interests?|limited partner interests?|"
+    r"beneficial interests?|registered shares?|subordinate voting shares?|"
+    r"non.voting shares?|class [a-z] voting shares?)\b", re.I
 )
 INELIGIBLE_TYPES = re.compile(
-    r"\b(warrants?|subscription rights?|rights to purchase|preferred stock|"
-    r"preferred shares?|preferred securities|senior notes?|subordinated notes?|"
-    r"debentures?|exchange.traded fund|closed.end fund|units? consisting|"
-    r"units? comprising)\b", re.I
+    r"\b(warrants?|subscription rights?|rights?|preferred|"
+    r"senior notes?|subordinated notes?|notes?|debentures?|"
+    r"convertible securities|exchange.traded funds?|closed.end funds?|"
+    r"units?|etns?|subscription receipts?)\b", re.I
 )
 
 
@@ -108,9 +110,13 @@ def classification(row):
     if row["etf"] == "Y":
         return "EXCLUDED_ETF"
     name = str(row.get("name") or "")
-    if INELIGIBLE_TYPES.search(name):
+    # Nasdaq Trader normally appends the security type after the first " - ".
+    # Check the security description, not the issuer's legal name: an issuer
+    # name containing "Rights" or "Unit" must not determine instrument type.
+    security_description = name.split(" - ", 1)[-1]
+    if INELIGIBLE_TYPES.search(security_description):
         return "EXCLUDED_SECURITY_TYPE"
-    if CLEAR_TYPES.search(name):
+    if CLEAR_TYPES.search(security_description):
         return "LIKELY_ELIGIBLE_TYPE"
     # E.g. SPAC units, trusts or abbreviated descriptions need real checking.
     return "UNRESOLVED_TYPE"
