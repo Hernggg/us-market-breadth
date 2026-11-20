@@ -1,0 +1,37 @@
+name: EODData INDEX free API entitlement - research only
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'research/eoddata/eoddata_api_probe.py'
+      - 'tests/test_eoddata_api_probe.py'
+      - '.github/workflows/eoddata-api-feasibility.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  safe-api-access:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Check no secrets or vendor quotes can leak in offline tests
+        run: python -m unittest discover -s tests -p 'test_eoddata_api_probe.py' -v
+      - name: Demonstrate safe no-key status (does not contact EODData)
+        run: python research/eoddata/eoddata_api_probe.py --symbols NCFI MAHQ
+      - name: Test authenticated free-plan INDEX access only when manually requested
+        if: github.event_name == 'workflow_dispatch'
+        env:
+          EODDATA_API_KEY: \${{ secrets.EODDATA_API_KEY }}
+        run: python research/eoddata/eoddata_api_probe.py --symbols NCFI NCTH MAHQ
+
+# IMPORTANT:
+# Do not add a cron schedule or commit vendor records to this public repo.
+# On first-time activation the user must place their own EODData key in
+# Settings -> Secrets and variables -> Actions -> EODDATA_API_KEY.
+# Both personal-use and data redistribution terms must be respected.
