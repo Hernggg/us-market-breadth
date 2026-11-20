@@ -120,3 +120,12 @@ Do not merge into production main until validated. S&P production remains unchan
 - Source is Yahoo undocumented web endpoint; may rate-limit and is not a suitably licensed full-universe feed. This code has **publish_to_us_market=false** and remains on draft research branch only.
 
 **Remaining real blockers**: legally authorized daily Composite actual component list and complete properly licensed ~311-day historical price inputs for ~3,400 names with delisting/ticker continuity. The engineering formula is now proven; the production data entitlements and completeness are not.
+
+## I. Full-universe calculation scaling & licensed-data input readiness (2026-11-20)
+
+- **Full 311-session synthetic price scale simulation**: nasdaq_bulk_breadth_engine.py tested DuckDB computation for 3,400 *invented* security IDs, 1,050,086 synthetic OHLC rows, 202,573 synthetic PIT constituent-day rows; produced all 60 individual daily breadth records and 1/5/10/20/60 session aggregation without any online vendor data. Historical gaps, new listings and delisted members represented in synthetic fixtures, with dense-calendar forward-fill prevention. Run https://github.com/Hernggg/us-market-breadth/actions/runs/44712820796
+- These results are **purely synthetic and not market measurements**, and cannot replace the real authorized Nasdaq index identity/price records.
+- **Legal-input adapter**: nasdaq_licensed_input_adapter.py imports externally supplied local Parquet market calendar, PIT membership and split-adjusted OHLC, using a permanent security ID. Requires express membership + price data rights flags before import; never fetches GIW or prices from undocumented endpoints. User attestations are not legal verification; output remains research-only.
+- **60 passing automated tests** include the Parquet licensed-input roundtrip and a consistency comparison to the existing Python daily breadth implementation. Run https://github.com/Hernggg/us-market-breadth/actions/runs/44713334375
+- Full schema, operational steps and production blocking requirements recorded in research/NASDAQ_BULK_ENGINE_RUNBOOK.md
+- **Actual blockers remain unchanged**: licensed historical Composite constituent identities with permitted derived analysis; adequately complete real 311-session OHLC for ~3,400 names, including delistings and ticker changes; audited quality before integrating into official V2.0. No Nasdaq market breadth publication and no S&P main changes.
