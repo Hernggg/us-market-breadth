@@ -94,6 +94,8 @@ python research/tradingview/parse_private_breadth_csv.py \
   Do not mix intraday snapshots with the completed END OF DAY Close.
 - https://eoddata.com/stockquote/INDEX/NCFI.htm
 - https://www.eoddata.com/stockquote/INDEX/NCTH.htm
+- https://eoddata.com/stockquote/INDEX/S5FI.htm
+- https://eoddata.com/stockquote/INDEX/S5TH.htm
 - Reuters also publishes daily Nasdaq **exchange-wide** A/D and
   Nasdaq Composite / S&P500 52-week NH/NL in its US market-close reports,
   explicitly noting different populations:
