@@ -5,7 +5,7 @@
 Accesses only publicly accessible, unauthenticated Nasdaq GIW Excel exports,
 never bypasses authorization; no raw component lists are persisted or printed.
 Writes only aggregate counts and failure/audit diagnostics, never index-member
-identities. Requests are bounded to 2/5 known trading sessions per invocation.
+identities. Requests are bounded to 60 audited sessions, with deliberate pacing.
 """
 from __future__ import annotations
 
@@ -30,7 +30,7 @@ HOST="https://indexes.nasdaq.com/Index/ExportWeightings/COMP"
 MAX_DOWNLOAD_BYTES=3_000_000
 NAMESPACE="{http://schemas.openxmlformats.org/spreadsheetml/2006/main}"
 USER_AGENT="Mozilla/5.0 (us-market-breadth; noncommercial personal research)"
-MAX_DAYS=5
+MAX_DAYS=60
 
 
 class AuthSafeRedirect(urllib.request.HTTPRedirectHandler):
@@ -158,14 +158,14 @@ def candidate_sets(rows,day):
             d[ticker]=r
     likely={t for t,v in d.items() if classification(v)=="LIKELY_ELIGIBLE_TYPE"}
     unresolved={t for t,v in d.items() if classification(v)=="UNRESOLVED_TYPE"}
-    return likely, unresolved, len(d)
+    return likely, unresolved, len(d), d
 
 
 def normalize(symbol):
     return symbol.strip().upper().replace("-", ".")
 
 
-def reconcile(official, likely, unresolved, total):
+def reconcile(official, likely, unresolved, total, listed_records):
     if likely & unresolved:
         raise AuditError("Candidate categories overlap")
     # Do NOT alter constituents by non-verified heuristics. Show both exact
@@ -175,7 +175,22 @@ def reconcile(official, likely, unresolved, total):
     extra=likely - official
     norm_official={normalize(t) for t in official}
     norm_likely={normalize(t) for t in likely}
+    official_not_likely = {
+        "NOT_IN_NASDAQ_DIRECTORY":0,
+        "UNRESOLVED_TYPE":0,
+        "EXCLUDED_SECURITY_TYPE":0,
+        "EXCLUDED_ETF":0,
+        "EXCLUDED_TEST":0,
+        "OTHER":0,
+    }
+    for ticker in exact_missing:
+        record=listed_records.get(ticker)
+        reason=classification(record) if record is not None else "NOT_IN_NASDAQ_DIRECTORY"
+        official_not_likely[reason if reason in official_not_likely else "OTHER"]+=1
+    if sum(official_not_likely.values())!=len(exact_missing):
+        raise AuditError("Official missing cause breakdown failed reconciliation")
     return {
+        "official_not_candidate_reason_breakdown":official_not_likely,
         "nasdaq_directory_total":total,
         "official_comp_members":len(official),
         "likely_type_candidate_count":len(likely),
@@ -200,7 +215,7 @@ def audit(days):
     for day in days:
         raw=get_export(day)
         official, quality=parse_xlsx(raw)
-        likely, unresolved, total=candidate_sets(history,day)
+        likely, unresolved, total, listed_records=candidate_sets(history,day)
         result.append({
             "date":day.isoformat(),
             "source":"https://indexes.nasdaq.com/Index/Weighting/COMP",
@@ -208,7 +223,7 @@ def audit(days):
             "export_byte_count":len(raw),
             "export_sha256":hashlib.sha256(raw).hexdigest(),
             **quality,
-            **reconcile(official,likely,unresolved,total),
+            **reconcile(official,likely,unresolved,total,listed_records),
             "official_added_since_prior_checked_day":len(official-previous) if previous is not None else None,
             "official_removed_since_prior_checked_day":len(previous-official) if previous is not None else None,
         })
@@ -232,7 +247,7 @@ def main():
     p.add_argument("--out",type=Path,default=Path("research/nasdaq_comp/official_component_reconciliation.json"))
     a=p.parse_args()
     if not 1<=a.sessions<=MAX_DAYS:
-        raise AuditError("Only 1..5 dates allowed per study run; avoid unbounded vendor access")
+        raise AuditError("Only 1..60 dates allowed per study run; avoid unbounded vendor access")
     days=load_calendar(a.calendar,None)[-a.sessions:]
     report=audit(days)
     a.out.parent.mkdir(parents=True,exist_ok=True)
