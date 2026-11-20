@@ -78,3 +78,16 @@ Settings → Secrets and variables → Actions → New repository secret:
 Once configured, run the EODData API entitlement workflow manually. Until it returns actually authorized INDEX history and acceptable license/retention conditions, **do not schedule it daily or claim all 5 windows can automatically update**. Even if authenticated access succeeds, public GitHub publication of vendor values remains prohibited without permission; use private data storage/workflows or a permitted nonredistributable reporting route.
 
 No change to the user-validated 3-in-1 TradingView Pine script or `main` S&P500 production.
+
+## 6. Third-provider evidence: eligibility is materially different
+
+A further openly documented **independent** source confirms that "Nasdaq NH/NL" does not have a single universal stock universe:
+
+- thetrading.tools on Nov 19 2026 counted **11 new highs and 325 new lows across 2,484 scored Nasdaq-listed eligible stocks**. It requires a full year of daily OHLCV, excludes ETFs, closed-end funds, structured instruments, and units, and reports its 52-week range as a rolling 365 calendar-day window excluding the current day.
+- EODData's MAHQ/MALQ on the same session reported **11 highs / 450 lows**; Reuters called its **Composite** figures **34 highs / 529 lows**.
+- This is **evidence that source-specific universe and methodological definitions materially change the counts**. Equal new-high counts (11 vs 11) do NOT imply identical source members or calculation rules; the distinct new-low counts disprove a blanket identical method.
+- A contemporaneous Nasdaq new-high instrument list includes many recent SPAC/acquisition corporations on Nov 20, further illustrating why IPO seasoning, SPAC exclusions and treatment of stock-like securities can have a large effect on the *highs* numerator.
+- Definitions / sources: https://www.thetrading.tools/new-highs-new-lows and https://www.investcom.com/us/marketnewhighnasdaq.htm. Both are THIRD PARTY sources, not Nasdaq-certified Composite member lists.
+- Nasdaq Trader's free published Daily Market Summary official year-to-date fields include **Nasdaq Advances/Declines/Unchanged but not 52-week high/low counts**, so they cannot be used as exact 52-week count ground truth; https://nasdaqtrader.com/Trader.aspx?id=DailyMarketSummaryDefs .
+
+**Do not claim that EODData equals Reuters or that the discrepancy is fully explained.** These differences are a methodological problem for strict benchmarking but acceptable for *within-provider trend analysis* if clearly labeled as vendor-specific.
