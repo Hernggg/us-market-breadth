@@ -37,3 +37,25 @@ Run: https://github.com/Hernggg/us-market-breadth/actions/runs/44698886811
 
 Research in branch research/nasdaq-composite-pit / draft PR #1.
 Do not merge into production main until validated. S&P production remains unchanged.
+
+## E. New verified follow-on milestones (2026-11-20)
+
+**Official Nasdaq Trader daily archive**
+- Program nasdaq_official_history.py; research CSV official_nasdaq_issues_daily_history.csv stores **220 official 2026 Nasdaq-listed issue A/D sessions** (2026-01-02 to 2026-11-17), and official_nasdaq_issues_history_summary.json stores all 1/5/10/20/60 session aggregates and freshness flags.
+- Nasdaq Trader public page advertises only the CURRENT year's annual CSV (as of November 2026), so 2024-2025 archive backfill was NOT available by the guessed URLs. The new code retains its local committed archive across year rollover, provided GitHub Actions continues running after production approval. An earlier failed attempt is recorded; the corrected actual 2026 run succeeded: https://github.com/Hernggg/us-market-breadth/actions/runs/44700558505
+
+**Official sector benchmark context**
+- Program nasdaq_sector_rotation.py, research/official_sector_relative_strength.json; 11 index-level series and 1/5/10/20/60-session index close-to-close RETURNS, not sector stock breadth.
+- For the 20-session window ending Nov 17 2026: Nasdaq Computer -11.992%, Nasdaq Composite -7.9336%, Nasdaq Industrial +0.4443%.
+- Verified: https://github.com/Hernggg/us-market-breadth/actions/runs/44700849920
+
+**Improved point-in-time Nasdaq listing type classification**
+- Official methodology basis: https://indexes.nasdaqomx.com/docs/Methodology_COMP.pdf (2025). Excluded SPAC units, rights, debt notes, preferred, ETFs; considered eligible diverse common-share classes, ADS/ADRs, beneficial-interest securities.
+- 2026-11-19 raw listed directory: 5,602; 3,397 **candidate common-like types**, 6 unresolved types, 910 excluded non-common types, 1,289 ETFs. This is still NOT official COMP membership: actual NOCP seasoning, exceptions, delisted securities and vendor/source errors remain unverified.
+- Previously 429 ambiguous issue descriptions now only 6 (2026-11-19); multiple legal share classes were checked against SEC filings. Six cases and source URLs recorded in research/nasdaq_comp/manual_security_type_evidence_20261119.json. Three generic depositary-share cases were identified as preferred by SEC; two as common shares; one BDC still requires index exclusion-policy confirmation. These external observations are **not applied as index membership overrides** in the PIT algorithm.
+- Separate TradingView NASDAQ:IXIC public screen reported 3,393 index component instruments when accessed Nov 20, but that is NOT an identity-level nor date-aligned constituent audit against 3,397 candidates (difference 4). Similar totals are insufficient proof of accuracy.
+- Verified revised PIT classification: https://github.com/Hernggg/us-market-breadth/actions/runs/44701714367
+
+**Safety**
+- No changes to main branch S&P production update or public/latest.json.
+- All Nasdaq results remain on draft research PR #1, not automatically merged into @us-market V2.0 official Nasdaq Composite breadth.
