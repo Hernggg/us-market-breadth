@@ -103,3 +103,20 @@ Do not merge into production main until validated. S&P production remains unchan
 1. **Free/clearly permitted route**: continue NasdaqTrader listed-issues aggregate A/D (its scope differs from COMP); maintain the PIT Nasdaq listing directory as an explicit research *approximation* with source quality disclosure and available trial data allowed for private analytics; never call it true Composite membership.
 2. **Accurate COMP route**: obtain written data usage permission/licensed historical member API from Nasdaq Global Index Watch (or use Norgate's appropriately licensed historical COMP membership), and verify output/derived-data rights before re-enabling daily automatic analysis.
 3. **Prices**: MarketParquet's stated standard license allows personal research and derivative non-reconstructable aggregate statistics, but its complete archive may require payment. Licensed 311-session daily prices and corporate-action continuity remain to be audited; do not publish raw bars.
+
+## H. Real-price sampled 60-session breadth engine proven (2026-11-20)
+
+**Executed deliverable**: `nasdaq_listing_breadth_lab.py` implements **A/D, MA50/200, and 52-week adjusted INTRADAY high/low events**, and five 1/5/10/20/60 trading-session windows, with actual Yahoo daily OHLC and Nasdaq PIT listing directory participation. No sample raw prices or ticker-level output are saved in the repository.
+
+- Measured 60 exchange sessions 2026-08-27 to 2026-11-19; reference index calendar had 501 daily sessions, enough for previous 251-session OHLC lookback.
+- Enhanced deterministic sample of 24 Nasdaq listed-security type candidates: 8 liquid controls, 12 other current listed issues, 2 new entrants, 2 formerly listed issues. **Purposeful QA cohort, NOT a probability sample and NOT official Nasdaq Composite index membership.**
+- Yahoo adjusted OHLC source returned some history for 24/24 selected tickers.
+- On Nov 19 sample, **22 historical PIT-listed sample securities were active; all 22 had adjusted closes; 22 were A/D eligible; 21 MA50 eligible; 20 MA200 and 252-session 52-week extreme eligible**. Missing historical windows are excluded from eligible indicator denominators, and recorded against the active-sample coverage denominator.
+- The Nov 19 sampled A/D was 3 up, 18 down and 1 unchanged, MA50 above 4/21, MA200 above 10/20, 0 adjusted OHLC 52-week highs and 1 low. **NEVER INTERPRET THESE AS FULL NASDAQ MARKET SENTIMENT**; sample intentionally nonrepresentative.
+- For all 60 trailing days, member-day priced coverage 96.031%; 50DMA-eligible coverage 92.374%; 200DMA and 52W extreme coverage 88.638%. These figures apply to the 24-symbol QA sample ONLY.
+- 60-session averages are computed **from daily percentages**, NOT pooled cross-date numerator/denominator; A/D uses window total advancers ÷ total decliners; close price comparisons require prior session; 52-week highs/lows use current adjusted intraday high/low vs prior 251 high/low sessions, strict > or <, with no candle forward-fill.
+- QA output: `research/nasdaq_comp/listed_sample_breadth_lab.json`.
+- GitHub real-data success: https://github.com/Hernggg/us-market-breadth/actions/runs/44710883488
+- Source is Yahoo undocumented web endpoint; may rate-limit and is not a suitably licensed full-universe feed. This code has **publish_to_us_market=false** and remains on draft research branch only.
+
+**Remaining real blockers**: legally authorized daily Composite actual component list and complete properly licensed ~311-day historical price inputs for ~3,400 names with delisting/ticker continuity. The engineering formula is now proven; the production data entitlements and completeness are not.
