@@ -1,0 +1,34 @@
+name: Experimental SP500 freshness bridge (no publishing)
+
+on:
+  push:
+    paths:
+      - '.github/workflows/candidate-bridge-probe.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  experimental:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install data processing library
+        run: python -m pip install --quiet duckdb
+      - name: Bridge one stale session and recompute full 60D metrics
+        run: python candidate_yahoo_bridge.py
+      - name: Upload only candidate summary (not raw Yahoo prices)
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: sp500-2026-11-19-candidate-audit
+          path: |
+            candidate_probe_output/sp500_pit_windows.csv
+            candidate_probe_output/sp500_pit_quality_report.txt
+            candidate_probe_output/sp500_pit_daily.csv
+          retention-days: 7
