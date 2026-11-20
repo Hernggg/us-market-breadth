@@ -1,0 +1,32 @@
+name: EODData API private entitlement check (manual only)
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  eoddata-free-index-access:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: research/nasdaq-composite-pit
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate safe access checks without any vendor data
+        run: python -m unittest discover -s tests -p 'test_eoddata_api_probe.py' -v
+      - name: Check authenticated INDEX historical bar entitlement (NO prices written)
+        env:
+          EODDATA_API_KEY: ${{ secrets.EODDATA_API_KEY }}
+        run: python research/eoddata/eoddata_api_probe.py --symbols NCFI NCTH MAHQ
+
+# This isolated, manual-only workflow is intentionally on the default branch
+# so the GitHub Actions UI can offer a Run workflow button. It checks out
+# research code without modifying S&P 500 main workflows or public/latest.json.
+# Free EODData Standard API still requires user EODDATA_API_KEY repository secret.
+# No cron, no write permissions, no vendor quote persistence/publication.
