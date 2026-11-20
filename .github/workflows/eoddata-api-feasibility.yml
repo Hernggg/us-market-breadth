@@ -27,7 +27,7 @@ jobs:
       - name: Test authenticated free-plan INDEX access only when manually requested
         if: github.event_name == 'workflow_dispatch'
         env:
-          EODDATA_API_KEY: \${{ secrets.EODDATA_API_KEY }}
+          EODDATA_API_KEY: ${{ secrets.EODDATA_API_KEY }}
         run: python research/eoddata/eoddata_api_probe.py --symbols NCFI NCTH MAHQ
 
 # IMPORTANT:
