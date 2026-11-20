@@ -1,0 +1,28 @@
+name: Nasdaq second-source daily gaps research
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'nasdaq_price_gap_probe.py'
+      - 'tests/test_nasdaq_price_gap_probe.py'
+      - '.github/workflows/nasdaq-price-gap-probe.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  gap-probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install DuckDB
+        run: pip install -r requirements.txt
+      - name: Check deterministic research sample
+        run: python -m unittest discover -s tests -p 'test_nasdaq_price_gap_probe.py' -v
+      - name: Compare second source for bounded Nasdaq price-gap sample
+        run: python nasdaq_price_gap_probe.py --asof 2026-11-19
