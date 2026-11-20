@@ -47,6 +47,25 @@ class SecurityClassificationTests(unittest.TestCase):
             "LIKELY_ELIGIBLE_TYPE"
         )
 
+    def test_additional_official_common_type_variants(self):
+        for item in ("Example - American Depository Shares",
+                     "Example - ADSs",
+                     "Alphabet Inc. - Class C Capital Stock",
+                     "Example - Common Share",
+                     "Example - Class A Ord Share",
+                     "Example - Class A Shares",
+                     "Example - New York Registry Shares",
+                     "Example - Ord Shares",
+                     "Example - Units of Beneficial Interest"):
+            with self.subTest(name=item):
+                self.assertEqual(classification(self.item(item)), "LIKELY_ELIGIBLE_TYPE")
+
+    def test_generic_depositary_vs_preference(self):
+        self.assertEqual(classification(self.item("Example - Depositary Shares")), "UNRESOLVED_TYPE")
+        self.assertEqual(classification(self.item("Example - Preference Shares")), "EXCLUDED_SECURITY_TYPE")
+        self.assertEqual(classification(self.item("Example - Preferred Units of Beneficial Interest")),
+                         "EXCLUDED_SECURITY_TYPE")
+
 
 class HistoricalIntegrityTests(unittest.TestCase):
     def setUp(self):
