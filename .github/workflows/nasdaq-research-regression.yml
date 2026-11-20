@@ -1,0 +1,26 @@
+name: Nasdaq research regression suite (safe: not production)
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'nasdaq_*.py'
+      - 'tests/test_nasdaq*.py'
+      - '.github/workflows/nasdaq-research-regression.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Compile all Nasdaq-only research code
+        run: python -m compileall -q nasdaq_comp_candidate.py nasdaq_price_source_probe.py nasdaq_official_stats_probe.py nasdaq_official_history.py nasdaq_sector_rotation.py nasdaq_candidate_security_review.py
+      - name: Run complete Nasdaq research unit test suite
+        run: python -m unittest discover -s tests -p 'test_nasdaq*.py' -v
