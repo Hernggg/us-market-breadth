@@ -3,11 +3,11 @@
   "eligible_for_comp_publication": false,
   "asof": "2026-11-19",
   "directory_total": 5602,
-  "unresolved_count": 37,
+  "unresolved_count": 6,
   "unresolved_market_categories": {
-    "G": 8,
-    "Q": 16,
-    "S": 13
+    "G": 1,
+    "Q": 3,
+    "S": 2
   },
   "unresolved_name_terms": {
     "unit": 0,
@@ -16,9 +16,9 @@
     "preferred": 0,
     "depositary": 3,
     "reit": 0,
-    "class": 8,
-    "stock": 3,
-    "share": 29,
+    "class": 1,
+    "stock": 0,
+    "share": 3,
     "note": 0,
     "fund": 0,
     "acquisition": 0,
@@ -43,140 +43,14 @@
       "etf_flag": "N"
     },
     {
-      "ticker": "HAO",
-      "name": "Haoxi Health Technology Limited - Class A Ord Share",
-      "market_category": "S",
-      "etf_flag": "N"
-    },
-    {
       "ticker": "MNSBP",
       "name": "MainStreet Bancshares, Inc. - Depositary Shares",
       "market_category": "S",
       "etf_flag": "N"
     },
     {
-      "ticker": "CRON",
-      "name": "Cronos Group Inc. - Common Share",
-      "market_category": "G",
-      "etf_flag": "N"
-    },
-    {
-      "ticker": "LILAP",
-      "name": "Liberty Latin America Ltd. - 9.0% Fixed Rate Cumulative Perpetual Redeemable Series A Preference Shares",
-      "market_category": "Q",
-      "etf_flag": "N"
-    },
-    {
-      "ticker": "CCEC",
-      "name": "Capital Clean Energy Carriers Corp. - Common Share",
-      "market_category": "Q",
-      "etf_flag": "N"
-    },
-    {
-      "ticker": "YXT",
-      "name": "YXT.COM GROUP HOLDING LIMITED - American Depository Shares",
-      "market_category": "G",
-      "etf_flag": "N"
-    },
-    {
-      "ticker": "GOOG",
-      "name": "Alphabet Inc. - Class C Capital Stock",
-      "market_category": "Q",
-      "etf_flag": "N"
-    },
-    {
-      "ticker": "NCTY",
-      "name": "The9 Limited - American Depository Shares",
-      "market_category": "S",
-      "etf_flag": "N"
-    },
-    {
-      "ticker": "BRBI",
-      "name": "BRBI BR Partners S.A. - ADSs",
-      "market_category": "S",
-      "etf_flag": "N"
-    },
-    {
-      "ticker": "ELVR",
-      "name": "Elevra Lithium Limited - American Depository Shares",
-      "market_category": "S",
-      "etf_flag": "N"
-    },
-    {
-      "ticker": "IBEX",
-      "name": "IBEX Limited - Common Share",
-      "market_category": "G",
-      "etf_flag": "N"
-    },
-    {
-      "ticker": "PAYP",
-      "name": "PayPay Corporation - American Depository Shares",
-      "market_category": "Q",
-      "etf_flag": "N"
-    },
-    {
       "ticker": "WAFDP",
       "name": "WaFd, Inc. - Depositary Shares",
-      "market_category": "Q",
-      "etf_flag": "N"
-    },
-    {
-      "ticker": "NVX",
-      "name": "NOVONIX Limited - American Depository Shares",
-      "market_category": "G",
-      "etf_flag": "N"
-    },
-    {
-      "ticker": "BZ",
-      "name": "KANZHUN LIMITED - American Depository Shares",
-      "market_category": "Q",
-      "etf_flag": "N"
-    },
-    {
-      "ticker": "STNE",
-      "name": "StoneCo Ltd. - Class A Common Share",
-      "market_category": "Q",
-      "etf_flag": "N"
-    },
-    {
-      "ticker": "AAPG",
-      "name": "Ascentage Pharma Group International - American Depository Shares",
-      "market_category": "G",
-      "etf_flag": "N"
-    },
-    {
-      "ticker": "CHWM",
-      "name": "Chilwa Minerals Limited - American Depository Shares",
-      "market_category": "S",
-      "etf_flag": "N"
-    },
-    {
-      "ticker": "SLN",
-      "name": "Silence Therapeutics Plc - American Depository Share",
-      "market_category": "G",
-      "etf_flag": "N"
-    },
-    {
-      "ticker": "IVA",
-      "name": "Inventiva S.A. - American Depository Shares",
-      "market_category": "G",
-      "etf_flag": "N"
-    },
-    {
-      "ticker": "Z",
-      "name": "Zillow Group, Inc. - Class C Capital Stock",
-      "market_category": "Q",
-      "etf_flag": "N"
-    },
-    {
-      "ticker": "RNW",
-      "name": "ReNew Energy Global plc - Class A Shares",
-      "market_category": "Q",
-      "etf_flag": "N"
-    },
-    {
-      "ticker": "ASML",
-      "name": "ASML Holding N.V. - New York Registry Shares",
       "market_category": "Q",
       "etf_flag": "N"
     },
@@ -187,68 +61,8 @@
       "etf_flag": "N"
     },
     {
-      "ticker": "DDI",
-      "name": "DoubleDown Interactive Co., Ltd. - American Depository Shares",
-      "market_category": "Q",
-      "etf_flag": "N"
-    },
-    {
-      "ticker": "CMPS",
-      "name": "COMPASS Pathways Plc - American Depository Shares",
-      "market_category": "Q",
-      "etf_flag": "N"
-    },
-    {
-      "ticker": "SIFY",
-      "name": "Sify Technologies Limited - American Depository Shares",
-      "market_category": "S",
-      "etf_flag": "N"
-    },
-    {
-      "ticker": "NBTX",
-      "name": "Nanobiotix S.A. - ADSs",
-      "market_category": "Q",
-      "etf_flag": "N"
-    },
-    {
-      "ticker": "KSPI",
-      "name": "Joint Stock Company Kaspi.kz - American Depository Shares",
-      "market_category": "Q",
-      "etf_flag": "N"
-    },
-    {
-      "ticker": "RETO",
-      "name": "ReTo Eco-Solutions, Inc. - Class A Shares",
-      "market_category": "S",
-      "etf_flag": "N"
-    },
-    {
       "ticker": "ORGO",
       "name": "Organogenesis Holdings Inc.  - Class A ",
-      "market_category": "S",
-      "etf_flag": "N"
-    },
-    {
-      "ticker": "YJ",
-      "name": "Yunji Inc. - American Depository Shares",
-      "market_category": "S",
-      "etf_flag": "N"
-    },
-    {
-      "ticker": "MDBH",
-      "name": "MDB Capital Holdings, LLC - Class A common ",
-      "market_category": "S",
-      "etf_flag": "N"
-    },
-    {
-      "ticker": "SY",
-      "name": "So-Young International Inc. - American Depository Shares",
-      "market_category": "S",
-      "etf_flag": "N"
-    },
-    {
-      "ticker": "GVH",
-      "name": "Globavend Holdings Limited - Ord Shares",
       "market_category": "S",
       "etf_flag": "N"
     }
