@@ -141,3 +141,14 @@ Do not merge into production main until validated. S&P production remains unchan
 - TradingView explicitly prohibits unlicensed automated scraping, non-display database storage, and unauthorized redistribution. Pine in the user's personal chart is a different permitted workflow from GitHub bots copying TV chart history; GitHub production auto-feed is NOT yet available.
 - NEVER use Pine scripts' absent or hypothetical values to fill data. @us-market should use real on-demand dated sources and cite their references; if 60-day mean cannot be obtained in permitted mode, report honestly.
 - This pivot eliminates the **3,400-stock quote prerequisite for Nasdaq/S&P MA50/200 percentage metrics specifically**, but full Nasdaq Composite member-only A/D, 52W highs/lows, all-US common-stock universe, and fully automated historical feed remain separate tasks.
+
+## K. Official TradingView MCP direct ChatGPT integration — discovery (2026-11-20)
+
+**Important new actionable route**: TradingView itself has launched an official **Streamable HTTP MCP** for ChatGPT/Codex: https://mcp.tradingview.com/mcp. Setup and details: https://www.tradingview.com/mcp/docs.
+
+- The authenticated `get_ohlcv` operation can retrieve **70+ daily bars of an indicator symbol** and permits on-the-fly computing 1/5/10/20/60 close-based arithmetic averages for `INDEX:NCFI/NCTH/S5FI/S5TH`, subject to TradingView account plan, availability and permissions. `run_pine_indicator` and `validate_pine_script` are additional alternatives.
+- This **does not require the 3,400-stock market data project** for these two Nasdaq MA breadth percentages. It is arguably the preferred way to get real on-demand figures when the user inputs @us-market.
+- TradingView officially documents ChatGPT setup in Settings → Plugins → Add → MCPs → Add → Add MCP Server, type Streamable HTTP, URL https://mcp.tradingview.com/mcp, then OAuth Authenticate. It mentions a **paid TradingView account** and MCP call limits.
+- **Restrictions:** official TradingView MCP personal AI question-answering only; prohibits building/publishing derived database/feed, unauthorized redistributions and automated trading. Do not connect its outputs to public GitHub or an unattended aggregation pipeline.
+- **Critical unfulfilled step:** no TradingView MCP tools are currently connected in this ChatGPT conversation; the authenticated `get_ohlcv` call has NOT been executed or verified. User account OAuth must be carried out by the user.
+- Exact setup and acceptance tests recorded in research/tradingview/CHATGPT_OFFICIAL_MCP_PATH.md.
