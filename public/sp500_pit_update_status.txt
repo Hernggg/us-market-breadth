@@ -1,8 +1,8 @@
 Requested session: 2026-11-19
 Remote GitHub release metadata available: True
-membership_intervals.parquet: REMOTE_UNCHANGED_REUSE
-recycled_tickers.csv: REMOTE_UNCHANGED_REUSE
-prices.parquet: REMOTE_UNCHANGED_REUSE
+membership_intervals.parquet: MISSING_OR_INVALID
+recycled_tickers.csv: MISSING_OR_INVALID
+prices.parquet: MISSING_OR_INVALID
 Actual source last SPY price date: 2026-11-18
 FRESHNESS: STALE_BEFORE_REQUESTED_DATE
 IMPORTANT: Outputs are for 2026-11-18 only; DO NOT label as 2026-11-19
