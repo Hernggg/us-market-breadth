@@ -30,6 +30,10 @@ def norm(value: str) -> str:
 
 def parse_day(value: str):
     val = value.strip().strip('"')
+    # Official Nasdaq Trader 2026 daily CSV uses timestamps like
+    # "1/2/2026 0:00:00"; the date is the exchange trading date.
+    if " " in val and ":" in val:
+        val = val.split(" ", 1)[0]
     for format_ in ("%Y-%m-%d", "%m/%d/%Y", "%m/%d/%y", "%Y%m%d", "%Y/%m/%d", "%d-%b-%Y"):
         try:
             return dt.datetime.strptime(val, format_).date()
@@ -69,8 +73,8 @@ def find_header(rows):
         dec = next((j for j,n in enumerate(names) if n in {"nasdaqdeclines","declines"}), None)
         unch = next((j for j,n in enumerate(names) if n in {"nasdaqunchanged","unchanged"}), None)
         date = next((j for j,n in enumerate(names) if n in {"date","tradedate","day","trade_date"}), None)
-        comp = next((j for j,n in enumerate(names) if n in {"nasdaqcompositeindex","nasdaqcomposite","compositeindex"}), None)
-        computer = next((j for j,n in enumerate(names) if n in {"nasdaqcomputerindex","computerindex"}), None)
+        comp = next((j for j,n in enumerate(names) if n in {"nasdaqcompositeindex","nasdaqcomposite","compositeindex","composite"}), None)
+        computer = next((j for j,n in enumerate(names) if n in {"nasdaqcomputerindex","computerindex","computer"}), None)
         if None not in (adv, dec, unch, date):
             return i, {"date":date, "advances":adv, "declines":dec, "unchanged":unch,
                        "composite":comp, "computer":computer}, row
