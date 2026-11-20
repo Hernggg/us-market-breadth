@@ -19,3 +19,15 @@ The **one saved-script** Basic-plan version is:
 6. Save chart layout again. If any of 50 plots or request limits error on Basic, revise before proceeding; never ask to pay as first solution.
 
 **Not done:** new Pine version has not been validated by an authenticated TradingView Pine compiler, nor is ChatGPT/GitHub unattended live ingestion available. Strict Composite constituent-only A/D remains unresolved.
+
+## Real user chart confirmation and cross-source QA (2026-11-20)
+
+- User has actually **compiled and displayed** the three-panel `US Market Breadth 3-in-1` free TradingView Basic script as of the chart's 2026-11-19 session. This verifies runtime compatibility for the existing 10-symbol / 50-plot design, not automated ChatGPT retrieval.
+- Nasdaq ADVQ/DECQ 2026-11-19 **daily finished EOD close** values matched EODData's public INDEX/ADVQ and INDEX/DECQ historical "RECENT END OF DAY PRICES" rows exactly. EODData's intraday LAST differed from its completed EOD Close; use the completed row and never mix them.
+- Source pages: https://eoddata.com/stockquote/INDEX/ADVQ.htm and https://eoddata.com/stockquote/INDEX/DECQ.htm
+- **However rolling window comparisons were NOT equal across vendors**: 5/10/20-day Pine moving averages differed from EODData's published MA5/10/20 of those market-stat symbols. Historical daily bar differences, exchange close conventions, and data revisions need investigation. Only the single day is independently confirmed.
+- Nasdaq Trader's official annual daily market summary counts even more securities than the ADVQ/DECQ pair. Their population and treatment of exchange-listed securities, untraded/unchanged issues and ETFs differ. Never assert that Nasdaq Trader NASDAQ LISTED ISSUES, TradingView's "NASD" indicators, and strict Nasdaq Composite have identical member lists. Official constituent-only A/D is unresolved.
+- TradingView's 52W high/low MAHP EOD shows a non-integer 0.01, anomalous for issue COUNT data, and the screenshot labels it "*odd vendor count". Do not silently replace or round it; assess effect on averaged counts.
+- Do not transfer screenshots or vendor source quote sequences into public GitHub as a dataset. This qualitative verification note preserves only implementation status and source links.
+
+Next step for practical personal @us-market V2.0: keep the user-validated script as ONE saved TradingView Basic script. For fresh market sessions, manually inspect/export its values with the true session date. It is **not** an unattended auto-feed into ChatGPT. Seek separate verified S&P500-member A/D, actual COMP-only A/D, exact Nasdaq exchange/COMP NH-NL scope and all-US qualifying common shares; no silent substitution.
