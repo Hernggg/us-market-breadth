@@ -11,9 +11,10 @@
     "No 50/200DMA or 52-week new highs/lows provided by this source",
     "Source can serve as independent A/D comparison to future reconstructed COMP breadth"
   ],
-  "status": "INCOMPLETE_REQUIRED_60_SESSIONS",
-  "actual_latest": "2026-11-17",
-  "columns": {
+  "status": "STALE_NASDAQ_ISSUES_AD_60_SESSION_AVAILABLE",
+  "freshness": "STALE_BEFORE_REQUESTED_SESSION",
+  "requested_last_session": "2026-11-19",
+  "source_columns": {
     "date": "Date",
     "advances": "Advances",
     "declines": "Declines",
@@ -21,12 +22,543 @@
     "composite": "Composite",
     "computer": "Computer"
   },
+  "calendar_status": "SOURCE_DATE_LAG_VERIFIED",
   "missing_session_dates": [
     "2026-11-18",
     "2026-11-19"
   ],
-  "valid_observed_sessions": 220,
-  "errors": [
+  "actual_latest": "2026-11-17",
+  "actual_first": "2026-08-25",
+  "daily": [
+    {
+      "date": "2026-08-25",
+      "advances": 3175,
+      "declines": 1829,
+      "unchanged": 244,
+      "composite_index_level": 26151.3,
+      "computer_index_level": 26790.32
+    },
+    {
+      "date": "2026-08-26",
+      "advances": 2102,
+      "declines": 2830,
+      "unchanged": 286,
+      "composite_index_level": 26130.2,
+      "computer_index_level": 26796.66
+    },
+    {
+      "date": "2026-08-27",
+      "advances": 2585,
+      "declines": 2381,
+      "unchanged": 278,
+      "composite_index_level": 26541.35,
+      "computer_index_level": 27532.89
+    },
+    {
+      "date": "2026-08-28",
+      "advances": 1586,
+      "declines": 3400,
+      "unchanged": 271,
+      "composite_index_level": 26402.42,
+      "computer_index_level": 27294.08
+    },
+    {
+      "date": "2026-08-31",
+      "advances": 1950,
+      "declines": 3057,
+      "unchanged": 276,
+      "composite_index_level": 26370.89,
+      "computer_index_level": 27264.55
+    },
+    {
+      "date": "2026-09-01",
+      "advances": 1315,
+      "declines": 3716,
+      "unchanged": 240,
+      "composite_index_level": 26099.77,
+      "computer_index_level": 26989.54
+    },
+    {
+      "date": "2026-09-02",
+      "advances": 3220,
+      "declines": 1745,
+      "unchanged": 293,
+      "composite_index_level": 26217.83,
+      "computer_index_level": 27106.73
+    },
+    {
+      "date": "2026-09-03",
+      "advances": 3099,
+      "declines": 1891,
+      "unchanged": 259,
+      "composite_index_level": 26584.06,
+      "computer_index_level": 27470.27
+    },
+    {
+      "date": "2026-09-04",
+      "advances": 2575,
+      "declines": 2377,
+      "unchanged": 304,
+      "composite_index_level": 26506.99,
+      "computer_index_level": 27510.25
+    },
+    {
+      "date": "2026-09-08",
+      "advances": 1843,
+      "declines": 3179,
+      "unchanged": 250,
+      "composite_index_level": 26421.41,
+      "computer_index_level": 27430.35
+    },
+    {
+      "date": "2026-09-09",
+      "advances": 1292,
+      "declines": 3725,
+      "unchanged": 238,
+      "composite_index_level": 26253.34,
+      "computer_index_level": 27371.56
+    },
+    {
+      "date": "2026-09-10",
+      "advances": 1474,
+      "declines": 3556,
+      "unchanged": 260,
+      "composite_index_level": 26081.72,
+      "computer_index_level": 27183.97
+    },
+    {
+      "date": "2026-09-11",
+      "advances": 2888,
+      "declines": 2069,
+      "unchanged": 282,
+      "composite_index_level": 26333.04,
+      "computer_index_level": 27440.48
+    },
+    {
+      "date": "2026-09-14",
+      "advances": 2162,
+      "declines": 2781,
+      "unchanged": 308,
+      "composite_index_level": 26186.41,
+      "computer_index_level": 27240.7
+    },
+    {
+      "date": "2026-09-15",
+      "advances": 1458,
+      "declines": 3523,
+      "unchanged": 273,
+      "composite_index_level": 25981.57,
+      "computer_index_level": 27118.32
+    },
+    {
+      "date": "2026-09-16",
+      "advances": 1915,
+      "declines": 3031,
+      "unchanged": 304,
+      "composite_index_level": 25978.42,
+      "computer_index_level": 27137.82
+    },
+    {
+      "date": "2026-09-17",
+      "advances": 3461,
+      "declines": 1536,
+      "unchanged": 271,
+      "composite_index_level": 26418.3,
+      "computer_index_level": 27697.57
+    },
+    {
+      "date": "2026-09-18",
+      "advances": 2074,
+      "declines": 2921,
+      "unchanged": 271,
+      "composite_index_level": 26522.55,
+      "computer_index_level": 27913.01
+    },
+    {
+      "date": "2026-09-21",
+      "advances": 3070,
+      "declines": 1965,
+      "unchanged": 241,
+      "composite_index_level": 27122.09,
+      "computer_index_level": 28735.35
+    },
+    {
+      "date": "2026-09-22",
+      "advances": 2899,
+      "declines": 2094,
+      "unchanged": 276,
+      "composite_index_level": 27244.28,
+      "computer_index_level": 28898.92
+    },
+    {
+      "date": "2026-09-23",
+      "advances": 1199,
+      "declines": 3849,
+      "unchanged": 216,
+      "composite_index_level": 26936.04,
+      "computer_index_level": 28605.63
+    },
+    {
+      "date": "2026-09-24",
+      "advances": 1991,
+      "declines": 2977,
+      "unchanged": 295,
+      "composite_index_level": 26939.37,
+      "computer_index_level": 28655.84
+    },
+    {
+      "date": "2026-09-25",
+      "advances": 2608,
+      "declines": 2352,
+      "unchanged": 311,
+      "composite_index_level": 27068.72,
+      "computer_index_level": 28846.76
+    },
+    {
+      "date": "2026-09-28",
+      "advances": 1439,
+      "declines": 3570,
+      "unchanged": 264,
+      "composite_index_level": 26820.38,
+      "computer_index_level": 28587.76
+    },
+    {
+      "date": "2026-09-29",
+      "advances": 1999,
+      "declines": 2977,
+      "unchanged": 311,
+      "composite_index_level": 26797.54,
+      "computer_index_level": 28559.57
+    },
+    {
+      "date": "2026-09-30",
+      "advances": 2008,
+      "declines": 2982,
+      "unchanged": 292,
+      "composite_index_level": 26861.06,
+      "computer_index_level": 28700.55
+    },
+    {
+      "date": "2026-10-01",
+      "advances": 2449,
+      "declines": 2575,
+      "unchanged": 266,
+      "composite_index_level": 26871.6,
+      "computer_index_level": 28773.64
+    },
+    {
+      "date": "2026-10-02",
+      "advances": 2883,
+      "declines": 2148,
+      "unchanged": 252,
+      "composite_index_level": 27190.86,
+      "computer_index_level": 29079.32
+    },
+    {
+      "date": "2026-10-05",
+      "advances": 2673,
+      "declines": 2353,
+      "unchanged": 254,
+      "composite_index_level": 27477.31,
+      "computer_index_level": 29346.47
+    },
+    {
+      "date": "2026-10-06",
+      "advances": 2505,
+      "declines": 2499,
+      "unchanged": 271,
+      "composite_index_level": 27599.89,
+      "computer_index_level": 29444.75
+    },
+    {
+      "date": "2026-10-07",
+      "advances": 1539,
+      "declines": 3496,
+      "unchanged": 246,
+      "composite_index_level": 27538.69,
+      "computer_index_level": 29403.74
+    },
+    {
+      "date": "2026-10-08",
+      "advances": 2156,
+      "declines": 2848,
+      "unchanged": 268,
+      "composite_index_level": 27193.34,
+      "computer_index_level": 28935.67
+    },
+    {
+      "date": "2026-10-09",
+      "advances": 2897,
+      "declines": 2090,
+      "unchanged": 276,
+      "composite_index_level": 27366.17,
+      "computer_index_level": 29022.4
+    },
+    {
+      "date": "2026-10-12",
+      "advances": 1971,
+      "declines": 3039,
+      "unchanged": 279,
+      "composite_index_level": 27245.9,
+      "computer_index_level": 28879.42
+    },
+    {
+      "date": "2026-10-13",
+      "advances": 1904,
+      "declines": 3089,
+      "unchanged": 284,
+      "composite_index_level": 27204.38,
+      "computer_index_level": 28936.2
+    },
+    {
+      "date": "2026-10-14",
+      "advances": 1153,
+      "declines": 3902,
+      "unchanged": 236,
+      "composite_index_level": 26692.87,
+      "computer_index_level": 28207.99
+    },
+    {
+      "date": "2026-10-15",
+      "advances": 3288,
+      "declines": 1753,
+      "unchanged": 245,
+      "composite_index_level": 26713.03,
+      "computer_index_level": 28138.04
+    },
+    {
+      "date": "2026-10-16",
+      "advances": 1375,
+      "declines": 3649,
+      "unchanged": 217,
+      "composite_index_level": 26140.03,
+      "computer_index_level": 27381.46
+    },
+    {
+      "date": "2026-10-19",
+      "advances": 2275,
+      "declines": 2726,
+      "unchanged": 241,
+      "composite_index_level": 26430.89,
+      "computer_index_level": 27679.83
+    },
+    {
+      "date": "2026-10-20",
+      "advances": 3289,
+      "declines": 1662,
+      "unchanged": 287,
+      "composite_index_level": 26424.82,
+      "computer_index_level": 27537.21
+    },
+    {
+      "date": "2026-10-21",
+      "advances": 2773,
+      "declines": 2200,
+      "unchanged": 289,
+      "composite_index_level": 26702.86,
+      "computer_index_level": 27856.87
+    },
+    {
+      "date": "2026-10-22",
+      "advances": 2153,
+      "declines": 2841,
+      "unchanged": 258,
+      "composite_index_level": 26008.86,
+      "computer_index_level": 26936.49
+    },
+    {
+      "date": "2026-10-23",
+      "advances": 1944,
+      "declines": 3004,
+      "unchanged": 258,
+      "composite_index_level": 25955.34,
+      "computer_index_level": 26960.71
+    },
+    {
+      "date": "2026-10-26",
+      "advances": 2624,
+      "declines": 2353,
+      "unchanged": 247,
+      "composite_index_level": 26169.38,
+      "computer_index_level": 27215.46
+    },
+    {
+      "date": "2026-10-27",
+      "advances": 3251,
+      "declines": 1780,
+      "unchanged": 246,
+      "composite_index_level": 26477.81,
+      "computer_index_level": 27575.21
+    },
+    {
+      "date": "2026-10-28",
+      "advances": 3043,
+      "declines": 1956,
+      "unchanged": 267,
+      "composite_index_level": 26549.85,
+      "computer_index_level": 27709.5
+    },
+    {
+      "date": "2026-10-29",
+      "advances": 2518,
+      "declines": 2476,
+      "unchanged": 235,
+      "composite_index_level": 26184.72,
+      "computer_index_level": 27137.1
+    },
+    {
+      "date": "2026-10-30",
+      "advances": 1291,
+      "declines": 3720,
+      "unchanged": 243,
+      "composite_index_level": 25437.0,
+      "computer_index_level": 26079.84
+    },
+    {
+      "date": "2026-11-02",
+      "advances": 2403,
+      "declines": 2658,
+      "unchanged": 203,
+      "composite_index_level": 25164.36,
+      "computer_index_level": 25487.46
+    },
+    {
+      "date": "2026-11-03",
+      "advances": 2509,
+      "declines": 2442,
+      "unchanged": 266,
+      "composite_index_level": 25372.01,
+      "computer_index_level": 25782.68
+    },
+    {
+      "date": "2026-11-04",
+      "advances": 3335,
+      "declines": 1680,
+      "unchanged": 208,
+      "composite_index_level": 25736.51,
+      "computer_index_level": 26044.09
+    },
+    {
+      "date": "2026-11-05",
+      "advances": 876,
+      "declines": 4241,
+      "unchanged": 156,
+      "composite_index_level": 24315.0,
+      "computer_index_level": 24359.7
+    },
+    {
+      "date": "2026-11-06",
+      "advances": 2967,
+      "declines": 2062,
+      "unchanged": 195,
+      "composite_index_level": 24579.42,
+      "computer_index_level": 24683.49
+    },
+    {
+      "date": "2026-11-09",
+      "advances": 3816,
+      "declines": 1244,
+      "unchanged": 191,
+      "composite_index_level": 25253.14,
+      "computer_index_level": 25346.42
+    },
+    {
+      "date": "2026-11-10",
+      "advances": 1568,
+      "declines": 3461,
+      "unchanged": 208,
+      "composite_index_level": 25065.87,
+      "computer_index_level": 25023.95
+    },
+    {
+      "date": "2026-11-11",
+      "advances": 3161,
+      "declines": 1816,
+      "unchanged": 263,
+      "composite_index_level": 25466.19,
+      "computer_index_level": 25615.19
+    },
+    {
+      "date": "2026-11-12",
+      "advances": 1197,
+      "declines": 3806,
+      "unchanged": 215,
+      "composite_index_level": 25366.09,
+      "computer_index_level": 25532.64
+    },
+    {
+      "date": "2026-11-13",
+      "advances": 1898,
+      "declines": 3108,
+      "unchanged": 222,
+      "composite_index_level": 25136.27,
+      "computer_index_level": 25206.23
+    },
+    {
+      "date": "2026-11-16",
+      "advances": 1168,
+      "declines": 3848,
+      "unchanged": 227,
+      "composite_index_level": 24509.76,
+      "computer_index_level": 24437.64
+    },
+    {
+      "date": "2026-11-17",
+      "advances": 1329,
+      "declines": 3679,
+      "unchanged": 210,
+      "composite_index_level": 24328.38,
+      "computer_index_level": 24234.94
+    }
+  ],
+  "windows": [
+    {
+      "sessions": 1,
+      "end": "2026-11-17",
+      "avg_advances": 1329.0,
+      "avg_declines": 3679.0,
+      "avg_unchanged": 210.0,
+      "ad_ratio": 0.36124,
+      "avg_net_advances": -2350.0
+    },
+    {
+      "sessions": 5,
+      "end": "2026-11-17",
+      "avg_advances": 1750.6,
+      "avg_declines": 3251.4,
+      "avg_unchanged": 227.4,
+      "ad_ratio": 0.53841,
+      "avg_net_advances": -1500.8
+    },
+    {
+      "sessions": 10,
+      "end": "2026-11-17",
+      "avg_advances": 2131.5,
+      "avg_declines": 2894.5,
+      "avg_unchanged": 209.5,
+      "ad_ratio": 0.7364,
+      "avg_net_advances": -763.0
+    },
+    {
+      "sessions": 20,
+      "end": "2026-11-17",
+      "avg_advances": 2291.2,
+      "avg_declines": 2718.75,
+      "avg_unchanged": 230.35,
+      "ad_ratio": 0.84274,
+      "avg_net_advances": -427.55
+    },
+    {
+      "sessions": 60,
+      "end": "2026-11-17",
+      "avg_advances": 2259.467,
+      "avg_declines": 2741.95,
+      "avg_unchanged": 255.717,
+      "ad_ratio": 0.82404,
+      "avg_net_advances": -482.483
+    }
+  ],
+  "minor_nondate_errors": [
     {
       "line": 46,
       "reason": "Missing numeric data"
