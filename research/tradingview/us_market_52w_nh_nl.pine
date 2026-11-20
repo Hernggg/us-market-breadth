@@ -1,0 +1,66 @@
+//@version=6
+// @us-market V2.0 supplementary 52-week NH/NL indicator.
+//
+// INDEX:MAHQ / MALQ are "52-Week Highs/Lows Nasdaq" as labeled by
+// TradingView, NOT independently verified strict Nasdaq Composite membership.
+// INDEX:MAHP / MALP are labeled S&P 500 52-week highs/lows.
+// Do not combine Nasdaq exchange counts with Composite member-only breadth
+// without clearly distinguishing the population.
+// This script reads TradingView data INSIDE the TradingView chart and never
+// scrapes, stores, or publishes the underlying vendor index data.
+indicator("@us-market | Nasdaq & S&P 500 52-week highs/lows", shorttitle="US Market 52W NH/NL", overlay=false, precision=2)
+
+if not (timeframe.isdaily and timeframe.multiplier == 1)
+    runtime.error("Use the 1D (daily) chart, ideally NASDAQ:IXIC, for exchange-session alignment.")
+
+// Average of DAILY NEW HIGH/LOW COUNTS across n sessions, NOT price new highs
+// across n sessions. lookahead_off disallows historical future leakage.
+[nhq0, nhq5, nhq10, nhq20, nhq60] = request.security("INDEX:MAHQ", "1D", [close, ta.sma(close, 5), ta.sma(close, 10), ta.sma(close, 20), ta.sma(close, 60)], gaps=barmerge.gaps_on, lookahead=barmerge.lookahead_off, ignore_invalid_symbol=true)
+[nlq0, nlq5, nlq10, nlq20, nlq60] = request.security("INDEX:MALQ", "1D", [close, ta.sma(close, 5), ta.sma(close, 10), ta.sma(close, 20), ta.sma(close, 60)], gaps=barmerge.gaps_on, lookahead=barmerge.lookahead_off, ignore_invalid_symbol=true)
+[nhp0, nhp5, nhp10, nhp20, nhp60] = request.security("INDEX:MAHP", "1D", [close, ta.sma(close, 5), ta.sma(close, 10), ta.sma(close, 20), ta.sma(close, 60)], gaps=barmerge.gaps_on, lookahead=barmerge.lookahead_off, ignore_invalid_symbol=true)
+[nlp0, nlp5, nlp10, nlp20, nlp60] = request.security("INDEX:MALP", "1D", [close, ta.sma(close, 5), ta.sma(close, 10), ta.sma(close, 20), ta.sma(close, 60)], gaps=barmerge.gaps_on, lookahead=barmerge.lookahead_off, ignore_invalid_symbol=true)
+
+plot(nhq0, "MAHQ_Now", display=display.data_window)
+plot(nhq5, "MAHQ_Avg5", display=display.data_window)
+plot(nhq10, "MAHQ_Avg10", display=display.data_window)
+plot(nhq20, "MAHQ_Avg20", display=display.data_window)
+plot(nhq60, "MAHQ_Avg60", display=display.data_window)
+plot(nlq0, "MALQ_Now", display=display.data_window)
+plot(nlq5, "MALQ_Avg5", display=display.data_window)
+plot(nlq10, "MALQ_Avg10", display=display.data_window)
+plot(nlq20, "MALQ_Avg20", display=display.data_window)
+plot(nlq60, "MALQ_Avg60", display=display.data_window)
+plot(nhp0, "MAHP_Now", display=display.data_window)
+plot(nhp5, "MAHP_Avg5", display=display.data_window)
+plot(nhp10, "MAHP_Avg10", display=display.data_window)
+plot(nhp20, "MAHP_Avg20", display=display.data_window)
+plot(nhp60, "MAHP_Avg60", display=display.data_window)
+plot(nlp0, "MALP_Now", display=display.data_window)
+plot(nlp5, "MALP_Avg5", display=display.data_window)
+plot(nlp10, "MALP_Avg10", display=display.data_window)
+plot(nlp20, "MALP_Avg20", display=display.data_window)
+plot(nlp60, "MALP_Avg60", display=display.data_window)
+
+f_count(float val) =>
+    na(val) ? "N/A" : str.tostring(val, "#.##")
+f_col(float val, bool isHigh) =>
+    na(val) ? color.gray : isHigh ? color.rgb(55, 200, 145) : color.rgb(255, 142, 138)
+f_row(table grid, int row, string label, float nqh, float nql, float sph, float spl) =>
+    table.cell(grid, 0, row, label, text_color=color.white, bgcolor=color.rgb(38,47,61))
+    table.cell(grid, 1, row, f_count(nqh), text_color=f_col(nqh,true), bgcolor=color.rgb(23,29,40))
+    table.cell(grid, 2, row, f_count(nql), text_color=f_col(nql,false), bgcolor=color.rgb(23,29,40))
+    table.cell(grid, 3, row, f_count(sph), text_color=f_col(sph,true), bgcolor=color.rgb(23,29,40))
+    table.cell(grid, 4, row, f_count(spl), text_color=f_col(spl,false), bgcolor=color.rgb(23,29,40))
+
+var table grid = table.new(position.top_right, 5, 6, border_width=1, frame_color=color.rgb(65,73,87))
+if barstate.islast
+    table.cell(grid, 0, 0, "Period", bgcolor=color.rgb(38,47,61), text_color=color.white)
+    table.cell(grid, 1, 0, "Nasdaq NH", bgcolor=color.rgb(38,47,61), text_color=color.white)
+    table.cell(grid, 2, 0, "Nasdaq NL", bgcolor=color.rgb(38,47,61), text_color=color.white)
+    table.cell(grid, 3, 0, "S&P NH", bgcolor=color.rgb(38,47,61), text_color=color.white)
+    table.cell(grid, 4, 0, "S&P NL", bgcolor=color.rgb(38,47,61), text_color=color.white)
+    f_row(grid, 1, "Daily", nhq0, nlq0, nhp0, nlp0)
+    f_row(grid, 2, "Avg 5D", nhq5, nlq5, nhp5, nlp5)
+    f_row(grid, 3, "Avg 10D", nhq10, nlq10, nhp10, nlp10)
+    f_row(grid, 4, "Avg 20D", nhq20, nlq20, nhp20, nlp20)
+    f_row(grid, 5, "Avg 60D", nhq60, nlq60, nhp60, nlp60)
