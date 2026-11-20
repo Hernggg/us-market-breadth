@@ -20,6 +20,8 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+      - name: Install DuckDB for full-universe research regression tests
+        run: pip install -r requirements.txt
       - name: Compile all Nasdaq-only research code
         run: python -m compileall -q nasdaq_comp_candidate.py nasdaq_price_source_probe.py nasdaq_official_stats_probe.py nasdaq_official_history.py nasdaq_sector_rotation.py nasdaq_candidate_security_review.py
       - name: Run complete Nasdaq research unit test suite
