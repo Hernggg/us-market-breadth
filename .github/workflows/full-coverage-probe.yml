@@ -1,0 +1,67 @@
+name: Probe full SP500 point-in-time Yahoo EOD coverage
+
+on:
+  push:
+    paths:
+      - '.github/workflows/full-coverage-probe.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  coverage:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Install DuckDB for historical membership inspection
+        run: python -m pip install --quiet duckdb
+      - name: Test latest closes for historical member universe (no data publication)
+        shell: bash
+        run: |
+          python - <<'PY'
+          import urllib.request, urllib.error, json, datetime as dt, time, math, collections, concurrent.futures
+          import duckdb
+          from zoneinfo import ZoneInfo
+          TARGET='2026-11-19'; PREV='2026-11-18'
+          u='https://github.com/Johnbrick123/sp500-data/releases/download/data/membership_intervals.parquet'
+          req=urllib.request.Request(u,headers={'User-Agent':'Mozilla/5.0'})
+          with urllib.request.urlopen(req,timeout=30) as r:
+              raw=r.read()
+          open('/tmp/members.parquet','wb').write(raw)
+          con=duckdb.connect()
+          members=[x[0] for x in con.execute('SELECT DISTINCT UPPER(CAST(ticker AS VARCHAR)) FROM read_parquet(?) WHERE CAST(start AS DATE)<=? AND ("end" IS NULL OR CAST("end" AS DATE)>?) ORDER BY 1', ['/tmp/members.parquet',TARGET,TARGET]).fetchall()]
+          con.close()
+          print('PIT MEMBERS',len(members),flush=True)
+          def inspect(s):
+              y=s.replace('.','-').replace('/','-')
+              problems=[]
+              for host in ('query1.finance.yahoo.com','query2.finance.yahoo.com'):
+                  try:
+                      link=f'https://{host}/v8/finance/chart/{urllib.parse.quote(y)}?range=10d&interval=1d'
+                      req=urllib.request.Request(link,headers={'User-Agent':'Mozilla/5.0','Accept':'application/json'})
+                      with urllib.request.urlopen(req,timeout=12) as r:
+                          record=json.loads(r.read(1000000).decode('utf-8'))['chart']['result'][0]
+                      dates=[dt.datetime.fromtimestamp(int(t),ZoneInfo('America/New_York')).date().isoformat() for t in record.get('timestamp',[])]
+                      adj=record.get('indicators',{}).get('adjclose',[{}])[0].get('adjclose',[])
+                      if TARGET not in dates or PREV not in dates:return (s,'MISSING_DATE',str(dates[-1] if dates else None))
+                      a=adj[dates.index(PREV)] if dates.index(PREV)<len(adj) else None
+                      b=adj[dates.index(TARGET)] if dates.index(TARGET)<len(adj) else None
+                      if a is None or b is None or a<=0 or b<=0:return (s,'MISSING_ADJ',str(dates[-1]))
+                      ret=b/a-1
+                      if not math.isfinite(ret) or abs(ret)>0.5:return (s,'UNUSUAL_RETURN',str(round(ret,3)))
+                      return (s,'OK',str(round(ret,6)))
+                  except Exception as e:
+                      problems.append(type(e).__name__+':'+str(e)[:65])
+              return (s,'FETCH_ERROR',';'.join(problems))
+          import urllib.parse
+          result=[]
+          with concurrent.futures.ThreadPoolExecutor(max_workers=4) as ex:
+              for i,x in enumerate(ex.map(inspect,members),1):
+                  result.append(x)
+                  if i%100==0:print('PROGRESS',i,'/',len(members),flush=True)
+          counts=collections.Counter(x[1] for x in result)
+          print('COVERAGE',dict(counts),'total',len(members),flush=True)
+          print('FAILED_FIRST_30',[x for x in result if x[1]!='OK'][:30],flush=True)
+          print('NOTE This is a single-date retrieval availability probe; no changes are made to published reports or raw historical prices.',flush=True)
+          PY
