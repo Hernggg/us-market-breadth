@@ -10,6 +10,7 @@ diagnostics. This is research only, not a license for mass ingestion.
 from __future__ import annotations
 import datetime as dt
 import io
+import os
 import json
 import urllib.parse
 import urllib.request
@@ -82,6 +83,12 @@ def check_one(date, shape):
     return out
 
 def main():
+    # GIW is copyrighted/licensed index data. Reuse of historical component
+    # files for an automated analysis pipeline needs express vendor permission.
+    # Gate this research prototype until that entitlement is established.
+    if os.environ.get("NASDAQ_GIW_PERMISSION_CONFIRMED") != "yes":
+        print("BLOCKED: Nasdaq GIW index constituent usage rights are not confirmed. Do not automate exports.")
+        return 3
     outcomes=[check_one(DATES[0],"normal"),check_one(DATES[0],"xlsx_suffix"),
               check_one(DATES[1],"normal")]
     print(json.dumps({
