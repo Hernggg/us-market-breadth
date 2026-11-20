@@ -32,10 +32,14 @@ class ArchiveTests(unittest.TestCase):
         self.assertEqual(ws[-1]["ad_ratio"],2.0)
         self.assertEqual(ws[0]["index_return_reference_date"],days[-2].isoformat())
 
-    def test_partial_annual_file_rejected(self):
+    def test_partial_ytd_accepted_but_insufficient_rolling_60_days_rejected(self):
+        # The first weeks of a new year legitimately contain fewer than 60 sessions.
+        # They must be safely merged with previously archived December sessions.
         with patch("nasdaq_official_history.fetch_csv", return_value=("https://test.invalid",self.csv_text(n=40))):
-            with self.assertRaisesRegex(AuditError,"only 40 valid sessions"):
-                annual_file(2025)
+            _, days, _, _ = annual_file(2025)
+        self.assertEqual(len(days),40)
+        with self.assertRaisesRegex(AuditError,"Need 60 observations"):
+            windows_for(list(days.values()))
 
     def test_duplicate_dates_refused(self):
         original=self.csv_text()
