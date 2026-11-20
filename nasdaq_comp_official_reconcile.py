@@ -229,7 +229,23 @@ def audit(days):
         })
         previous=official
         time.sleep(0.7)  # avoid rapid repeated access to public web service
+    periods=[]
+    for sessions in (1,5,10,20,60):
+        if len(result)<sessions:
+            continue
+        relevant=result[-sessions:]
+        periods.append({
+            "sessions":sessions,
+            "asof":relevant[-1]["date"],
+            "average_official_comp_member_count":round(sum(x["official_comp_members"] for x in relevant)/sessions,3),
+            "average_candidate_count":round(sum(x["likely_type_candidate_count"] for x in relevant)/sessions,3),
+            "average_exact_identity_match_count":round(sum(x["exact_match_count"] for x in relevant)/sessions,3),
+            "average_official_match_pct":round(sum(100*x["exact_match_count"]/x["official_comp_members"] for x in relevant)/sessions,4),
+            "maximum_unmatched_official_member_count":max(x["official_not_likely_candidate_count"] for x in relevant),
+            "maximum_extra_candidate_count":max(x["candidate_not_official_count"] for x in relevant),
+        })
     return {
+        "windows":periods,
         "status":"RESEARCH_ONLY_UNAUTHENTICATED_OFFICIAL_COMPONENT_COMPARISON",
         "official_file_contains_actual_component_rows":True,
         "no_raw_member_tickers_or_names_stored":True,
