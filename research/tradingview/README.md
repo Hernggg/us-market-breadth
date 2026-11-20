@@ -67,11 +67,11 @@ B. [us_market_52w_nh_nl.pine](./us_market_52w_nh_nl.pine)
 
 Offline personal CSV validation tool (not required to SEE the chart table):
 
-\`\`\`bash
+```bash
 python research/tradingview/parse_private_breadth_csv.py \
   --csv /private/US_Market_Breadth_export.csv \
   --expected-session 2026-11-19
-\`\`\`
+```
 
 - The tool requires all 20 plots and validates 0..100% bounds, duplicate
   dates, exact requested as-of date, and recomputes every rolling average
@@ -82,33 +82,26 @@ python research/tradingview/parse_private_breadth_csv.py \
 - This offline parser has automated **synthetic CSV fixture** unit tests:
   not evidence that the user's actual TradingView export already works.
 
-## 3. Actual publicly verifiable Nov 19 2026 market snapshot
+## 3. Real-source verification without vendor data republication
 
-**EODData** displayed an actual historical *end-of-day* table for
-Nasdaq Composite above-50DMA (NCFI), and above-200DMA (NCTH) through Nov 19.
-- Exact close/5/10/20-day averages displayed / reproducible from the last
-  10 closing values; 60D **not available from that public ten-day table**.
-- NCFI: Nov 19 historical EOD Close 31.39, MA5 of indicator 38.90,
-  MA10 of indicator 43.45, MA20 of indicator 43.53.
-- NCTH: Nov 19 historical EOD Close 43.73, MA5 48.00, MA10 50.75,
-  MA20 52.45.
-- Very important: EODData also lists an intraday "LAST" quote separately;
-  use the fully completed RECENT END OF DAY PRICES **Close** to avoid
-  mixing snapshot times.
+- EODData's Nasdaq NCFI / NCTH pages display genuine completed end-of-day
+  close series and on-page indicator SMA5, SMA10 and SMA20 values.
+- A successful private one-off review checked 5/10 day arithmetic means of
+  its latest 10 **historical close** observations against the site's SMA
+  figures. The 20-day SMA was visible on the source page; a 60-day mean was
+  not.
+- IMPORTANT: those websites also show an intraday "LAST" quote.
+  Do not mix intraday snapshots with the completed END OF DAY Close.
 - https://eoddata.com/stockquote/INDEX/NCFI.htm
 - https://www.eoddata.com/stockquote/INDEX/NCTH.htm
+- Reuters also publishes daily Nasdaq **exchange-wide** A/D and
+  Nasdaq Composite / S&P500 52-week NH/NL in its US market-close reports,
+  explicitly noting different populations:
+  https://www.reuters.com/business/nasdaq-futures-jump-anthropics-record-ipo-pricing-fuels-hopes-strong-debut-2026-11-19/
 
-Reuters Nov 19 US-market close article provided:
-- Nasdaq **EXCHANGE** listed-issues advances 1057, declines 3756;
-  A/D ~0.2814 (different universe from strict Composite).
-- Nasdaq **Composite as described in article** 52W NH 34, NL 529;
-  S&P500 52W NH 1, NL 18.
-- https://www.reuters.com/business/nasdaq-futures-jump-anthropics-record-ipo-pricing-fuels-hopes-strong-debut-2026-11-19/
-
-**Do not republish vendor raw table data or generate a public GitHub
-database from these website observations without rights review.**
-On-demand private user analysis with attributed links is distinct from
-an unattended bulk retrieval service.
+Avoid storing or redistributing source page quote tables or proprietary
+vendor aggregates in this public GitHub repo without appropriate rights.
+One-off private question answering should cite and date source pages.
 
 ## 4. Data availability / @us-market completion chart
 
