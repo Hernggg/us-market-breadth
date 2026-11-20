@@ -13,6 +13,48 @@
   ],
   "status": "STALE_NASDAQ_ISSUES_AD_60_SESSION_AVAILABLE",
   "freshness": "STALE_BEFORE_REQUESTED_SESSION",
+  "index_return_comparison_not_breadth": [
+    {
+      "sessions": 1,
+      "end": "2026-11-17",
+      "start_reference_date": "2026-11-16",
+      "composite_index_return_pct": -0.74,
+      "computer_index_return_pct": -0.8295,
+      "computer_minus_composite_pp": -0.0895
+    },
+    {
+      "sessions": 5,
+      "end": "2026-11-17",
+      "start_reference_date": "2026-11-10",
+      "composite_index_return_pct": -2.9422,
+      "computer_index_return_pct": -3.153,
+      "computer_minus_composite_pp": -0.2108
+    },
+    {
+      "sessions": 10,
+      "end": "2026-11-17",
+      "start_reference_date": "2026-11-03",
+      "composite_index_return_pct": -4.1133,
+      "computer_index_return_pct": -6.003,
+      "computer_minus_composite_pp": -1.8897
+    },
+    {
+      "sessions": 20,
+      "end": "2026-11-17",
+      "start_reference_date": "2026-10-20",
+      "composite_index_return_pct": -7.9336,
+      "computer_index_return_pct": -11.992,
+      "computer_minus_composite_pp": -4.0584
+    },
+    {
+      "sessions": 60,
+      "end": "2026-11-17",
+      "start_reference_date": "2026-08-24",
+      "composite_index_return_pct": -6.358,
+      "computer_index_return_pct": -8.7815,
+      "computer_minus_composite_pp": -2.4235
+    }
+  ],
   "requested_last_session": "2026-11-19",
   "source_columns": {
     "date": "Date",
