@@ -18,6 +18,7 @@ from __future__ import annotations
 
 import argparse
 import datetime as dt
+import hashlib
 import json
 import math
 import statistics
@@ -30,12 +31,54 @@ from pathlib import Path
 from zoneinfo import ZoneInfo
 
 from nasdaq_comp_candidate import verified_source, classification, load_calendar, AuditError
-from nasdaq_price_source_probe import symbols_for_day, choose_sample, yahoo_chart, USER_AGENT
+from nasdaq_price_source_probe import symbols_for_day, yahoo_chart, USER_AGENT
 
 PERIODS=(1,5,10,20,60)
 MAX_SAMPLE=24
 REQUIRED_CALENDAR_SESSIONS=311
 NY=ZoneInfo("America/New_York")
+
+
+def choose_breadth_cohort(rows, first_day, last_day, size):
+    """Purposefully span controls, recent entrants and former-listed records.
+
+    This is a diverse QA cohort, NEVER a probability sample of Nasdaq or COMP.
+    Prefer mostly currently active members, unlike all-former heavy pilot.
+    """
+    if not 1 <= size <= MAX_SAMPLE:
+        raise AuditError("Sample size out of range")
+    first=symbols_for_day(rows,first_day)
+    last=symbols_for_day(rows,last_day)
+    fixed=("AAPL","MSFT","NVDA","AMZN","GOOGL","META","TSLA","AMD")
+    chosen=[]
+    seen=set()
+    def add(ticker,bucket):
+        if ticker not in seen and len(chosen)<size:
+            chosen.append((ticker,bucket))
+            seen.add(ticker)
+    def eligible(record):
+        return record is not None and classification(record)=="LIKELY_ELIGIBLE_TYPE"
+    def order(tickers,seed):
+        return sorted(tickers,key=lambda t:hashlib.sha256((seed+":"+t).encode()).hexdigest())
+    for t in fixed[:min(8,max(1,size//3))]:
+        if eligible(last.get(t)):
+            add(t,"LIQUID_CONTROL")
+    former=order((t for t,v in first.items() if t not in last and eligible(v)),"FORMER")
+    newly=order((t for t,v in last.items() if t not in first and eligible(v)),"NEWLY_LISTED")
+    current=order((t for t,v in last.items() if eligible(v)),"CURRENT")
+    former_quota=min(2,size//9)
+    new_quota=min(2,size//10)
+    for t in former[:former_quota]:
+        add(t,"FORMER_LISTED")
+    for t in newly[:new_quota]:
+        add(t,"NEWLY_LISTED")
+    for t in current:
+        add(t,"CURRENT")
+    for t in former:
+        add(t,"FORMER_LISTED")
+    if len(chosen)!=size:
+        raise AuditError("PIT archive could not supply requested diversified QA sample")
+    return chosen
 
 
 def parse_adjusted_ohlc(item):
@@ -192,7 +235,7 @@ def run(sample_size,calendar_path):
     calendar=sorted(d for d in index_prices if d<=days[-1])
     if len(calendar)<REQUIRED_CALENDAR_SESSIONS or calendar[-60:]!=days:
         raise AuditError("Reference Nasdaq index sessions do not align to 60-day S&P exchange calendar")
-    candidates=choose_sample(rows,days[0],days[-1],sample_size)
+    candidates=choose_breadth_cohort(rows,days[0],days[-1],sample_size)
     sampled=[t for t,b in candidates]
     source_status={}
     bars={}
@@ -218,7 +261,8 @@ def run(sample_size,calendar_path):
         "asof":days[-1].isoformat(),
         "first_day":days[0].isoformat(),
         "sample_size":len(sampled),
-        "sampling_policy":"Deterministic controls and cohorts of former/current/unresolved Nasdaq listings, not probability sampled",
+        "sample_cohort_counts":dict(Counter(bucket for _,bucket in candidates)),
+        "sampling_policy":"Deterministic controls, current common-like, newly listed, and former-listed cohorts, not probability sampled",
         "data_source":"Yahoo unofficial chart adjusted close and approximate adjusted intraday high/low",
         "source_status_counts":dict(counts),
         "underlying_calendar_sessions":len(calendar),
@@ -235,7 +279,7 @@ def run(sample_size,calendar_path):
 
 def main():
     p=argparse.ArgumentParser()
-    p.add_argument("--size",type=int,default=18)
+    p.add_argument("--size",type=int,default=24)
     p.add_argument("--calendar",type=Path,default=Path("public/sp500_pit_daily.csv"))
     p.add_argument("--out",type=Path,default=Path("research/nasdaq_comp/listed_sample_breadth_lab.json"))
     a=p.parse_args()
