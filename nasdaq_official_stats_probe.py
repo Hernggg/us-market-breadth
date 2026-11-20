@@ -157,7 +157,30 @@ def reconstruct(raw_text: str, expected_sessions):
             "ad_ratio":round(advances/declines,5) if declines else None,
             "avg_net_advances":round((advances-declines)/n,3)
         })
+    # Nasdaq Trader also supplies official Composite and Computer index LEVELS.
+    # These are price index comparisons, not breadth, and require n+1 closes.
+    index_returns = []
+    source_dates = [d for d in sorted(data) if d <= dt.date.fromisoformat(daily[-1]["date"])]
+    for n in WINDOWS:
+        item = {"sessions": n, "end": daily[-1]["date"],
+                "start_reference_date": source_dates[-n-1].isoformat() if len(source_dates)>n else None}
+        for name in ("composite", "computer"):
+            if len(source_dates)>n:
+                previous = data[source_dates[-n-1]].get(name + "_index_level")
+                latest = daily[-1].get(name + "_index_level")
+                item[name + "_index_return_pct"] = round(100 * (latest/previous-1), 4) if (
+                    previous is not None and previous>0 and latest is not None and latest>0
+                ) else None
+            else:
+                item[name + "_index_return_pct"] = None
+        c_return = item["computer_index_return_pct"]
+        comp_return = item["composite_index_return_pct"]
+        item["computer_minus_composite_pp"] = round(c_return-comp_return,4) if (
+            c_return is not None and comp_return is not None
+        ) else None
+        index_returns.append(item)
     return {"status": status, "freshness": freshness,
+            "index_return_comparison_not_breadth": index_returns,
             "requested_last_session": requested_last.isoformat(),
             "source_columns":columns,
             "calendar_status":"SOURCE_DATE_LAG_VERIFIED" if missing else "MATCHED_60_SESSIONS",
