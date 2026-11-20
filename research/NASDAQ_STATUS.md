@@ -59,3 +59,30 @@ Do not merge into production main until validated. S&P production remains unchan
 **Safety**
 - No changes to main branch S&P production update or public/latest.json.
 - All Nasdaq results remain on draft research PR #1, not automatically merged into @us-market V2.0 official Nasdaq Composite breadth.
+
+## F. Bulk price coverage and second-source gap feasibility (2026-11-20)
+
+**Official actual index component COUNT — not identity**
+- Nasdaq Global Index Watch COMP overview explicitly reports 3,393 components **as of 2026-11-19**: https://indexes.nasdaqomx.com/Index/Overview/COMP
+- Our 2026-11-19 PIT listing security-type screen still reports 3,397 likely common-like and 6 unresolved. Even identical counts are insufficient; list identities and one-day NOCP seasoning are still unverified. Full GIW Weighting list is behind login.
+
+**Bulk daily price vendor one-day test (license-aware)**
+- Candidate vendor MarketParquet publishes one full U.S. stock day as no-account PARQUET sample, with split-adjusted OHLCV. Vendor says free trial samples have NO redistribution license; neither these files nor their raw stock quotes were persisted, committed, or shared.
+- On 2026-11-19, ephemeral sample had 6,460 symbols; PIT-listed common-like candidate screen had 3,397 symbols, of which 3,188 had a bulk sample price and 209 did not; one-day candidate match **93.8475%**. This is NOT an index-membership coverage rate or a 311-session price history coverage rate.
+- Source page: https://marketparquet.com/guides/free-historical-stock-data
+- Research code: nasdaq_bulk_price_probe.py; cloud run https://github.com/Hernggg/us-market-breadth/actions/runs/44706316421
+- Vendor reports free trial access to ~365 calendar days, which is only about ~250 sessions; **not enough for the 311 sessions needed to calculate 60 trailing session close-based 52-week highs/lows with full history**. Full history is a paid/license question, not solved.
+
+**Second source gap sample (Yahoo adjusted close)**
+- Deterministic test selected **24 of 209** bulk-missing candidate tickers, plus **6 bulk-present controls**. This is a nonrepresentative probe, NOT validated full-universe coverage.
+- All 24 bulk-missing names had a Yahoo adjusted closing price on **2026-11-19**; 13/24 had complete current-day 252-consecutive-session lookback needed for adjusted-close 52-week classification; 783 of 1,440 possible 60-day sample member-days had a full 200DMA lookback in Yahoo. New listings, missing sessions and symbol identity continuity need separate audits.
+- The 6 controls also had Yahoo latest-session quotes; 5/6 had complete 252-session lookback; 341 of 360 possible sample member-days had the 200DMA lookback.
+- No Yahoo/vendor prices or per-stock gap lists were committed. Research code: nasdaq_price_gap_probe.py; cloud run https://github.com/Hernggg/us-market-breadth/actions/runs/44706728331.
+
+**Still blocking before official COMP breadth**
+1. Actual member-by-member Nasdaq Composite historical constituent identity validation and listing effective day/NOCP seasoning.
+2. Licensed, sustainable bulk historical price source with stock splits, ticker changes, delistings, minimum 311-day session backfill, and explicit handling for IPOs and thin names. Public free vendor samples must not be republished.
+3. Classify missing prices separately from insufficient pre-IPO lookback; never forward-fill missing candles or assert 95%+ coverage without true cohort denominator.
+4. Compute actual COMP-member 1/5/10/20/60 day A/D, MA50/200 and adjusted-close 52W NH/NL and cross-check against exchange-level A/D statistics (which remain a DIFFERENT universe).
+
+**Branch safeguard:** all source experiments are under draft research PR #1. The original S&P 500 main branch and public/latest.json are untouched.
