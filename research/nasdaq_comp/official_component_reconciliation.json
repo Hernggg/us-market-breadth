@@ -1,0 +1,63 @@
+{
+  "status": "RESEARCH_ONLY_UNAUTHENTICATED_OFFICIAL_COMPONENT_COMPARISON",
+  "official_file_contains_actual_component_rows": true,
+  "no_raw_member_tickers_or_names_stored": true,
+  "license_note": "Publicly accessible export does not grant redistribution; use derived counts only until official rights/usage confirmed.",
+  "historical_membership_sample_only": true,
+  "days": [
+    "2026-11-18",
+    "2026-11-19"
+  ],
+  "daily": [
+    {
+      "date": "2026-11-18",
+      "source": "https://indexes.nasdaq.com/Index/Weighting/COMP",
+      "official_export_retrieved_without_login": true,
+      "export_byte_count": 151300,
+      "export_sha256": "a8b9e144f30f32cfce44786473d9b26290b9fffed031c45bc07d778851731c5a",
+      "sheet_rows": 3396,
+      "header_row_index_1based": 1,
+      "valid_unique_component_rows": 3394,
+      "header_verified": true,
+      "nasdaq_directory_total": 5602,
+      "official_comp_members": 3394,
+      "likely_type_candidate_count": 3398,
+      "unresolved_type_count": 6,
+      "exact_match_count": 3387,
+      "official_not_likely_candidate_count": 7,
+      "candidate_not_official_count": 11,
+      "official_in_unresolved_count": 2,
+      "normalized_match_count": 3387,
+      "normalized_official_unmatched_count": 7,
+      "normalized_candidate_extra_count": 11,
+      "exact_identity_equality": false,
+      "official_added_since_prior_checked_day": null,
+      "official_removed_since_prior_checked_day": null
+    },
+    {
+      "date": "2026-11-19",
+      "source": "https://indexes.nasdaq.com/Index/Weighting/COMP",
+      "official_export_retrieved_without_login": true,
+      "export_byte_count": 151256,
+      "export_sha256": "b7c7c973ee4b798a5d635b65bec18d2dc07eb54e715b5cf71ec0ca7493bbd136",
+      "sheet_rows": 3395,
+      "header_row_index_1based": 1,
+      "valid_unique_component_rows": 3393,
+      "header_verified": true,
+      "nasdaq_directory_total": 5602,
+      "official_comp_members": 3393,
+      "likely_type_candidate_count": 3397,
+      "unresolved_type_count": 6,
+      "exact_match_count": 3386,
+      "official_not_likely_candidate_count": 7,
+      "candidate_not_official_count": 11,
+      "official_in_unresolved_count": 2,
+      "normalized_match_count": 3386,
+      "normalized_official_unmatched_count": 7,
+      "normalized_candidate_extra_count": 11,
+      "exact_identity_equality": false,
+      "official_added_since_prior_checked_day": 2,
+      "official_removed_since_prior_checked_day": 3
+    }
+  ]
+}
