@@ -14,6 +14,7 @@ import csv
 import datetime as dt
 import hashlib
 import io
+import os
 import json
 import re
 import time
@@ -257,6 +258,12 @@ def audit(days):
 
 
 def main():
+    # GIW is copyrighted/licensed index data. Reuse of historical component
+    # files for an automated analysis pipeline needs express vendor permission.
+    # Gate this research prototype until that entitlement is established.
+    if os.environ.get("NASDAQ_GIW_PERMISSION_CONFIRMED") != "yes":
+        print("BLOCKED: Nasdaq GIW index constituent usage rights are not confirmed. Do not automate exports.")
+        return 3
     p=argparse.ArgumentParser()
     p.add_argument("--calendar",type=Path,default=Path("public/sp500_pit_daily.csv"))
     p.add_argument("--sessions",type=int,default=2)
