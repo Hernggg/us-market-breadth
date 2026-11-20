@@ -118,13 +118,31 @@ def reconstruct(raw_text: str, expected_sessions):
     if not data:
         return {"status":"NEEDS_CSV_SCHEMA_REVIEW", "columns":columns,
                 "sample_headers":parsed[:3],"errors":errors}
+    requested_last = expected_sessions[-1]
+    actual_last = max(data)
     missing = [day.isoformat() for day in expected_sessions if day not in data]
-    if missing:
+    # Missing MIDDLE sessions cannot be silently skipped; source recency lag,
+    # by contrast, may be reported as a separately dated 60-day window.
+    available_overlap = [d for d in expected_sessions if d <= actual_last]
+    if any(d not in data for d in available_overlap) or actual_last > requested_last:
         return {"status":"INCOMPLETE_REQUIRED_60_SESSIONS",
-                "actual_latest":max(data).isoformat(), "columns":columns,
+                "actual_latest":actual_last.isoformat(), "columns":columns,
                 "missing_session_dates":missing,"valid_observed_sessions":len(data),
                 "errors":errors}
-    daily = [data[d] for d in expected_sessions]
+    if missing:
+        historical_dates = sorted(data)
+        if len(historical_dates) < 60 or historical_dates[-len(available_overlap):] != available_overlap:
+            return {"status":"INCOMPLETE_REQUIRED_60_SESSIONS",
+                    "actual_latest":actual_last.isoformat(), "columns":columns,
+                    "missing_session_dates":missing,"valid_observed_sessions":len(data),
+                    "errors":errors}
+        daily = [data[d] for d in historical_dates[-60:]]
+        freshness = "STALE_BEFORE_REQUESTED_SESSION"
+        status = "STALE_NASDAQ_ISSUES_AD_60_SESSION_AVAILABLE"
+    else:
+        daily = [data[d] for d in expected_sessions]
+        freshness = "DATE_MATCHED"
+        status = "FULL_60_SESSION_NASDAQ_ISSUES_AD_AVAILABLE"
     windows = []
     for n in WINDOWS:
         part = daily[-n:]
@@ -139,11 +157,13 @@ def reconstruct(raw_text: str, expected_sessions):
             "ad_ratio":round(advances/declines,5) if declines else None,
             "avg_net_advances":round((advances-declines)/n,3)
         })
-    return {"status":"FULL_60_SESSION_NASDAQ_ISSUES_AD_AVAILABLE",
+    return {"status": status, "freshness": freshness,
+            "requested_last_session": requested_last.isoformat(),
             "source_columns":columns,
-            "calendar_status":"MATCHED_60_SESSIONS",
-            "actual_latest":expected_sessions[-1].isoformat(),
-            "actual_first":expected_sessions[0].isoformat(),
+            "calendar_status":"SOURCE_DATE_LAG_VERIFIED" if missing else "MATCHED_60_SESSIONS",
+            "missing_session_dates":missing,
+            "actual_latest":daily[-1]["date"],
+            "actual_first":daily[0]["date"],
             "daily":daily, "windows":windows,
             "minor_nondate_errors":errors}
 
@@ -178,7 +198,7 @@ def main():
                       "columns":report.get("source_columns"),
                       "missing":report.get("missing_session_dates"),
                       "windows":report.get("windows")},ensure_ascii=False))
-    return 0 if result["status"].startswith("FULL_60_") else 2
+    return 0 if result["status"].startswith(("FULL_60_", "STALE_NASDAQ_ISSUES_AD_60_")) else 2
 
 
 if __name__ == "__main__":
