@@ -75,6 +75,10 @@ The authenticated test cannot run without `EODDATA_API_KEY`. First register for 
 Settings → Secrets and variables → Actions → New repository secret:
 **Name** `EODDATA_API_KEY`; **Value** pasted privately from EODData account.
 
+A minimal **read-only manual-dispatch entry point** has also been installed on the repository DEFAULT `main` branch as `.github/workflows/eoddata-index-api-manual-check.yml`. It checks out the research branch, has `contents: read` ONLY, has no cron, and never writes any vendor data or touches the production S&P500 update. The EODData research workflow on the non-default research branch is push-testable; the DEFAULT branch entry point makes the Actions → Run workflow button available.
+
+Once configured, open GitHub Actions → **EODData API private entitlement check (manual only)** → **Run workflow**. The run will print only three INDEX symbol access statuses and count/date coverage, no market quotes or secret. If outputs are `NO_API_KEY_CONFIGURED`, the repository secret is absent. `PLAN_RESTRICTED` means free entitlement did not pass; `ENDPOINT_OR_SYMBOL_NOT_AVAILABLE` means code/path or listing needs revision. Even `AUTHENTICATED_HISTORY_ROWS_FOUND` is only a rights/coverage technical confirmation, NOT permission to publish the downloaded information.
+
 Once configured, run the EODData API entitlement workflow manually. Until it returns actually authorized INDEX history and acceptable license/retention conditions, **do not schedule it daily or claim all 5 windows can automatically update**. Even if authenticated access succeeds, public GitHub publication of vendor values remains prohibited without permission; use private data storage/workflows or a permitted nonredistributable reporting route.
 
 No change to the user-validated 3-in-1 TradingView Pine script or `main` S&P500 production.
