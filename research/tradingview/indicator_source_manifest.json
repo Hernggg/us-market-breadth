@@ -1,0 +1,240 @@
+{
+  "version": "2026-11-20.real-vendor-series-discovery",
+  "purpose": "@us-market V2.0 technical source routing; NOT a live data snapshot",
+  "live_market_values_in_manifest": false,
+  "producer": "research only",
+  "hard_rules": [
+    "Never substitute Nasdaq 100 for Nasdaq Composite",
+    "Never mix Nasdaq-listed-exchange breadth with verified Nasdaq Composite constituent-only breadth",
+    "No values unless actual session date is confirmed; show stale source date explicitly",
+    "1/5/10/20/60 averages of DAILY percentage-above-own-MA series are NOT individual-stock 5/10/20/60-day moving averages",
+    "TradingView is visual/personal export only unless separately authorized for automated data use",
+    "Use completed EOD historical Close from EODData; do not confuse with intraday LAST quote",
+    "Never fill 60-day history using unverified extrapolation or simulated stock prices"
+  ],
+  "series": [
+    {
+      "metric_id": "NASDAQ_COMP_50DMA_ABOVE_PCT",
+      "symbol": "INDEX:NCFI",
+      "vendor": "TradingView",
+      "universe": "Nasdaq Composite",
+      "units": "percent",
+      "daily_avg_windows": [
+        1,
+        5,
+        10,
+        20,
+        60
+      ],
+      "public_reference_url": "https://www.tradingview.com/symbols/INDEX-NCFI/",
+      "secondary_on_demand_reference_url": "https://eoddata.com/stockquote/INDEX/NCFI.htm",
+      "observed_real_public_windows": [
+        1,
+        5,
+        10,
+        20
+      ],
+      "missing_public_window": [
+        60
+      ],
+      "ingestion": "private chart Pine display / user-exported personal CSV only; no automated website crawl"
+    },
+    {
+      "metric_id": "NASDAQ_COMP_200DMA_ABOVE_PCT",
+      "symbol": "INDEX:NCTH",
+      "vendor": "TradingView",
+      "universe": "Nasdaq Composite",
+      "units": "percent",
+      "daily_avg_windows": [
+        1,
+        5,
+        10,
+        20,
+        60
+      ],
+      "public_reference_url": "https://www.tradingview.com/symbols/INDEX-NCTH/",
+      "secondary_on_demand_reference_url": "https://eoddata.com/stockquote/INDEX/NCTH.htm",
+      "observed_real_public_windows": [
+        1,
+        5,
+        10,
+        20
+      ],
+      "missing_public_window": [
+        60
+      ],
+      "ingestion": "private chart Pine display / user-exported personal CSV only; no automated website crawl"
+    },
+    {
+      "metric_id": "SP500_50DMA_ABOVE_PCT",
+      "symbol": "INDEX:S5FI",
+      "vendor": "TradingView",
+      "universe": "S&P 500",
+      "units": "percent",
+      "daily_avg_windows": [
+        1,
+        5,
+        10,
+        20,
+        60
+      ],
+      "public_reference_url": "https://www.tradingview.com/symbols/INDEX-S5FI/",
+      "secondary_on_demand_reference_url": "https://eoddata.com/stockquote/INDEX/S5FI.htm",
+      "observed_real_public_windows": [
+        1,
+        5,
+        10,
+        20
+      ],
+      "missing_public_window": [
+        60
+      ],
+      "ingestion": "private chart Pine display / user-exported personal CSV only; no automated website crawl"
+    },
+    {
+      "metric_id": "SP500_200DMA_ABOVE_PCT",
+      "symbol": "INDEX:S5TH",
+      "vendor": "TradingView",
+      "universe": "S&P 500",
+      "units": "percent",
+      "daily_avg_windows": [
+        1,
+        5,
+        10,
+        20,
+        60
+      ],
+      "public_reference_url": "https://www.tradingview.com/symbols/INDEX-S5TH/",
+      "secondary_on_demand_reference_url": "https://eoddata.com/stockquote/INDEX/S5TH.htm",
+      "observed_real_public_windows": [
+        1,
+        5,
+        10,
+        20
+      ],
+      "missing_public_window": [
+        60
+      ],
+      "ingestion": "private chart Pine display / user-exported personal CSV only; no automated website crawl"
+    },
+    {
+      "metric_id": "NASDAQ_EXCHANGE_52W_NEW_HIGHS",
+      "symbol": "INDEX:MAHQ",
+      "vendor": "TradingView",
+      "universe": "Nasdaq exchange (do NOT call verified COMP-only)",
+      "units": "issues/day",
+      "daily_avg_windows": [
+        1,
+        5,
+        10,
+        20,
+        60
+      ],
+      "public_reference_url": "https://www.tradingview.com/symbols/INDEX-MAHQ/",
+      "runtime_verified": false,
+      "ingestion": "optional Pine display only until chart values and universe verified"
+    },
+    {
+      "metric_id": "NASDAQ_EXCHANGE_52W_NEW_LOWS",
+      "symbol": "INDEX:MALQ",
+      "vendor": "TradingView",
+      "universe": "Nasdaq exchange (do NOT call verified COMP-only)",
+      "units": "issues/day",
+      "daily_avg_windows": [
+        1,
+        5,
+        10,
+        20,
+        60
+      ],
+      "public_reference_url": "https://www.tradingview.com/symbols/INDEX-MALQ/",
+      "runtime_verified": false,
+      "ingestion": "optional Pine display only until chart values and universe verified"
+    },
+    {
+      "metric_id": "SP500_52W_NEW_HIGHS",
+      "symbol": "INDEX:MAHP",
+      "vendor": "TradingView",
+      "universe": "S&P 500",
+      "units": "issues/day",
+      "daily_avg_windows": [
+        1,
+        5,
+        10,
+        20,
+        60
+      ],
+      "public_reference_url": "https://www.tradingview.com/symbols/INDEX-MAHP/",
+      "runtime_verified": false,
+      "ingestion": "optional Pine display only until chart values and universe verified"
+    },
+    {
+      "metric_id": "SP500_52W_NEW_LOWS",
+      "symbol": "INDEX:MALP",
+      "vendor": "TradingView",
+      "universe": "S&P 500",
+      "units": "issues/day",
+      "daily_avg_windows": [
+        1,
+        5,
+        10,
+        20,
+        60
+      ],
+      "public_reference_url": "https://www.tradingview.com/symbols/INDEX-MALP/",
+      "runtime_verified": false,
+      "ingestion": "optional Pine display only until chart values and universe verified"
+    },
+    {
+      "metric_id": "NASDAQ_EXCHANGE_ISSUES_ADVANCES_DECLINES",
+      "vendor": "Nasdaq Trader",
+      "universe": "Nasdaq-listed exchange issues, not verified Composite index-only",
+      "units": "counts/day",
+      "daily_avg_windows": [
+        1,
+        5,
+        10,
+        20,
+        60
+      ],
+      "public_reference_url": "https://nasdaqtrader.com/dynamic/dailyfiles/daily2026.csv",
+      "research_file": "research/nasdaq_comp/official_nasdaq_issues_daily_history.csv",
+      "publication_condition": "explain source-lag and market-universe differences"
+    },
+    {
+      "metric_id": "NASDAQ_COMPOSITE_52W_NEW_HI_LO",
+      "vendor": "Reuters daily market reports",
+      "universe": "Nasdaq Composite as described in Reuters article",
+      "units": "counts/day",
+      "daily_avg_windows": [
+        1,
+        5,
+        10,
+        20,
+        60
+      ],
+      "public_reference_url": "https://www.reuters.com/business/nasdaq-futures-jump-anthropics-record-ipo-pricing-fuels-hopes-strong-debut-2026-11-19/",
+      "publication_condition": "individual dated articles, no verified 60-day complete series; never extrapolate"
+    },
+    {
+      "metric_id": "ALL_US_ELIGIBLE_COMMON_STOCKS_BREADTH",
+      "vendor": "unresolved",
+      "universe": "All eligible US common shares",
+      "units": "counts and percent",
+      "daily_avg_windows": [
+        1,
+        5,
+        10,
+        20,
+        60
+      ],
+      "publication_condition": "no substitutes; source unresolved"
+    }
+  ],
+  "key_documents": {
+    "ma_pine": "research/tradingview/us_market_ma_breadth.pine",
+    "nhnl_pine": "research/tradingview/us_market_52w_nh_nl.pine",
+    "private_csv_parser": "research/tradingview/parse_private_breadth_csv.py",
+    "usage_notes": "research/tradingview/README.md"
+  }
+}
