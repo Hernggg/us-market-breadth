@@ -4,6 +4,12 @@ on:
   schedule:
     - cron: '23 6 * * 2-6'
   workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/daily-update.yml'
+      - 'run_cloud_update.py'
+      - 'bridge_latest_session.py'
+      - 'publish_summary.py'
 
 permissions:
   contents: write
