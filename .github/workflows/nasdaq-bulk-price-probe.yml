@@ -1,0 +1,28 @@
+name: Nasdaq bulk price source sample feasibility
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'nasdaq_bulk_price_probe.py'
+      - 'tests/test_nasdaq_bulk_price_probe.py'
+      - '.github/workflows/nasdaq-bulk-price-probe.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  sample-probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install existing DuckDB dependency
+        run: pip install -r requirements.txt
+      - name: Run offline coverage tests
+        run: python -m unittest discover -s tests -p 'test_nasdaq_bulk_price_probe.py' -v
+      - name: Check one-day vendor sample without storing or republishing prices
+        run: python nasdaq_bulk_price_probe.py --asof 2026-11-19

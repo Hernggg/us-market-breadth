@@ -1,0 +1,383 @@
+{
+  "market": "NASDAQ_OFFICIAL_INDEX_PERFORMANCE_NOT_CONSTITUENT_BREADTH",
+  "eligible_for_us_market_comp_breadth_publication": false,
+  "source": "https://nasdaqtrader.com/dynamic/dailyfiles/daily2026.csv",
+  "requested_session": "2026-11-19",
+  "asof_actual": "2026-11-17",
+  "source_lag_status": "SOURCE_LAGGED",
+  "observed_sessions_in_current_year": 221,
+  "method": "Close-to-close n-trading-session index-level return, not daily average return",
+  "limitation": "Nasdaq Computer and other index returns provide sector leadership context, not constituent member breadth, official technology sector taxonomy or investible total return.",
+  "periods": [
+    {
+      "sessions": 1,
+      "from_prior_close": "2026-11-16",
+      "through_close": "2026-11-17",
+      "nasdaq_composite_return_pct": -0.74,
+      "indices": [
+        {
+          "index_id": "composite",
+          "name": "Nasdaq Composite",
+          "return_pct": -0.74,
+          "relative_to_composite_percentage_points": 0.0
+        },
+        {
+          "index_id": "n100",
+          "name": "Nasdaq-100",
+          "return_pct": -0.7183,
+          "relative_to_composite_percentage_points": 0.0217
+        },
+        {
+          "index_id": "financial100",
+          "name": "Nasdaq Financial-100",
+          "return_pct": -2.2817,
+          "relative_to_composite_percentage_points": -1.5417
+        },
+        {
+          "index_id": "industrial",
+          "name": "Nasdaq Industrial",
+          "return_pct": -0.7692,
+          "relative_to_composite_percentage_points": -0.0291
+        },
+        {
+          "index_id": "bank",
+          "name": "Nasdaq Bank",
+          "return_pct": -1.9105,
+          "relative_to_composite_percentage_points": -1.1704
+        },
+        {
+          "index_id": "insurance",
+          "name": "Nasdaq Insurance",
+          "return_pct": -1.3996,
+          "relative_to_composite_percentage_points": -0.6596
+        },
+        {
+          "index_id": "financial",
+          "name": "Nasdaq Financial",
+          "return_pct": -2.2546,
+          "relative_to_composite_percentage_points": -1.5146
+        },
+        {
+          "index_id": "transportation",
+          "name": "Nasdaq Transportation",
+          "return_pct": -1.6568,
+          "relative_to_composite_percentage_points": -0.9168
+        },
+        {
+          "index_id": "telecom",
+          "name": "Nasdaq Telecommunications",
+          "return_pct": 1.8003,
+          "relative_to_composite_percentage_points": 2.5404
+        },
+        {
+          "index_id": "biotech",
+          "name": "Nasdaq Biotechnology",
+          "return_pct": -0.714,
+          "relative_to_composite_percentage_points": 0.026
+        },
+        {
+          "index_id": "computer",
+          "name": "Nasdaq Computer",
+          "return_pct": -0.8295,
+          "relative_to_composite_percentage_points": -0.0894
+        }
+      ]
+    },
+    {
+      "sessions": 5,
+      "from_prior_close": "2026-11-10",
+      "through_close": "2026-11-17",
+      "nasdaq_composite_return_pct": -2.9422,
+      "indices": [
+        {
+          "index_id": "composite",
+          "name": "Nasdaq Composite",
+          "return_pct": -2.9422,
+          "relative_to_composite_percentage_points": 0.0
+        },
+        {
+          "index_id": "n100",
+          "name": "Nasdaq-100",
+          "return_pct": -2.664,
+          "relative_to_composite_percentage_points": 0.2782
+        },
+        {
+          "index_id": "financial100",
+          "name": "Nasdaq Financial-100",
+          "return_pct": -3.9016,
+          "relative_to_composite_percentage_points": -0.9593
+        },
+        {
+          "index_id": "industrial",
+          "name": "Nasdaq Industrial",
+          "return_pct": -2.2455,
+          "relative_to_composite_percentage_points": 0.6967
+        },
+        {
+          "index_id": "bank",
+          "name": "Nasdaq Bank",
+          "return_pct": -2.8139,
+          "relative_to_composite_percentage_points": 0.1283
+        },
+        {
+          "index_id": "insurance",
+          "name": "Nasdaq Insurance",
+          "return_pct": -0.4562,
+          "relative_to_composite_percentage_points": 2.486
+        },
+        {
+          "index_id": "financial",
+          "name": "Nasdaq Financial",
+          "return_pct": -4.2983,
+          "relative_to_composite_percentage_points": -1.3561
+        },
+        {
+          "index_id": "transportation",
+          "name": "Nasdaq Transportation",
+          "return_pct": -2.2253,
+          "relative_to_composite_percentage_points": 0.7169
+        },
+        {
+          "index_id": "telecom",
+          "name": "Nasdaq Telecommunications",
+          "return_pct": -1.6195,
+          "relative_to_composite_percentage_points": 1.3227
+        },
+        {
+          "index_id": "biotech",
+          "name": "Nasdaq Biotechnology",
+          "return_pct": -4.9733,
+          "relative_to_composite_percentage_points": -2.0311
+        },
+        {
+          "index_id": "computer",
+          "name": "Nasdaq Computer",
+          "return_pct": -3.153,
+          "relative_to_composite_percentage_points": -0.2108
+        }
+      ]
+    },
+    {
+      "sessions": 10,
+      "from_prior_close": "2026-11-03",
+      "through_close": "2026-11-17",
+      "nasdaq_composite_return_pct": -4.1133,
+      "indices": [
+        {
+          "index_id": "composite",
+          "name": "Nasdaq Composite",
+          "return_pct": -4.1133,
+          "relative_to_composite_percentage_points": 0.0
+        },
+        {
+          "index_id": "n100",
+          "name": "Nasdaq-100",
+          "return_pct": -4.1819,
+          "relative_to_composite_percentage_points": -0.0686
+        },
+        {
+          "index_id": "financial100",
+          "name": "Nasdaq Financial-100",
+          "return_pct": -3.5285,
+          "relative_to_composite_percentage_points": 0.5848
+        },
+        {
+          "index_id": "industrial",
+          "name": "Nasdaq Industrial",
+          "return_pct": -0.1043,
+          "relative_to_composite_percentage_points": 4.009
+        },
+        {
+          "index_id": "bank",
+          "name": "Nasdaq Bank",
+          "return_pct": -2.721,
+          "relative_to_composite_percentage_points": 1.3924
+        },
+        {
+          "index_id": "insurance",
+          "name": "Nasdaq Insurance",
+          "return_pct": 0.1038,
+          "relative_to_composite_percentage_points": 4.2171
+        },
+        {
+          "index_id": "financial",
+          "name": "Nasdaq Financial",
+          "return_pct": -3.7442,
+          "relative_to_composite_percentage_points": 0.3691
+        },
+        {
+          "index_id": "transportation",
+          "name": "Nasdaq Transportation",
+          "return_pct": -0.7094,
+          "relative_to_composite_percentage_points": 3.4039
+        },
+        {
+          "index_id": "telecom",
+          "name": "Nasdaq Telecommunications",
+          "return_pct": -1.1261,
+          "relative_to_composite_percentage_points": 2.9872
+        },
+        {
+          "index_id": "biotech",
+          "name": "Nasdaq Biotechnology",
+          "return_pct": -3.4215,
+          "relative_to_composite_percentage_points": 0.6918
+        },
+        {
+          "index_id": "computer",
+          "name": "Nasdaq Computer",
+          "return_pct": -6.003,
+          "relative_to_composite_percentage_points": -1.8897
+        }
+      ]
+    },
+    {
+      "sessions": 20,
+      "from_prior_close": "2026-10-20",
+      "through_close": "2026-11-17",
+      "nasdaq_composite_return_pct": -7.9336,
+      "indices": [
+        {
+          "index_id": "composite",
+          "name": "Nasdaq Composite",
+          "return_pct": -7.9336,
+          "relative_to_composite_percentage_points": 0.0
+        },
+        {
+          "index_id": "n100",
+          "name": "Nasdaq-100",
+          "return_pct": -8.4384,
+          "relative_to_composite_percentage_points": -0.5048
+        },
+        {
+          "index_id": "financial100",
+          "name": "Nasdaq Financial-100",
+          "return_pct": -3.2714,
+          "relative_to_composite_percentage_points": 4.6622
+        },
+        {
+          "index_id": "industrial",
+          "name": "Nasdaq Industrial",
+          "return_pct": 0.4443,
+          "relative_to_composite_percentage_points": 8.3779
+        },
+        {
+          "index_id": "bank",
+          "name": "Nasdaq Bank",
+          "return_pct": -0.2097,
+          "relative_to_composite_percentage_points": 7.7239
+        },
+        {
+          "index_id": "insurance",
+          "name": "Nasdaq Insurance",
+          "return_pct": 4.7049,
+          "relative_to_composite_percentage_points": 12.6385
+        },
+        {
+          "index_id": "financial",
+          "name": "Nasdaq Financial",
+          "return_pct": -4.6533,
+          "relative_to_composite_percentage_points": 3.2803
+        },
+        {
+          "index_id": "transportation",
+          "name": "Nasdaq Transportation",
+          "return_pct": 1.4921,
+          "relative_to_composite_percentage_points": 9.4257
+        },
+        {
+          "index_id": "telecom",
+          "name": "Nasdaq Telecommunications",
+          "return_pct": -4.7553,
+          "relative_to_composite_percentage_points": 3.1783
+        },
+        {
+          "index_id": "biotech",
+          "name": "Nasdaq Biotechnology",
+          "return_pct": -1.2695,
+          "relative_to_composite_percentage_points": 6.6641
+        },
+        {
+          "index_id": "computer",
+          "name": "Nasdaq Computer",
+          "return_pct": -11.992,
+          "relative_to_composite_percentage_points": -4.0584
+        }
+      ]
+    },
+    {
+      "sessions": 60,
+      "from_prior_close": "2026-08-24",
+      "through_close": "2026-11-17",
+      "nasdaq_composite_return_pct": -6.358,
+      "indices": [
+        {
+          "index_id": "composite",
+          "name": "Nasdaq Composite",
+          "return_pct": -6.358,
+          "relative_to_composite_percentage_points": 0.0
+        },
+        {
+          "index_id": "n100",
+          "name": "Nasdaq-100",
+          "return_pct": -6.9648,
+          "relative_to_composite_percentage_points": -0.6068
+        },
+        {
+          "index_id": "financial100",
+          "name": "Nasdaq Financial-100",
+          "return_pct": -8.4205,
+          "relative_to_composite_percentage_points": -2.0626
+        },
+        {
+          "index_id": "industrial",
+          "name": "Nasdaq Industrial",
+          "return_pct": -0.6204,
+          "relative_to_composite_percentage_points": 5.7376
+        },
+        {
+          "index_id": "bank",
+          "name": "Nasdaq Bank",
+          "return_pct": -4.727,
+          "relative_to_composite_percentage_points": 1.631
+        },
+        {
+          "index_id": "insurance",
+          "name": "Nasdaq Insurance",
+          "return_pct": 0.4174,
+          "relative_to_composite_percentage_points": 6.7753
+        },
+        {
+          "index_id": "financial",
+          "name": "Nasdaq Financial",
+          "return_pct": -10.464,
+          "relative_to_composite_percentage_points": -4.106
+        },
+        {
+          "index_id": "transportation",
+          "name": "Nasdaq Transportation",
+          "return_pct": -9.2372,
+          "relative_to_composite_percentage_points": -2.8793
+        },
+        {
+          "index_id": "telecom",
+          "name": "Nasdaq Telecommunications",
+          "return_pct": -4.0369,
+          "relative_to_composite_percentage_points": 2.3211
+        },
+        {
+          "index_id": "biotech",
+          "name": "Nasdaq Biotechnology",
+          "return_pct": -3.1772,
+          "relative_to_composite_percentage_points": 3.1807
+        },
+        {
+          "index_id": "computer",
+          "name": "Nasdaq Computer",
+          "return_pct": -8.7815,
+          "relative_to_composite_percentage_points": -2.4236
+        }
+      ]
+    }
+  ]
+}

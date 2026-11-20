@@ -1,0 +1,35 @@
+name: Nasdaq historical price source feasibility (research only)
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'nasdaq_price_source_probe.py'
+      - 'tests/test_nasdaq_price_source_probe.py'
+      - '.github/workflows/nasdaq-price-source-probe.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Test history window and missing-session logic
+        run: python -m unittest discover -s tests -p 'test_nasdaq_price_source_probe.py' -v
+      - name: Probe real, bounded Yahoo history for point-in-time sample
+        run: python nasdaq_price_source_probe.py --size 18 --out research/nasdaq_comp/price_source_probe.json
+      - name: Commit source diagnostics only (no quotes; never production public/)
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add research/nasdaq_comp/price_source_probe.json
+          if ! git diff --cached --quiet; then
+            git commit -m "Update Nasdaq research price-source coverage diagnostics"
+            git push
+          fi

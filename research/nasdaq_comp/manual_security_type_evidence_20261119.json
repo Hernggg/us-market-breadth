@@ -1,0 +1,52 @@
+{
+  "scope": "RESEARCH_ONLY_NOT_VALIDATED_COMP_MEMBERSHIP",
+  "asof": "2026-11-19",
+  "source_type": "SEC filings and issuer records; point-in-time type confirmation only",
+  "warning": "SEC share class does NOT independently prove inclusion in Nasdaq Composite on each day. BDC fund treatment and official membership require independent reconciliation.",
+  "investigated_ambiguous_symbols": [
+    {
+      "ticker": "CDZIP",
+      "security_type": "Depositary shares representing preferred stock",
+      "classification": "EXCLUDED_PREFERRED_CLASS",
+      "source": "https://www.sec.gov/Archives/edgar/data/727273/000143774926037037/cdzi20260930c_10q.htm"
+    },
+    {
+      "ticker": "MNSBP",
+      "security_type": "Depositary shares representing preferred stock",
+      "classification": "EXCLUDED_PREFERRED_CLASS",
+      "source": "https://www.sec.gov/Archives/edgar/data/1693577/000143774926033574/main20261027_8k.htm"
+    },
+    {
+      "ticker": "WAFDP",
+      "security_type": "Depositary shares representing preferred stock",
+      "classification": "EXCLUDED_PREFERRED_CLASS",
+      "source": "https://www.sec.gov/Archives/edgar/data/936528/000093652826000061/R1.htm"
+    },
+    {
+      "ticker": "GOOD",
+      "security_type": "REIT common stock",
+      "classification": "COMMON_TYPE_CANDIDATE_NOT_CONFIRMED_COMP",
+      "source": "https://www.gladstonecommercial.com/investors/company-information/faq"
+    },
+    {
+      "ticker": "ORGO",
+      "security_type": "Class A common stock",
+      "classification": "COMMON_TYPE_CANDIDATE_NOT_CONFIRMED_COMP",
+      "source": "https://www.sec.gov/Archives/edgar/data/1661181/000119312526449888/orgo-20260930.htm"
+    },
+    {
+      "ticker": "GAIN",
+      "security_type": "Common stock of a business development company (investment company)",
+      "classification": "UNRESOLVED_COMP_FUND_ELIGIBILITY",
+      "source": "https://www.sec.gov/Archives/edgar/data/1321741/000132174126000017/gain-20260630.htm"
+    }
+  ],
+  "independent_non_official_comparison": {
+    "third_party": "TradingView public NASDAQ:IXIC webpage",
+    "reported_component_count": 3393,
+    "source": "https://www.tradingview.com/symbols/NASDAQ-IXIC/",
+    "date_consistency": "snapshot as accessed on 2026-11-20; does not guarantee exact same reference date as PIT 2026-11-19",
+    "unvalidated_candidate_count": 3397,
+    "discrepancy": "candidate count is 4 larger than TradingView's independently displayed index component count; similar counts are NOT evidence of matching identities."
+  }
+}

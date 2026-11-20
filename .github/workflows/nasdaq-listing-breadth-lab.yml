@@ -1,0 +1,40 @@
+name: Nasdaq PIT rolling breadth arithmetic prototype (research only)
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'nasdaq_listing_breadth_lab.py'
+      - 'tests/test_nasdaq_listing_breadth_lab.py'
+      - '.github/workflows/nasdaq-listing-breadth-lab.yml'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: nasdaq-listed-rolling-breadth-lab
+  cancel-in-progress: false
+
+jobs:
+  sampled-breadth:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Run deterministic daily and five-window breadth formula tests
+        run: python -m unittest discover -s tests -p 'test_nasdaq_listing_breadth_lab.py' -v
+      - name: Execute bounded PIT Nasdaq LISTED sample (never official COMP)
+        run: python nasdaq_listing_breadth_lab.py --size 24 --out research/nasdaq_comp/listed_sample_breadth_lab.json
+      - name: Save counts-only QA results in isolated research branch
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add research/nasdaq_comp/listed_sample_breadth_lab.json
+          if ! git diff --cached --quiet; then
+            git commit -m "Record Nasdaq-listed sample arithmetic QA (not Composite)"
+            git pull --rebase origin "$GITHUB_REF_NAME"
+            git push origin HEAD:"$GITHUB_REF_NAME"
+          fi

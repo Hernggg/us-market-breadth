@@ -1,0 +1,37 @@
+name: Nasdaq Composite PIT candidate research (NOT production)
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '15 8 * * 2-6'
+  push:
+    paths:
+      - 'nasdaq_comp_candidate.py'
+      - 'tests/test_nasdaq_comp_candidate.py'
+      - '.github/workflows/nasdaq-comp-research.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  audit-candidates:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Run isolated regression tests
+        run: python -m unittest discover -s tests -p 'test_nasdaq_comp_candidate.py' -v
+      - name: Verify PIT source and calculate candidate-universe audit
+        run: python nasdaq_comp_candidate.py --calendar public/sp500_pit_daily.csv --outdir research/nasdaq_comp
+      - name: Commit research-only results (never public/latest.json)
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add research/nasdaq_comp/
+          if ! git diff --cached --quiet; then
+            git commit -m "Update Nasdaq directory candidate research audit"
+            git push
+          fi

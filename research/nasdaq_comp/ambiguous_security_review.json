@@ -1,0 +1,71 @@
+{
+  "market": "NASDAQ_LISTING_CANDIDATE_CLASSIFICATION_REVIEW_NOT_COMP",
+  "eligible_for_comp_publication": false,
+  "asof": "2026-11-19",
+  "directory_total": 5602,
+  "unresolved_count": 6,
+  "unresolved_market_categories": {
+    "G": 1,
+    "Q": 3,
+    "S": 2
+  },
+  "unresolved_name_terms": {
+    "unit": 0,
+    "rights": 0,
+    "warrant": 0,
+    "preferred": 0,
+    "depositary": 3,
+    "reit": 0,
+    "class": 1,
+    "stock": 0,
+    "share": 3,
+    "note": 0,
+    "fund": 0,
+    "acquisition": 0,
+    "trust": 1,
+    "income": 0,
+    "exchange": 0,
+    "stapled": 0
+  },
+  "excluded_noncommon_type_count": 910,
+  "sample_selection": "45 SHA256-sorted tickers, stable and not a representative sample",
+  "sample": [
+    {
+      "ticker": "CDZIP",
+      "name": "Cadiz, Inc. - Depositary Shares",
+      "market_category": "G",
+      "etf_flag": "N"
+    },
+    {
+      "ticker": "GOOD",
+      "name": "Gladstone Commercial Corporation - Real Estate Investment Trust",
+      "market_category": "Q",
+      "etf_flag": "N"
+    },
+    {
+      "ticker": "MNSBP",
+      "name": "MainStreet Bancshares, Inc. - Depositary Shares",
+      "market_category": "S",
+      "etf_flag": "N"
+    },
+    {
+      "ticker": "WAFDP",
+      "name": "WaFd, Inc. - Depositary Shares",
+      "market_category": "Q",
+      "etf_flag": "N"
+    },
+    {
+      "ticker": "GAIN",
+      "name": "Gladstone Investment Corporation - Business Development Company",
+      "market_category": "Q",
+      "etf_flag": "N"
+    },
+    {
+      "ticker": "ORGO",
+      "name": "Organogenesis Holdings Inc.  - Class A ",
+      "market_category": "S",
+      "etf_flag": "N"
+    }
+  ],
+  "limit": "Company descriptions are NOT a substitute for security instrument type or official Composite index status; do not auto-include ambiguous names."
+}
