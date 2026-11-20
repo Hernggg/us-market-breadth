@@ -1,0 +1,305 @@
+{
+  "market": "NASDAQ_LISTING_CANDIDATE_CLASSIFICATION_REVIEW_NOT_COMP",
+  "eligible_for_comp_publication": false,
+  "asof": "2026-11-19",
+  "directory_total": 5602,
+  "unresolved_count": 429,
+  "unresolved_market_categories": {
+    "G": 311,
+    "S": 70,
+    "Q": 48
+  },
+  "unresolved_name_terms": {
+    "unit": 251,
+    "rights": 76,
+    "warrant": 0,
+    "preferred": 5,
+    "depositary": 4,
+    "reit": 0,
+    "class": 17,
+    "stock": 3,
+    "share": 38,
+    "note": 28,
+    "fund": 0,
+    "acquisition": 296,
+    "trust": 2,
+    "income": 0,
+    "exchange": 0,
+    "stapled": 0
+  },
+  "excluded_noncommon_type_count": 521,
+  "sample_selection": "45 SHA256-sorted tickers, stable and not a representative sample",
+  "sample": [
+    {
+      "ticker": "PAGP",
+      "name": "Plains GP Holdings, L.P. - Class A Shares representing limited partner interests",
+      "market_category": "Q",
+      "etf_flag": "N"
+    },
+    {
+      "ticker": "CHPGR",
+      "name": "ChampionsGate Acquisition Corporation - Rights",
+      "market_category": "G",
+      "etf_flag": "N"
+    },
+    {
+      "ticker": "SCPQU",
+      "name": "Social Commerce Partners Corporation - Unit",
+      "market_category": "G",
+      "etf_flag": "N"
+    },
+    {
+      "ticker": "ADACU",
+      "name": "American Drive Acquisition Company - Units",
+      "market_category": "G",
+      "etf_flag": "N"
+    },
+    {
+      "ticker": "LTGRU",
+      "name": "Long Table Growth Corp. - Units",
+      "market_category": "G",
+      "etf_flag": "N"
+    },
+    {
+      "ticker": "OFSSO",
+      "name": "OFS Capital Corporation - 7.50% Notes due 2028",
+      "market_category": "G",
+      "etf_flag": "N"
+    },
+    {
+      "ticker": "KEYYU",
+      "name": "Keystone Acquisition Corp. - Unit",
+      "market_category": "G",
+      "etf_flag": "N"
+    },
+    {
+      "ticker": "CDZIP",
+      "name": "Cadiz, Inc. - Depositary Shares",
+      "market_category": "G",
+      "etf_flag": "N"
+    },
+    {
+      "ticker": "CAQUU",
+      "name": "Cambridge Acquisition Corp. - Unit",
+      "market_category": "G",
+      "etf_flag": "N"
+    },
+    {
+      "ticker": "GIXXU",
+      "name": "GigCapital9 Corp. - Units",
+      "market_category": "G",
+      "etf_flag": "N"
+    },
+    {
+      "ticker": "BPACU",
+      "name": "Blueport Acquisition Ltd - Units",
+      "market_category": "S",
+      "etf_flag": "N"
+    },
+    {
+      "ticker": "DGXX",
+      "name": "Digi Power X Inc. - Common Subordinate Voting Shares",
+      "market_category": "S",
+      "etf_flag": "N"
+    },
+    {
+      "ticker": "ILLUU",
+      "name": "Illumination Acquisition Corp I - Units",
+      "market_category": "G",
+      "etf_flag": "N"
+    },
+    {
+      "ticker": "TAVIR",
+      "name": "Tavia Acquisition Corp. - Right",
+      "market_category": "G",
+      "etf_flag": "N"
+    },
+    {
+      "ticker": "HVMCU",
+      "name": "Highview Merger Corp. - Units",
+      "market_category": "G",
+      "etf_flag": "N"
+    },
+    {
+      "ticker": "DTSQU",
+      "name": "DT Cloud Star Acquisition Corporation - Units",
+      "market_category": "S",
+      "etf_flag": "N"
+    },
+    {
+      "ticker": "OIMAU",
+      "name": "OneIM Acquisition Corp. - Units",
+      "market_category": "G",
+      "etf_flag": "N"
+    },
+    {
+      "ticker": "CAPNR",
+      "name": "Cayson Acquisition Corp - Right",
+      "market_category": "G",
+      "etf_flag": "N"
+    },
+    {
+      "ticker": "RDACU",
+      "name": "Rising Dragon Acquisition Corp. - Unit",
+      "market_category": "S",
+      "etf_flag": "N"
+    },
+    {
+      "ticker": "OCLTU",
+      "name": "OceanLight Acquisition Corporation - Units",
+      "market_category": "G",
+      "etf_flag": "N"
+    },
+    {
+      "ticker": "IPHXU",
+      "name": "Inflection Point Acquisition Corp. VIII - Unit",
+      "market_category": "G",
+      "etf_flag": "N"
+    },
+    {
+      "ticker": "LKSPR",
+      "name": "Lake Superior Acquisition Corp. - Rights",
+      "market_category": "G",
+      "etf_flag": "N"
+    },
+    {
+      "ticker": "MCAHR",
+      "name": "Mountain Crest Acquisition 6 Corp. - Rights",
+      "market_category": "G",
+      "etf_flag": "N"
+    },
+    {
+      "ticker": "SZZLR",
+      "name": "Sizzle Acquisition Corp. II - Right",
+      "market_category": "G",
+      "etf_flag": "N"
+    },
+    {
+      "ticker": "CRACR",
+      "name": "Crown Reserve Acquisition Corp. I - Rights",
+      "market_category": "G",
+      "etf_flag": "N"
+    },
+    {
+      "ticker": "BRRKU",
+      "name": "Bluerock Acquisition Corp. II - Units",
+      "market_category": "G",
+      "etf_flag": "N"
+    },
+    {
+      "ticker": "CTHH",
+      "name": "Qwest Corporation - 6.750% Notes due 2052",
+      "market_category": "Q",
+      "etf_flag": "N"
+    },
+    {
+      "ticker": "IEAGR",
+      "name": "Infinite Eagle Acquisition Corp. - Rights",
+      "market_category": "G",
+      "etf_flag": "N"
+    },
+    {
+      "ticker": "CTAAU",
+      "name": "ClearThink 1 Acquisition Corp. - Units",
+      "market_category": "G",
+      "etf_flag": "N"
+    },
+    {
+      "ticker": "OXLCZ",
+      "name": "Oxford Lane Capital Corp. - 5.00% Notes due 2027",
+      "market_category": "Q",
+      "etf_flag": "N"
+    },
+    {
+      "ticker": "NBRGR",
+      "name": "Newbridge Acquisition Limited - Rights",
+      "market_category": "S",
+      "etf_flag": "N"
+    },
+    {
+      "ticker": "OXLCL",
+      "name": "Oxford Lane Capital Corp. - 6.75% Notes due 2031",
+      "market_category": "Q",
+      "etf_flag": "N"
+    },
+    {
+      "ticker": "OXSQH",
+      "name": "Oxford Square Capital Corp. - 7.75% Notes due 2030",
+      "market_category": "Q",
+      "etf_flag": "N"
+    },
+    {
+      "ticker": "LOGI",
+      "name": "Logitech International S.A. - Registered Shares",
+      "market_category": "Q",
+      "etf_flag": "N"
+    },
+    {
+      "ticker": "HACQU",
+      "name": "HCM IV Acquisition Corp. - Unit",
+      "market_category": "G",
+      "etf_flag": "N"
+    },
+    {
+      "ticker": "CXIIU",
+      "name": "Churchill Capital Corp XII - Units",
+      "market_category": "G",
+      "etf_flag": "N"
+    },
+    {
+      "ticker": "FIGXU",
+      "name": "FIGX Capital Acquisition Corp. - Units",
+      "market_category": "G",
+      "etf_flag": "N"
+    },
+    {
+      "ticker": "SSEAR",
+      "name": "Starry Sea Acquisition Corp - Rights",
+      "market_category": "S",
+      "etf_flag": "N"
+    },
+    {
+      "ticker": "CIGI",
+      "name": "Colliers International Group Inc.  - Subordinate Voting Shares",
+      "market_category": "Q",
+      "etf_flag": "N"
+    },
+    {
+      "ticker": "AESPU",
+      "name": "Aeon Acquisition I Corp. - Units",
+      "market_category": "G",
+      "etf_flag": "N"
+    },
+    {
+      "ticker": "RNAQU",
+      "name": "Rainier Acquisition Corporation - Units",
+      "market_category": "S",
+      "etf_flag": "N"
+    },
+    {
+      "ticker": "KRAQU",
+      "name": "KRAKacquisition Corp - Unit",
+      "market_category": "G",
+      "etf_flag": "N"
+    },
+    {
+      "ticker": "FVNNU",
+      "name": "Future Vision II Acquisition Corporation - Units",
+      "market_category": "S",
+      "etf_flag": "N"
+    },
+    {
+      "ticker": "TRGSR",
+      "name": "TRG Latin America Acquisitions Corp. - Rights",
+      "market_category": "G",
+      "etf_flag": "N"
+    },
+    {
+      "ticker": "CRANU",
+      "name": "Crane Harbor Acquisition Corp. II - Units",
+      "market_category": "G",
+      "etf_flag": "N"
+    }
+  ],
+  "limit": "Company descriptions are NOT a substitute for security instrument type or official Composite index status; do not auto-include ambiguous names."
+}
