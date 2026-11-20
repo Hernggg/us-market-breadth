@@ -53,30 +53,45 @@ def choose_sample(rows, start, end, sample_size):
     liquid = [x for x in FIXED if x in today and classification(today[x]) == "LIKELY_ELIGIBLE_TYPE"]
     # Deterministic selection, with an explicit inclusion of actual removed
     # directory names when they exist: don't test today's survivors only.
-    former = sorted(
-        t for t, r in first.items()
-        if t not in today and classification(r) == "LIKELY_ELIGIBLE_TYPE"
+    def deterministic_random_order(tickers, kind):
+        # Avoid alphabetic sample bias. Stable across repeated test executions.
+        return sorted(tickers, key=lambda t: hashlib.sha256((kind + ":" + t).encode()).hexdigest())
+    former = deterministic_random_order(
+        [t for t, r in first.items() if t not in today and classification(r) == "LIKELY_ELIGIBLE_TYPE"],
+        "FORMER_LISTED"
     )
-    current = sorted(t for t, r in today.items() if classification(r) == "LIKELY_ELIGIBLE_TYPE")
-    unresolved = sorted(t for t, r in today.items() if classification(r) == "UNRESOLVED_TYPE")
+    current = deterministic_random_order(
+        [t for t, r in today.items() if classification(r) == "LIKELY_ELIGIBLE_TYPE"],
+        "CURRENT_LIKELY"
+    )
+    unresolved = deterministic_random_order(
+        [t for t, r in today.items() if classification(r) == "UNRESOLVED_TYPE"],
+        "CURRENT_UNRESOLVED"
+    )
     buckets = [("FIXED_LIQUID", liquid), ("FORMER_LISTED", former),
                ("CURRENT_LIKELY", current), ("CURRENT_UNRESOLVED", unresolved)]
     picked = []
     used = set()
-    # Seed buckets with at least one non-survivor and one unresolved whenever
-    # capacity allows, then select the rest deterministically.
-    for kind, tickers in buckets:
-        if kind in ("FORMER_LISTED", "CURRENT_UNRESOLVED") and len(picked) < sample_size and tickers:
-            t = tickers[0]
-            if t not in used:
-                picked.append((t, kind)); used.add(t)
-    for kind, tickers in buckets:
-        for ticker in tickers:
-            if len(picked) >= sample_size:
-                return picked
-            if ticker in used:
-                continue
-            picked.append((ticker, kind)); used.add(ticker)
+    def add(ticker, kind):
+        if ticker and ticker not in used and len(picked) < sample_size:
+            picked.append((ticker, kind))
+            used.add(ticker)
+    # A predictable liquid control cohort, plus three distinct risk cohorts.
+    for ticker in liquid[:min(len(liquid), max(1, sample_size//2))]:
+        add(ticker, "FIXED_LIQUID")
+    for kind, tickers in buckets[1:]:
+        if tickers:
+            add(tickers[0], kind)
+    # Round robin ensures delisted, current, and ambiguous security types are
+    # all examined; never let the alphabetically-first former names dominate.
+    for offset in range(max(len(former), len(current), len(unresolved), 1)):
+        if len(picked) == sample_size:
+            break
+        for kind, tickers in buckets[1:]:
+            if offset < len(tickers):
+                add(tickers[offset], kind)
+    for ticker in liquid:
+        add(ticker, "FIXED_LIQUID")
     return picked
 
 
@@ -178,19 +193,32 @@ def main():
     if tail != dates:
         raise AuditError("Nasdaq reference index calendar disagrees with published S&P 500 sessions")
     results = []
+    daily_directory_members = {day: set(symbols_for_day(rows, day)) for day in dates}
     # Only a small, rate-limited feasibility sample; full-universe download
     # requires a licensed/supported source or a separately accepted policy.
     def one(item):
         ticker, bucket = item
         prices, status = yahoo_chart(ticker)
         spans = session_coverage(prices, sessions) if status == "OK" else []
+        # Critical: quoted bars after a Nasdaq delisting or exchange transfer
+        # must NOT be counted as eligible member-days.
+        active_spans = [
+            s for s in spans
+            if ticker in daily_directory_members[dt.date.fromisoformat(s["date"])]
+        ]
+        active_days = sum(ticker in daily_directory_members[d] for d in dates)
         eligible = {
-            key: sum(int(s[key]) for s in spans)
+            key: sum(int(s[key]) for s in active_spans)
             for key in ("priced", "ad", "ma50", "ma200", "hilo")
         }
+        outside = sum(
+            day in prices and ticker not in daily_directory_members[day] for day in dates
+        )
         return {"ticker": ticker, "selection": bucket, "source_status": status,
                 "history_bars": len(prices),
-                "eligible_sessions_out_of_60": eligible,
+                "nasdaq_directory_active_sessions": active_days,
+                "valid_price_sessions_out_of_active_directory_sessions": eligible,
+                "quote_days_outside_directory_in_window": outside,
                 "first_price_date": min(prices).isoformat() if prices else None,
                 "last_price_date": max(prices).isoformat() if prices else None}
     with ThreadPoolExecutor(max_workers=2) as pool:
@@ -210,13 +238,21 @@ def main():
         "sample_size": len(sample),
         "source_status_counts": dict(statuses),
         "coverage": {
-            key: {"eligible_member_days": sum(r["eligible_sessions_out_of_60"][key] for r in results),
-                  "possible_member_days": len(results)*60}
+            key: {
+                "qualified_directory_member_days": sum(
+                    r["valid_price_sessions_out_of_active_directory_sessions"][key] for r in results
+                ),
+                "possible_directory_member_days": sum(
+                    r["nasdaq_directory_active_sessions"] for r in results
+                )
+            }
             for key in ("priced", "ad", "ma50", "ma200", "hilo")
         },
         "limitations": [
             "These are sampled Nasdaq-listed security types, not actual Composite index membership",
             "Sample symbols do not establish full historical-price coverage, especially delisted shares",
+            "Coverage denominators include only days the sampled ticker was in the reconstructed Nasdaq listing directory",
+            "Historical directory intervals do not establish company identity continuity or official Composite index membership",
             "52W denotes adjusted CLOSE-only extremes, not intraday 52-week highs/lows",
             "No raw prices or index breadth statistics published",
             "Yahoo v8 chart is unofficial and rate-limited; viability and usage terms must be reviewed",
