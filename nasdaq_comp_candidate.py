@@ -28,17 +28,19 @@ DATA_FILE = "nasdaqlisted.jsonl"
 USER_AGENT = "us-market-breadth-research/1.0 (point-in-time audit)"
 MAX_BYTES = 5_000_000
 CLEAR_TYPES = re.compile(
-    r"\b(common stock|common shares|ordinary shares?|american depositary|"
-    r"depositary shares representing common|adrs?\b|ads\b|"
+    r"\b(common stock|common shares?|common\b|ordinary shares?|"
+    r"american depositary|american depository|"
+    r"depositary shares representing common|adrs?\b|adss?\b|"
     r"limited partnership interests?|limited partner interests?|"
-    r"beneficial interests?|registered shares?|subordinate voting shares?|"
-    r"non.voting shares?|class [a-z] voting shares?)\b", re.I
+    r"beneficial interests?|registered shares?|new york registry shares?|"
+    r"subordinate voting shares?|non.voting shares?|class [a-z] voting shares?|"
+    r"class [a-z] ord shares?|ord shares?|capital stock|class [a-z] shares?)\b", re.I
 )
 INELIGIBLE_TYPES = re.compile(
     r"\b(warrants?|subscription rights?|rights?|preferred|"
     r"senior notes?|subordinated notes?|notes?|debentures?|"
     r"convertible securities|exchange.traded funds?|closed.end funds?|"
-    r"units?|etns?|subscription receipts?)\b", re.I
+    r"preference shares?|units?|etns?|subscription receipts?)\b", re.I
 )
 
 
@@ -114,6 +116,13 @@ def classification(row):
     # Check the security description, not the issuer's legal name: an issuer
     # name containing "Rights" or "Unit" must not determine instrument type.
     security_description = name.split(" - ", 1)[-1]
+    # COMP methodology explicitly allows UNITS OF BENEFICIAL INTEREST, not
+    # generic SPAC units. Preserve this narrow exception (unless another
+    # ineligible instrument word appears in the description).
+    if re.search(r"\bunits? of beneficial interests?\b", security_description, re.I):
+        if not re.search(r"\b(preferred|preference|warrants?|rights?|notes?)\b",
+                         security_description, re.I):
+            return "LIKELY_ELIGIBLE_TYPE"
     if INELIGIBLE_TYPES.search(security_description):
         return "EXCLUDED_SECURITY_TYPE"
     if CLEAR_TYPES.search(security_description):
