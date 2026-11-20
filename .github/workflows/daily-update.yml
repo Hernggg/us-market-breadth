@@ -2,7 +2,7 @@ name: Update SP500 market breadth
 
 on:
   schedule:
-    - cron: '23 3 * * 2-6'
+    - cron: '23 6 * * 2-6'
   workflow_dispatch:
 
 permissions:
