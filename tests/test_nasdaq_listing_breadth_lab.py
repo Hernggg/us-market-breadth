@@ -3,7 +3,7 @@ from __future__ import annotations
 import datetime as dt
 import unittest
 from nasdaq_listing_breadth_lab import (
-    stat_day, summarize, parse_adjusted_ohlc, AuditError
+    stat_day, summarize, parse_adjusted_ohlc, choose_breadth_cohort, AuditError
 )
 
 
@@ -126,6 +126,39 @@ class WindowBreadthTests(unittest.TestCase):
         self.assertIsNone(stats[0]["daily_averages"]["mean_50dma_pct"])
         self.assertEqual(stats[0]["hilo_member_day_coverage"],0)
         self.assertEqual(stats[0]["priced_member_day_coverage"],0)
+
+
+class CohortSelectionTests(unittest.TestCase):
+    def test_diverse_cohort_and_no_duplicates(self):
+        first=dt.date(2026,8,27)
+        last=dt.date(2026,11,19)
+        def r(t,start,end=None):
+            return (t,start,end,{"ticker":t,"name":"Example - Common Stock",
+                                 "etf":"N","test_issue":"N"})
+        fixed=["AAPL","MSFT","NVDA","AMZN","GOOGL","META","TSLA","AMD"]
+        rows=[r(t,first) for t in fixed]
+        rows.extend(r("FORMER"+str(i),first,last) for i in range(6))
+        rows.extend(r("NEW"+str(i),first+dt.timedelta(days=8)) for i in range(6))
+        rows.extend(r("CURR"+str(i),first) for i in range(50))
+        cohort=choose_breadth_cohort(rows,first,last,24)
+        categories=dict((t,b) for t,b in cohort)
+        self.assertEqual(len(cohort),24)
+        self.assertEqual(len(set(categories)),24)
+        self.assertEqual(sum(b=="FORMER_LISTED" for t,b in cohort),2)
+        self.assertEqual(sum(b=="NEWLY_LISTED" for t,b in cohort),2)
+        self.assertEqual(sum(b=="LIQUID_CONTROL" for t,b in cohort),8)
+        self.assertGreaterEqual(sum(b=="CURRENT" for t,b in cohort),12)
+        self.assertEqual(cohort,choose_breadth_cohort(list(reversed(rows)),first,last,24))
+
+    def test_no_unresolved_in_selected_cohort(self):
+        first=dt.date(2026,8,27)
+        last=dt.date(2026,11,19)
+        rows=[("BAD",first,None,{"ticker":"BAD","name":"Example - Depositary Shares","etf":"N","test_issue":"N"})]
+        rows.extend((f"VALID{i}",first,None,{"ticker":f"VALID{i}",
+             "name":"Example - Common Stock","etf":"N","test_issue":"N"}) for i in range(30))
+        chosen=choose_breadth_cohort(rows,first,last,18)
+        self.assertNotIn("BAD",[t for t,_ in chosen])
+
 
 if __name__=="__main__":
     unittest.main()
