@@ -26,8 +26,8 @@ jobs:
           python-version: '3.12'
       - name: Unit tests for year transitions, annual schema and conservative checks
         run: python -m unittest discover -s tests -p 'test_nasdaq_official_history.py' -v
-      - name: Download official 2024-2026 historical Nasdaq issue statistics
-        run: python nasdaq_official_history.py --first-year 2024 --outdir research/nasdaq_comp
+      - name: Fetch currently published Nasdaq Trader annual YTD and preserve archive
+        run: python nasdaq_official_history.py --first-year 2026 --outdir research/nasdaq_comp
       - name: Commit research-only derived daily totals
         run: |
           git config user.name "github-actions[bot]"
