@@ -1,4 +1,4 @@
-name: Nasdaq research regression suite (safe: not production)
+name: Nasdaq research regression suite - safe and non-production
 
 on:
   workflow_dispatch:
