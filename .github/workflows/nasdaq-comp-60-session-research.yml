@@ -1,0 +1,28 @@
+name: Nasdaq official Composite 60-session membership backfill research
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/nasdaq-comp-60-session-research.yml'
+permissions:
+  contents: write
+jobs:
+  research-60:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify 60 historical COMP EOD constituent identity sets without publishing them
+        run: python nasdaq_comp_official_reconcile.py --sessions 60 --out research/nasdaq_comp/official_comp_60_session_audit.json
+      - name: Commit counts-only membership audit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add research/nasdaq_comp/official_comp_60_session_audit.json
+          if ! git diff --cached --quiet; then
+            git commit -m "Record derived 60-day Nasdaq Composite official membership quality audit"
+            git push
+          fi
