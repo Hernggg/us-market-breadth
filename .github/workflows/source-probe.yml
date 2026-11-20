@@ -14,52 +14,42 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-      - name: Test a few symbols without changing production data
+      - name: Sample Yahoo Finance fresh daily adjusted-close coverage
         shell: bash
         run: |
           python - <<'PY'
-          import csv
-          import datetime as dt
-          import io
-          import json
-          import urllib.request
-          import urllib.error
+          import json, datetime as dt, urllib.request, urllib.error, time
           from zoneinfo import ZoneInfo
-
           TARGET='2026-11-19'
-          headers={'User-Agent':'Mozilla/5.0 (compatible; USMarketBreadthProbe/1.0)','Accept':'application/json,text/csv,*/*'}
-          def read(url):
-              req=urllib.request.Request(url,headers=headers)
-              with urllib.request.urlopen(req,timeout=15) as r:
-                  return r.status, r.read(1500000).decode('utf-8','replace')
-
-          print('Testing EOD availability for', TARGET, 'UTC:',dt.datetime.now(dt.timezone.utc).isoformat(),flush=True)
-          yahoo_good=0
-          for symbol in ['SPY','AAPL','MSFT']:
+          PRIOR='2026-11-18'
+          SYMBOLS='SPY AAPL MSFT NVDA AMZN GOOGL META TSLA BRK-B JNJ JPM XOM COST UNH HD PG KO PEP WMT MCD AMD AVGO PLTR CRM V'.split()
+          successes=0
+          errors=[]
+          for i,symbol in enumerate(SYMBOLS,1):
+              outcome=None
               for host in ['query1.finance.yahoo.com','query2.finance.yahoo.com']:
                   try:
-                      url='https://'+host+'/v8/finance/chart/'+symbol+'?range=10d&interval=1d'
-                      status,txt=read(url)
-                      record=json.loads(txt)['chart']['result'][0]
-                      dates=[dt.datetime.fromtimestamp(t,ZoneInfo('America/New_York')).date().isoformat() for t in record.get('timestamp',[])]
+                      u=f'https://{host}/v8/finance/chart/{symbol}?range=10d&interval=1d'
+                      req=urllib.request.Request(u,headers={'User-Agent':'Mozilla/5.0','Accept':'application/json'})
+                      with urllib.request.urlopen(req,timeout=12) as r:
+                          record=json.loads(r.read(1100000).decode('utf-8'))['chart']['result'][0]
+                      times=record.get('timestamp',[])
+                      dates=[dt.datetime.fromtimestamp(int(t),ZoneInfo('America/New_York')).date().isoformat() for t in times]
                       adj=record.get('indicators',{}).get('adjclose',[{}])[0].get('adjclose',[])
-                      closes=record.get('indicators',{}).get('quote',[{}])[0].get('close',[])
-                      found=TARGET in dates
-                      idx=dates.index(TARGET) if found else -1
-                      valid=found and idx<len(closes) and closes[idx] is not None and idx<len(adj) and adj[idx] is not None
-                      yahoo_good+=int(valid)
-                      print('YAHOO',symbol,'host',host,'HTTP',status,'latest',dates[-1] if dates else 'NONE','target_found',found,'adjusted_close_present',valid,flush=True)
+                      pos=dates.index(TARGET) if TARGET in dates else -1
+                      prev=dates.index(PRIOR) if PRIOR in dates else -1
+                      valid=(pos>=0 and prev>=0 and pos<len(adj) and prev<len(adj) and adj[pos] is not None and adj[prev] is not None and adj[prev]>0)
+                      outcome=('OK',round(adj[pos]/adj[prev]-1,5)) if valid else ('INCOMPLETE',dates[-1] if dates else 'NO_DATES')
                       break
                   except Exception as e:
-                      print('YAHOO',symbol,'host',host,'FAILED',type(e).__name__,str(e)[:100],flush=True)
-          try:
-              u='https://stooq.com/q/d/l/?s=spy.us&i=d&d1=20261113&d2=20261120'
-              status,txt=read(u)
-              reader=csv.DictReader(io.StringIO(txt))
-              rows=list(reader) if txt.startswith('Date,') else []
-              dates=[row.get('Date') for row in rows]
-              print('STOOQ SPY','HTTP',status,'CSV_rows',len(rows),'latest',dates[-1] if dates else 'NONE','target_found',TARGET in dates,flush=True)
-          except Exception as e:
-              print('STOOQ SPY FAILED',type(e).__name__,str(e)[:100],flush=True)
-          print('RESULT Yahoo valid adjusted-close symbols:',yahoo_good,'/3; this is ONLY an access/freshness probe, not a verified broad-market data source.')
+                      outcome=('ERROR',type(e).__name__+':'+str(e)[:60])
+              if outcome[0]=='OK':
+                  successes+=1
+              else:
+                  errors.append((symbol,outcome))
+              print('SAMPLE',i,symbol,*outcome,flush=True)
+              time.sleep(0.14)
+          print('RESULT',successes,'/',len(SYMBOLS),'have both 11/18 and 11/19 adjusted closes',flush=True)
+          print('FAILURES',errors,flush=True)
+          print('NOTICE: This checks data availability only, not constituent coverage, licensing, adjusted-price consistency, or full-history technical values.',flush=True)
           PY
