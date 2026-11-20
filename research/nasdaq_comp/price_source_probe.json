@@ -1,0 +1,317 @@
+{
+  "market": "NASDAQ_LISTING_CANDIDATE_PRICE_SOURCE_PROBE_NOT_COMPOSITE",
+  "status": "RESEARCH_SAMPLE_ONLY",
+  "eligible_for_us_market_publication": false,
+  "asof_actual": "2026-11-19",
+  "first_session": "2026-08-27",
+  "calendar_source": "Yahoo ^IXIC historical daily sessions matched to existing S&P500 60-session calendar",
+  "price_source": "Yahoo Finance undocumented v8 daily adjusted close",
+  "point_in_time_archive": "https://github.com/TylerJForstrom/Stock-Data",
+  "historical_membership_verified": false,
+  "sample_size": 18,
+  "source_status_counts": {
+    "OK": 17,
+    "ValueError|ValueError": 1
+  },
+  "coverage": {
+    "priced": {
+      "eligible_member_days": 623,
+      "possible_member_days": 1080
+    },
+    "ad": {
+      "eligible_member_days": 617,
+      "possible_member_days": 1080
+    },
+    "ma50": {
+      "eligible_member_days": 580,
+      "possible_member_days": 1080
+    },
+    "ma200": {
+      "eligible_member_days": 480,
+      "possible_member_days": 1080
+    },
+    "hilo": {
+      "eligible_member_days": 480,
+      "possible_member_days": 1080
+    }
+  },
+  "limitations": [
+    "These are sampled Nasdaq-listed security types, not actual Composite index membership",
+    "Sample symbols do not establish full historical-price coverage, especially delisted shares",
+    "52W denotes adjusted CLOSE-only extremes, not intraday 52-week highs/lows",
+    "No raw prices or index breadth statistics published",
+    "Yahoo v8 chart is unofficial and rate-limited; viability and usage terms must be reviewed"
+  ],
+  "symbols": [
+    {
+      "ticker": "ACHV",
+      "selection": "FORMER_LISTED",
+      "source_status": "OK",
+      "history_bars": 7,
+      "eligible_sessions_out_of_60": {
+        "priced": 7,
+        "ad": 6,
+        "ma50": 0,
+        "ma200": 0,
+        "hilo": 0
+      },
+      "first_price_date": "2026-11-11",
+      "last_price_date": "2026-11-19"
+    },
+    {
+      "ticker": "AACIU",
+      "selection": "CURRENT_UNRESOLVED",
+      "source_status": "OK",
+      "history_bars": 192,
+      "eligible_sessions_out_of_60": {
+        "priced": 60,
+        "ad": 60,
+        "ma50": 60,
+        "ma200": 0,
+        "hilo": 0
+      },
+      "first_price_date": "2026-02-18",
+      "last_price_date": "2026-11-19"
+    },
+    {
+      "ticker": "AAPL",
+      "selection": "FIXED_LIQUID",
+      "source_status": "OK",
+      "history_bars": 501,
+      "eligible_sessions_out_of_60": {
+        "priced": 60,
+        "ad": 60,
+        "ma50": 60,
+        "ma200": 60,
+        "hilo": 60
+      },
+      "first_price_date": "2024-11-20",
+      "last_price_date": "2026-11-19"
+    },
+    {
+      "ticker": "MSFT",
+      "selection": "FIXED_LIQUID",
+      "source_status": "OK",
+      "history_bars": 501,
+      "eligible_sessions_out_of_60": {
+        "priced": 60,
+        "ad": 60,
+        "ma50": 60,
+        "ma200": 60,
+        "hilo": 60
+      },
+      "first_price_date": "2024-11-20",
+      "last_price_date": "2026-11-19"
+    },
+    {
+      "ticker": "NVDA",
+      "selection": "FIXED_LIQUID",
+      "source_status": "OK",
+      "history_bars": 501,
+      "eligible_sessions_out_of_60": {
+        "priced": 60,
+        "ad": 60,
+        "ma50": 60,
+        "ma200": 60,
+        "hilo": 60
+      },
+      "first_price_date": "2024-11-20",
+      "last_price_date": "2026-11-19"
+    },
+    {
+      "ticker": "AMZN",
+      "selection": "FIXED_LIQUID",
+      "source_status": "OK",
+      "history_bars": 501,
+      "eligible_sessions_out_of_60": {
+        "priced": 60,
+        "ad": 60,
+        "ma50": 60,
+        "ma200": 60,
+        "hilo": 60
+      },
+      "first_price_date": "2024-11-20",
+      "last_price_date": "2026-11-19"
+    },
+    {
+      "ticker": "GOOGL",
+      "selection": "FIXED_LIQUID",
+      "source_status": "OK",
+      "history_bars": 501,
+      "eligible_sessions_out_of_60": {
+        "priced": 60,
+        "ad": 60,
+        "ma50": 60,
+        "ma200": 60,
+        "hilo": 60
+      },
+      "first_price_date": "2024-11-20",
+      "last_price_date": "2026-11-19"
+    },
+    {
+      "ticker": "META",
+      "selection": "FIXED_LIQUID",
+      "source_status": "OK",
+      "history_bars": 501,
+      "eligible_sessions_out_of_60": {
+        "priced": 60,
+        "ad": 60,
+        "ma50": 60,
+        "ma200": 60,
+        "hilo": 60
+      },
+      "first_price_date": "2024-11-20",
+      "last_price_date": "2026-11-19"
+    },
+    {
+      "ticker": "TSLA",
+      "selection": "FIXED_LIQUID",
+      "source_status": "OK",
+      "history_bars": 501,
+      "eligible_sessions_out_of_60": {
+        "priced": 60,
+        "ad": 60,
+        "ma50": 60,
+        "ma200": 60,
+        "hilo": 60
+      },
+      "first_price_date": "2024-11-20",
+      "last_price_date": "2026-11-19"
+    },
+    {
+      "ticker": "AMD",
+      "selection": "FIXED_LIQUID",
+      "source_status": "OK",
+      "history_bars": 501,
+      "eligible_sessions_out_of_60": {
+        "priced": 60,
+        "ad": 60,
+        "ma50": 60,
+        "ma200": 60,
+        "hilo": 60
+      },
+      "first_price_date": "2024-11-20",
+      "last_price_date": "2026-11-19"
+    },
+    {
+      "ticker": "ADIL",
+      "selection": "FORMER_LISTED",
+      "source_status": "OK",
+      "history_bars": 6,
+      "eligible_sessions_out_of_60": {
+        "priced": 6,
+        "ad": 5,
+        "ma50": 0,
+        "ma200": 0,
+        "hilo": 0
+      },
+      "first_price_date": "2026-10-28",
+      "last_price_date": "2026-11-04"
+    },
+    {
+      "ticker": "AIXC",
+      "selection": "FORMER_LISTED",
+      "source_status": "OK",
+      "history_bars": 1,
+      "eligible_sessions_out_of_60": {
+        "priced": 1,
+        "ad": 0,
+        "ma50": 0,
+        "ma200": 0,
+        "hilo": 0
+      },
+      "first_price_date": "2026-09-29",
+      "last_price_date": "2026-09-29"
+    },
+    {
+      "ticker": "ALDF",
+      "selection": "FORMER_LISTED",
+      "source_status": "OK",
+      "history_bars": 7,
+      "eligible_sessions_out_of_60": {
+        "priced": 7,
+        "ad": 6,
+        "ma50": 0,
+        "ma200": 0,
+        "hilo": 0
+      },
+      "first_price_date": "2026-11-05",
+      "last_price_date": "2026-11-13"
+    },
+    {
+      "ticker": "ALOT",
+      "selection": "FORMER_LISTED",
+      "source_status": "OK",
+      "history_bars": 1,
+      "eligible_sessions_out_of_60": {
+        "priced": 0,
+        "ad": 0,
+        "ma50": 0,
+        "ma200": 0,
+        "hilo": 0
+      },
+      "first_price_date": "2026-08-26",
+      "last_price_date": "2026-08-26"
+    },
+    {
+      "ticker": "ANY",
+      "selection": "FORMER_LISTED",
+      "source_status": "ValueError|ValueError",
+      "history_bars": 0,
+      "eligible_sessions_out_of_60": {
+        "priced": 0,
+        "ad": 0,
+        "ma50": 0,
+        "ma200": 0,
+        "hilo": 0
+      },
+      "first_price_date": null,
+      "last_price_date": null
+    },
+    {
+      "ticker": "APGE",
+      "selection": "FORMER_LISTED",
+      "source_status": "OK",
+      "history_bars": 1,
+      "eligible_sessions_out_of_60": {
+        "priced": 1,
+        "ad": 0,
+        "ma50": 0,
+        "ma200": 0,
+        "hilo": 0
+      },
+      "first_price_date": "2026-09-02",
+      "last_price_date": "2026-09-02"
+    },
+    {
+      "ticker": "ATAI",
+      "selection": "FORMER_LISTED",
+      "source_status": "OK",
+      "history_bars": 1,
+      "eligible_sessions_out_of_60": {
+        "priced": 1,
+        "ad": 0,
+        "ma50": 0,
+        "ma200": 0,
+        "hilo": 0
+      },
+      "first_price_date": "2026-09-10",
+      "last_price_date": "2026-09-10"
+    },
+    {
+      "ticker": "ATII",
+      "selection": "FORMER_LISTED",
+      "source_status": "OK",
+      "history_bars": 89,
+      "eligible_sessions_out_of_60": {
+        "priced": 60,
+        "ad": 60,
+        "ma50": 40,
+        "ma200": 0,
+        "hilo": 0
+      },
+      "first_price_date": "2026-07-17",
+      "last_price_date": "2026-11-19"
+    }
+  ]
+}
