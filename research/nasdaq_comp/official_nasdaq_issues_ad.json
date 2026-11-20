@@ -1,0 +1,122 @@
+{
+  "market": "NASDAQ_LISTED_ISSUES_STATISTICS_NOT_VERIFIED_COMP_INDEX",
+  "official_data": true,
+  "actual_nasdaq_composite_constituents": false,
+  "eligible_for_us_market_comp_publication": false,
+  "source": "https://nasdaqtrader.com/dynamic/dailyfiles/daily2026.csv",
+  "notes": [
+    "Official Nasdaq Trader daily market statistics for Nasdaq-listed issues",
+    "Nasdaq Trader does NOT say these figures are exactly Nasdaq Composite constituent-only A/D",
+    "Do not count ETF/test/security-type issues as COMP by assumption",
+    "No 50/200DMA or 52-week new highs/lows provided by this source",
+    "Source can serve as independent A/D comparison to future reconstructed COMP breadth"
+  ],
+  "status": "NEEDS_CSV_SCHEMA_REVIEW",
+  "columns": {
+    "date": "Date",
+    "advances": "Advances",
+    "declines": "Declines",
+    "unchanged": "Unchanged",
+    "composite": null,
+    "computer": null
+  },
+  "sample_headers": [
+    [
+      "Date",
+      "N100",
+      "Financial100",
+      "Composite",
+      "Composite_Hi",
+      "Composite_Low",
+      "N100_Hi",
+      "N100_Low",
+      "Industrial",
+      "Bank",
+      "Insurance",
+      "Financial",
+      "Transportation",
+      "Telecom",
+      "Biotech",
+      "Computer",
+      "NasdaqTrades",
+      "Volume",
+      "DolVol",
+      "MktVal",
+      "Advances",
+      "Declines",
+      "Unchanged"
+    ],
+    [
+      "1/2/2026 0:00:00",
+      "25206.17",
+      "7380.39",
+      "23235.63",
+      "23585.96",
+      "23119.49",
+      "25597.65",
+      "25086.36",
+      "12427.13",
+      "4611.19",
+      "15321.12",
+      "13531.60",
+      "7598.46",
+      "507.67",
+      "5706.69",
+      "22830.67",
+      "55583341.00",
+      "7516732915.00",
+      "423788988900.00",
+      "43128494142.00",
+      "2959.00",
+      "1890.00",
+      "168.00"
+    ],
+    [
+      "1/5/2026 0:00:00",
+      "25401.32",
+      "7611.60",
+      "23395.82",
+      "23476.51",
+      "23332.23",
+      "25520.51",
+      "25354.66",
+      "12655.79",
+      "4696.92",
+      "15503.56",
+      "13951.99",
+      "7743.31",
+      "508.75",
+      "5639.71",
+      "22875.25",
+      "61804871.00",
+      "8966842566.00",
+      "448803385892.00",
+      "43419805156.00",
+      "3435.00",
+      "1438.00",
+      "194.00"
+    ]
+  ],
+  "errors": [
+    {
+      "line": 2,
+      "reason": "Bad date value: '1/2/2026 0:00:00'"
+    },
+    {
+      "line": 3,
+      "reason": "Bad date value: '1/5/2026 0:00:00'"
+    },
+    {
+      "line": 4,
+      "reason": "Bad date value: '1/6/2026 0:00:00'"
+    },
+    {
+      "line": 5,
+      "reason": "Bad date value: '1/7/2026 0:00:00'"
+    },
+    {
+      "line": 6,
+      "reason": "Bad date value: '1/8/2026 0:00:00'"
+    }
+  ]
+}
