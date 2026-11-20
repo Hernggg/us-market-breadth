@@ -3,75 +3,33 @@
   "eligible_for_comp_publication": false,
   "asof": "2026-11-19",
   "directory_total": 5602,
-  "unresolved_count": 429,
+  "unresolved_count": 37,
   "unresolved_market_categories": {
-    "G": 311,
-    "S": 70,
-    "Q": 48
+    "G": 8,
+    "Q": 16,
+    "S": 13
   },
   "unresolved_name_terms": {
-    "unit": 251,
-    "rights": 76,
+    "unit": 0,
+    "rights": 0,
     "warrant": 0,
-    "preferred": 5,
-    "depositary": 4,
+    "preferred": 0,
+    "depositary": 3,
     "reit": 0,
-    "class": 17,
+    "class": 8,
     "stock": 3,
-    "share": 38,
-    "note": 28,
+    "share": 29,
+    "note": 0,
     "fund": 0,
-    "acquisition": 296,
-    "trust": 2,
+    "acquisition": 0,
+    "trust": 1,
     "income": 0,
     "exchange": 0,
     "stapled": 0
   },
-  "excluded_noncommon_type_count": 521,
+  "excluded_noncommon_type_count": 910,
   "sample_selection": "45 SHA256-sorted tickers, stable and not a representative sample",
   "sample": [
-    {
-      "ticker": "PAGP",
-      "name": "Plains GP Holdings, L.P. - Class A Shares representing limited partner interests",
-      "market_category": "Q",
-      "etf_flag": "N"
-    },
-    {
-      "ticker": "CHPGR",
-      "name": "ChampionsGate Acquisition Corporation - Rights",
-      "market_category": "G",
-      "etf_flag": "N"
-    },
-    {
-      "ticker": "SCPQU",
-      "name": "Social Commerce Partners Corporation - Unit",
-      "market_category": "G",
-      "etf_flag": "N"
-    },
-    {
-      "ticker": "ADACU",
-      "name": "American Drive Acquisition Company - Units",
-      "market_category": "G",
-      "etf_flag": "N"
-    },
-    {
-      "ticker": "LTGRU",
-      "name": "Long Table Growth Corp. - Units",
-      "market_category": "G",
-      "etf_flag": "N"
-    },
-    {
-      "ticker": "OFSSO",
-      "name": "OFS Capital Corporation - 7.50% Notes due 2028",
-      "market_category": "G",
-      "etf_flag": "N"
-    },
-    {
-      "ticker": "KEYYU",
-      "name": "Keystone Acquisition Corp. - Unit",
-      "market_category": "G",
-      "etf_flag": "N"
-    },
     {
       "ticker": "CDZIP",
       "name": "Cadiz, Inc. - Depositary Shares",
@@ -79,225 +37,219 @@
       "etf_flag": "N"
     },
     {
-      "ticker": "CAQUU",
-      "name": "Cambridge Acquisition Corp. - Unit",
-      "market_category": "G",
-      "etf_flag": "N"
-    },
-    {
-      "ticker": "GIXXU",
-      "name": "GigCapital9 Corp. - Units",
-      "market_category": "G",
-      "etf_flag": "N"
-    },
-    {
-      "ticker": "BPACU",
-      "name": "Blueport Acquisition Ltd - Units",
-      "market_category": "S",
-      "etf_flag": "N"
-    },
-    {
-      "ticker": "DGXX",
-      "name": "Digi Power X Inc. - Common Subordinate Voting Shares",
-      "market_category": "S",
-      "etf_flag": "N"
-    },
-    {
-      "ticker": "ILLUU",
-      "name": "Illumination Acquisition Corp I - Units",
-      "market_category": "G",
-      "etf_flag": "N"
-    },
-    {
-      "ticker": "TAVIR",
-      "name": "Tavia Acquisition Corp. - Right",
-      "market_category": "G",
-      "etf_flag": "N"
-    },
-    {
-      "ticker": "HVMCU",
-      "name": "Highview Merger Corp. - Units",
-      "market_category": "G",
-      "etf_flag": "N"
-    },
-    {
-      "ticker": "DTSQU",
-      "name": "DT Cloud Star Acquisition Corporation - Units",
-      "market_category": "S",
-      "etf_flag": "N"
-    },
-    {
-      "ticker": "OIMAU",
-      "name": "OneIM Acquisition Corp. - Units",
-      "market_category": "G",
-      "etf_flag": "N"
-    },
-    {
-      "ticker": "CAPNR",
-      "name": "Cayson Acquisition Corp - Right",
-      "market_category": "G",
-      "etf_flag": "N"
-    },
-    {
-      "ticker": "RDACU",
-      "name": "Rising Dragon Acquisition Corp. - Unit",
-      "market_category": "S",
-      "etf_flag": "N"
-    },
-    {
-      "ticker": "OCLTU",
-      "name": "OceanLight Acquisition Corporation - Units",
-      "market_category": "G",
-      "etf_flag": "N"
-    },
-    {
-      "ticker": "IPHXU",
-      "name": "Inflection Point Acquisition Corp. VIII - Unit",
-      "market_category": "G",
-      "etf_flag": "N"
-    },
-    {
-      "ticker": "LKSPR",
-      "name": "Lake Superior Acquisition Corp. - Rights",
-      "market_category": "G",
-      "etf_flag": "N"
-    },
-    {
-      "ticker": "MCAHR",
-      "name": "Mountain Crest Acquisition 6 Corp. - Rights",
-      "market_category": "G",
-      "etf_flag": "N"
-    },
-    {
-      "ticker": "SZZLR",
-      "name": "Sizzle Acquisition Corp. II - Right",
-      "market_category": "G",
-      "etf_flag": "N"
-    },
-    {
-      "ticker": "CRACR",
-      "name": "Crown Reserve Acquisition Corp. I - Rights",
-      "market_category": "G",
-      "etf_flag": "N"
-    },
-    {
-      "ticker": "BRRKU",
-      "name": "Bluerock Acquisition Corp. II - Units",
-      "market_category": "G",
-      "etf_flag": "N"
-    },
-    {
-      "ticker": "CTHH",
-      "name": "Qwest Corporation - 6.750% Notes due 2052",
+      "ticker": "GOOD",
+      "name": "Gladstone Commercial Corporation - Real Estate Investment Trust",
       "market_category": "Q",
       "etf_flag": "N"
     },
     {
-      "ticker": "IEAGR",
-      "name": "Infinite Eagle Acquisition Corp. - Rights",
-      "market_category": "G",
-      "etf_flag": "N"
-    },
-    {
-      "ticker": "CTAAU",
-      "name": "ClearThink 1 Acquisition Corp. - Units",
-      "market_category": "G",
-      "etf_flag": "N"
-    },
-    {
-      "ticker": "OXLCZ",
-      "name": "Oxford Lane Capital Corp. - 5.00% Notes due 2027",
-      "market_category": "Q",
-      "etf_flag": "N"
-    },
-    {
-      "ticker": "NBRGR",
-      "name": "Newbridge Acquisition Limited - Rights",
+      "ticker": "HAO",
+      "name": "Haoxi Health Technology Limited - Class A Ord Share",
       "market_category": "S",
       "etf_flag": "N"
     },
     {
-      "ticker": "OXLCL",
-      "name": "Oxford Lane Capital Corp. - 6.75% Notes due 2031",
-      "market_category": "Q",
-      "etf_flag": "N"
-    },
-    {
-      "ticker": "OXSQH",
-      "name": "Oxford Square Capital Corp. - 7.75% Notes due 2030",
-      "market_category": "Q",
-      "etf_flag": "N"
-    },
-    {
-      "ticker": "LOGI",
-      "name": "Logitech International S.A. - Registered Shares",
-      "market_category": "Q",
-      "etf_flag": "N"
-    },
-    {
-      "ticker": "HACQU",
-      "name": "HCM IV Acquisition Corp. - Unit",
-      "market_category": "G",
-      "etf_flag": "N"
-    },
-    {
-      "ticker": "CXIIU",
-      "name": "Churchill Capital Corp XII - Units",
-      "market_category": "G",
-      "etf_flag": "N"
-    },
-    {
-      "ticker": "FIGXU",
-      "name": "FIGX Capital Acquisition Corp. - Units",
-      "market_category": "G",
-      "etf_flag": "N"
-    },
-    {
-      "ticker": "SSEAR",
-      "name": "Starry Sea Acquisition Corp - Rights",
+      "ticker": "MNSBP",
+      "name": "MainStreet Bancshares, Inc. - Depositary Shares",
       "market_category": "S",
       "etf_flag": "N"
     },
     {
-      "ticker": "CIGI",
-      "name": "Colliers International Group Inc.  - Subordinate Voting Shares",
+      "ticker": "CRON",
+      "name": "Cronos Group Inc. - Common Share",
+      "market_category": "G",
+      "etf_flag": "N"
+    },
+    {
+      "ticker": "LILAP",
+      "name": "Liberty Latin America Ltd. - 9.0% Fixed Rate Cumulative Perpetual Redeemable Series A Preference Shares",
       "market_category": "Q",
       "etf_flag": "N"
     },
     {
-      "ticker": "AESPU",
-      "name": "Aeon Acquisition I Corp. - Units",
+      "ticker": "CCEC",
+      "name": "Capital Clean Energy Carriers Corp. - Common Share",
+      "market_category": "Q",
+      "etf_flag": "N"
+    },
+    {
+      "ticker": "YXT",
+      "name": "YXT.COM GROUP HOLDING LIMITED - American Depository Shares",
       "market_category": "G",
       "etf_flag": "N"
     },
     {
-      "ticker": "RNAQU",
-      "name": "Rainier Acquisition Corporation - Units",
+      "ticker": "GOOG",
+      "name": "Alphabet Inc. - Class C Capital Stock",
+      "market_category": "Q",
+      "etf_flag": "N"
+    },
+    {
+      "ticker": "NCTY",
+      "name": "The9 Limited - American Depository Shares",
       "market_category": "S",
       "etf_flag": "N"
     },
     {
-      "ticker": "KRAQU",
-      "name": "KRAKacquisition Corp - Unit",
-      "market_category": "G",
-      "etf_flag": "N"
-    },
-    {
-      "ticker": "FVNNU",
-      "name": "Future Vision II Acquisition Corporation - Units",
+      "ticker": "BRBI",
+      "name": "BRBI BR Partners S.A. - ADSs",
       "market_category": "S",
       "etf_flag": "N"
     },
     {
-      "ticker": "TRGSR",
-      "name": "TRG Latin America Acquisitions Corp. - Rights",
+      "ticker": "ELVR",
+      "name": "Elevra Lithium Limited - American Depository Shares",
+      "market_category": "S",
+      "etf_flag": "N"
+    },
+    {
+      "ticker": "IBEX",
+      "name": "IBEX Limited - Common Share",
       "market_category": "G",
       "etf_flag": "N"
     },
     {
-      "ticker": "CRANU",
-      "name": "Crane Harbor Acquisition Corp. II - Units",
+      "ticker": "PAYP",
+      "name": "PayPay Corporation - American Depository Shares",
+      "market_category": "Q",
+      "etf_flag": "N"
+    },
+    {
+      "ticker": "WAFDP",
+      "name": "WaFd, Inc. - Depositary Shares",
+      "market_category": "Q",
+      "etf_flag": "N"
+    },
+    {
+      "ticker": "NVX",
+      "name": "NOVONIX Limited - American Depository Shares",
       "market_category": "G",
+      "etf_flag": "N"
+    },
+    {
+      "ticker": "BZ",
+      "name": "KANZHUN LIMITED - American Depository Shares",
+      "market_category": "Q",
+      "etf_flag": "N"
+    },
+    {
+      "ticker": "STNE",
+      "name": "StoneCo Ltd. - Class A Common Share",
+      "market_category": "Q",
+      "etf_flag": "N"
+    },
+    {
+      "ticker": "AAPG",
+      "name": "Ascentage Pharma Group International - American Depository Shares",
+      "market_category": "G",
+      "etf_flag": "N"
+    },
+    {
+      "ticker": "CHWM",
+      "name": "Chilwa Minerals Limited - American Depository Shares",
+      "market_category": "S",
+      "etf_flag": "N"
+    },
+    {
+      "ticker": "SLN",
+      "name": "Silence Therapeutics Plc - American Depository Share",
+      "market_category": "G",
+      "etf_flag": "N"
+    },
+    {
+      "ticker": "IVA",
+      "name": "Inventiva S.A. - American Depository Shares",
+      "market_category": "G",
+      "etf_flag": "N"
+    },
+    {
+      "ticker": "Z",
+      "name": "Zillow Group, Inc. - Class C Capital Stock",
+      "market_category": "Q",
+      "etf_flag": "N"
+    },
+    {
+      "ticker": "RNW",
+      "name": "ReNew Energy Global plc - Class A Shares",
+      "market_category": "Q",
+      "etf_flag": "N"
+    },
+    {
+      "ticker": "ASML",
+      "name": "ASML Holding N.V. - New York Registry Shares",
+      "market_category": "Q",
+      "etf_flag": "N"
+    },
+    {
+      "ticker": "GAIN",
+      "name": "Gladstone Investment Corporation - Business Development Company",
+      "market_category": "Q",
+      "etf_flag": "N"
+    },
+    {
+      "ticker": "DDI",
+      "name": "DoubleDown Interactive Co., Ltd. - American Depository Shares",
+      "market_category": "Q",
+      "etf_flag": "N"
+    },
+    {
+      "ticker": "CMPS",
+      "name": "COMPASS Pathways Plc - American Depository Shares",
+      "market_category": "Q",
+      "etf_flag": "N"
+    },
+    {
+      "ticker": "SIFY",
+      "name": "Sify Technologies Limited - American Depository Shares",
+      "market_category": "S",
+      "etf_flag": "N"
+    },
+    {
+      "ticker": "NBTX",
+      "name": "Nanobiotix S.A. - ADSs",
+      "market_category": "Q",
+      "etf_flag": "N"
+    },
+    {
+      "ticker": "KSPI",
+      "name": "Joint Stock Company Kaspi.kz - American Depository Shares",
+      "market_category": "Q",
+      "etf_flag": "N"
+    },
+    {
+      "ticker": "RETO",
+      "name": "ReTo Eco-Solutions, Inc. - Class A Shares",
+      "market_category": "S",
+      "etf_flag": "N"
+    },
+    {
+      "ticker": "ORGO",
+      "name": "Organogenesis Holdings Inc.  - Class A ",
+      "market_category": "S",
+      "etf_flag": "N"
+    },
+    {
+      "ticker": "YJ",
+      "name": "Yunji Inc. - American Depository Shares",
+      "market_category": "S",
+      "etf_flag": "N"
+    },
+    {
+      "ticker": "MDBH",
+      "name": "MDB Capital Holdings, LLC - Class A common ",
+      "market_category": "S",
+      "etf_flag": "N"
+    },
+    {
+      "ticker": "SY",
+      "name": "So-Young International Inc. - American Depository Shares",
+      "market_category": "S",
+      "etf_flag": "N"
+    },
+    {
+      "ticker": "GVH",
+      "name": "Globavend Holdings Limited - Ord Shares",
+      "market_category": "S",
       "etf_flag": "N"
     }
   ],
