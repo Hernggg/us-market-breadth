@@ -22,7 +22,7 @@ jobs:
           python-version: '3.12'
       - name: Verify one personal-research reading without republishing source history
         env:
-          EXPECTED: \${{ inputs.expected_date }}
+          EXPECTED: ${{ inputs.expected_date }}
         run: |
           if [ -n "$EXPECTED" ]; then
             python research/all_us_52w/compute_public_history_once.py --expected-date "$EXPECTED"
