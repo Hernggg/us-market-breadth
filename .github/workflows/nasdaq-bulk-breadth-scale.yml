@@ -1,0 +1,42 @@
+name: Nasdaq full-universe 3400 security compute scale proof - SYNTHETIC
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'nasdaq_bulk_breadth_engine.py'
+      - 'tests/test_nasdaq_bulk_breadth_engine.py'
+      - '.github/workflows/nasdaq-bulk-breadth-scale.yml'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: nasdaq-bulk-breadth-scale-research
+  cancel-in-progress: false
+
+jobs:
+  test-and-scale:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install existing DuckDB dependency
+        run: pip install -r requirements.txt
+      - name: Validate 311-session finance math against Python reference
+        run: python -m unittest discover -s tests -p 'test_nasdaq_bulk_breadth_engine.py' -v
+      - name: Scale synthetic batch calculation to 3400 securities and 311 sessions
+        run: python nasdaq_bulk_breadth_engine.py --synthetic-securities 3400 --out research/nasdaq_comp/bulk_engine_synthetic_scale.json
+      - name: Save only synthetic aggregate QA and runtime data
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add research/nasdaq_comp/bulk_engine_synthetic_scale.json
+          if ! git diff --cached --quiet; then
+            git commit -m "Validate synthetic 3400 security Nasdaq breadth batch scale"
+            git pull --rebase origin "$GITHUB_REF_NAME"
+            git push origin HEAD:"$GITHUB_REF_NAME"
+          fi

@@ -1,0 +1,64 @@
+//@version=6
+// @us-market V2.0 breadth helper.
+// USE ON 1D CHART ONLY. Values are TradingView INDEX vendor percentages.
+// "Avg5" etc mean 5 DAILY VALUES of % above the 50- or 200-day MA.
+// They do NOT mean 5-day or 20-day STOCK moving-average breadth.
+// For personal visual research inside TradingView; not a web-scraping tool.
+indicator("@us-market | Nasdaq Composite & S&P 500 50/200DMA breadth", shorttitle="US Market MA Breadth", overlay=false, precision=2)
+
+if not (timeframe.isdaily and timeframe.multiplier == 1)
+    runtime.error("Set the chart to 1D (daily) to align US market breadth observations.")
+
+[ncfi0, ncfi5, ncfi10, ncfi20, ncfi60] = request.security("INDEX:NCFI", "1D", [close, ta.sma(close, 5), ta.sma(close, 10), ta.sma(close, 20), ta.sma(close, 60)], gaps=barmerge.gaps_on, lookahead=barmerge.lookahead_off, ignore_invalid_symbol=true)
+[ncth0, ncth5, ncth10, ncth20, ncth60] = request.security("INDEX:NCTH", "1D", [close, ta.sma(close, 5), ta.sma(close, 10), ta.sma(close, 20), ta.sma(close, 60)], gaps=barmerge.gaps_on, lookahead=barmerge.lookahead_off, ignore_invalid_symbol=true)
+[s5fi0, s5fi5, s5fi10, s5fi20, s5fi60] = request.security("INDEX:S5FI", "1D", [close, ta.sma(close, 5), ta.sma(close, 10), ta.sma(close, 20), ta.sma(close, 60)], gaps=barmerge.gaps_on, lookahead=barmerge.lookahead_off, ignore_invalid_symbol=true)
+[s5th0, s5th5, s5th10, s5th20, s5th60] = request.security("INDEX:S5TH", "1D", [close, ta.sma(close, 5), ta.sma(close, 10), ta.sma(close, 20), ta.sma(close, 60)], gaps=barmerge.gaps_on, lookahead=barmerge.lookahead_off, ignore_invalid_symbol=true)
+
+// Unique, stable plot titles: TradingView export CSV uses these as column headers.
+// Display in Data Window without cluttering the chart with 20 overlapping lines.
+plot(ncfi0, "NCFI_Now", display=display.data_window)
+plot(ncfi5, "NCFI_Avg5", display=display.data_window)
+plot(ncfi10, "NCFI_Avg10", display=display.data_window)
+plot(ncfi20, "NCFI_Avg20", display=display.data_window)
+plot(ncfi60, "NCFI_Avg60", display=display.data_window)
+plot(ncth0, "NCTH_Now", display=display.data_window)
+plot(ncth5, "NCTH_Avg5", display=display.data_window)
+plot(ncth10, "NCTH_Avg10", display=display.data_window)
+plot(ncth20, "NCTH_Avg20", display=display.data_window)
+plot(ncth60, "NCTH_Avg60", display=display.data_window)
+plot(s5fi0, "S5FI_Now", display=display.data_window)
+plot(s5fi5, "S5FI_Avg5", display=display.data_window)
+plot(s5fi10, "S5FI_Avg10", display=display.data_window)
+plot(s5fi20, "S5FI_Avg20", display=display.data_window)
+plot(s5fi60, "S5FI_Avg60", display=display.data_window)
+plot(s5th0, "S5TH_Now", display=display.data_window)
+plot(s5th5, "S5TH_Avg5", display=display.data_window)
+plot(s5th10, "S5TH_Avg10", display=display.data_window)
+plot(s5th20, "S5TH_Avg20", display=display.data_window)
+plot(s5th60, "S5TH_Avg60", display=display.data_window)
+
+f_percent(float value) =>
+    na(value) ? "N/A" : str.tostring(value, "#.##") + "%"
+
+f_color(float value) =>
+    na(value) ? color.gray : value >= 50 ? color.rgb(55, 200, 145) : color.rgb(255, 142, 138)
+
+f_row(table grid, int row, string label, float a, float b, float c, float d) =>
+    table.cell(grid, 0, row, label, text_color=color.white, bgcolor=color.rgb(38, 47, 61))
+    table.cell(grid, 1, row, f_percent(a), text_color=f_color(a), bgcolor=color.rgb(23, 29, 40))
+    table.cell(grid, 2, row, f_percent(b), text_color=f_color(b), bgcolor=color.rgb(23, 29, 40))
+    table.cell(grid, 3, row, f_percent(c), text_color=f_color(c), bgcolor=color.rgb(23, 29, 40))
+    table.cell(grid, 4, row, f_percent(d), text_color=f_color(d), bgcolor=color.rgb(23, 29, 40))
+
+var table dashboard = table.new(position.top_right, 5, 6, border_width=1, frame_color=color.rgb(65, 73, 87))
+if barstate.islast
+    table.cell(dashboard, 0, 0, "Window", bgcolor=color.rgb(38, 47, 61), text_color=color.white)
+    table.cell(dashboard, 1, 0, "Nasdaq 50", bgcolor=color.rgb(38, 47, 61), text_color=color.white)
+    table.cell(dashboard, 2, 0, "Nasdaq 200", bgcolor=color.rgb(38, 47, 61), text_color=color.white)
+    table.cell(dashboard, 3, 0, "S&P 50", bgcolor=color.rgb(38, 47, 61), text_color=color.white)
+    table.cell(dashboard, 4, 0, "S&P 200", bgcolor=color.rgb(38, 47, 61), text_color=color.white)
+    f_row(dashboard, 1, "Daily", ncfi0, ncth0, s5fi0, s5th0)
+    f_row(dashboard, 2, "Avg 5D", ncfi5, ncth5, s5fi5, s5th5)
+    f_row(dashboard, 3, "Avg 10D", ncfi10, ncth10, s5fi10, s5th10)
+    f_row(dashboard, 4, "Avg 20D", ncfi20, ncth20, s5fi20, s5th20)
+    f_row(dashboard, 5, "Avg 60D", ncfi60, ncth60, s5fi60, s5th60)

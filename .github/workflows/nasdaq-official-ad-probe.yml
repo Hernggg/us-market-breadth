@@ -1,0 +1,38 @@
+name: Nasdaq official listed-issues A/D feasibility (research only)
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'nasdaq_official_stats_probe.py'
+      - 'tests/test_nasdaq_official_stats_probe.py'
+      - '.github/workflows/nasdaq-official-ad-probe.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  official-ad-probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Run Nasdaq Trader CSV and 60-day window tests
+        run: python -m unittest discover -s tests -p 'test_nasdaq_official_stats_probe.py' -v
+      - name: Fetch and check Nasdaq Trader annual official file
+        run: python nasdaq_official_stats_probe.py --out research/nasdaq_comp/official_nasdaq_issues_ad.json
+      - name: Commit research audit only (never public/latest.json)
+        if: always()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          if [ -f research/nasdaq_comp/official_nasdaq_issues_ad.json ]; then
+            git add research/nasdaq_comp/official_nasdaq_issues_ad.json
+            if ! git diff --cached --quiet; then
+              git commit -m "Update official Nasdaq listed-issues market statistics research"
+              git push
+            fi
+          fi

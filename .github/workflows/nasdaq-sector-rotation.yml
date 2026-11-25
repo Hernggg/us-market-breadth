@@ -1,0 +1,35 @@
+name: Nasdaq official sector index rotation study (research only)
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'nasdaq_sector_rotation.py'
+      - 'tests/test_nasdaq_sector_rotation.py'
+      - '.github/workflows/nasdaq-sector-rotation.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  index-levels:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Check sector index level calculations
+        run: python -m unittest discover -s tests -p 'test_nasdaq_sector_rotation.py' -v
+      - name: Download official Nasdaq index levels and compare 1-60 session returns
+        run: python nasdaq_sector_rotation.py --out research/nasdaq_comp/official_sector_relative_strength.json
+      - name: Commit research-only derived index comparisons
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add research/nasdaq_comp/official_sector_relative_strength.json
+          if ! git diff --cached --quiet; then
+            git commit -m "Update Nasdaq index relative-strength research"
+            git push
+          fi

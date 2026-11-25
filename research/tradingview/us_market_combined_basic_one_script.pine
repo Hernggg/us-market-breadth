@@ -1,0 +1,118 @@
+//@version=6
+// @us-market V2.0 | TradingView Basic ONE-SAVED-SCRIPT edition.
+// 8 genuine TradingView INDEX market breadth series, 1/5/10/20/60 session averages.
+// Use on the 1D chart. Data is vendor-derived; no downloaded stock price simulations.
+// Important: MAHQ/MALQ are Nasdaq exchange issues, not independently verified
+// strict Nasdaq Composite member-only 52-week high/low counts.
+// Do not treat malformed 0.01 high/low vendor daily values as 0.01 stock.
+indicator("@us-market | Combined MA Breadth + 52W NH/NL", shorttitle="US Market Breadth All", overlay=false, precision=2)
+
+if not (timeframe.isdaily and timeframe.multiplier == 1)
+    runtime.error("Please switch chart to 1D daily timeframe.")
+
+// Part A: % of constituents with daily close above their OWN 50/200-day MA.
+// The 5/10/20/60 windows here average the daily BREADTH PERCENTAGES.
+[ncfi0, ncfi5, ncfi10, ncfi20, ncfi60] = request.security("INDEX:NCFI", "1D", [close, ta.sma(close, 5), ta.sma(close, 10), ta.sma(close, 20), ta.sma(close, 60)], gaps=barmerge.gaps_on, lookahead=barmerge.lookahead_off, ignore_invalid_symbol=true)
+[ncth0, ncth5, ncth10, ncth20, ncth60] = request.security("INDEX:NCTH", "1D", [close, ta.sma(close, 5), ta.sma(close, 10), ta.sma(close, 20), ta.sma(close, 60)], gaps=barmerge.gaps_on, lookahead=barmerge.lookahead_off, ignore_invalid_symbol=true)
+[s5fi0, s5fi5, s5fi10, s5fi20, s5fi60] = request.security("INDEX:S5FI", "1D", [close, ta.sma(close, 5), ta.sma(close, 10), ta.sma(close, 20), ta.sma(close, 60)], gaps=barmerge.gaps_on, lookahead=barmerge.lookahead_off, ignore_invalid_symbol=true)
+[s5th0, s5th5, s5th10, s5th20, s5th60] = request.security("INDEX:S5TH", "1D", [close, ta.sma(close, 5), ta.sma(close, 10), ta.sma(close, 20), ta.sma(close, 60)], gaps=barmerge.gaps_on, lookahead=barmerge.lookahead_off, ignore_invalid_symbol=true)
+
+// Part B: vendor-defined 52-week highs/lows issue COUNTS (averaged daily counts).
+// Nasdaq MAHQ/MALQ are Nasdaq exchange-type issues, not authenticated COMP-only.
+[mahq0, mahq5, mahq10, mahq20, mahq60] = request.security("INDEX:MAHQ", "1D", [close, ta.sma(close, 5), ta.sma(close, 10), ta.sma(close, 20), ta.sma(close, 60)], gaps=barmerge.gaps_on, lookahead=barmerge.lookahead_off, ignore_invalid_symbol=true)
+[malq0, malq5, malq10, malq20, malq60] = request.security("INDEX:MALQ", "1D", [close, ta.sma(close, 5), ta.sma(close, 10), ta.sma(close, 20), ta.sma(close, 60)], gaps=barmerge.gaps_on, lookahead=barmerge.lookahead_off, ignore_invalid_symbol=true)
+[mahp0, mahp5, mahp10, mahp20, mahp60] = request.security("INDEX:MAHP", "1D", [close, ta.sma(close, 5), ta.sma(close, 10), ta.sma(close, 20), ta.sma(close, 60)], gaps=barmerge.gaps_on, lookahead=barmerge.lookahead_off, ignore_invalid_symbol=true)
+[malp0, malp5, malp10, malp20, malp60] = request.security("INDEX:MALP", "1D", [close, ta.sma(close, 5), ta.sma(close, 10), ta.sma(close, 20), ta.sma(close, 60)], gaps=barmerge.gaps_on, lookahead=barmerge.lookahead_off, ignore_invalid_symbol=true)
+
+// Keep uniquely named plots for private chart-data exports / Data Window.
+// 40 plots are within TradingView Pine's max plot-count limit of 64.
+plot(ncfi0, "NCFI_Now", display=display.data_window)
+plot(ncfi5, "NCFI_Avg5", display=display.data_window)
+plot(ncfi10, "NCFI_Avg10", display=display.data_window)
+plot(ncfi20, "NCFI_Avg20", display=display.data_window)
+plot(ncfi60, "NCFI_Avg60", display=display.data_window)
+plot(ncth0, "NCTH_Now", display=display.data_window)
+plot(ncth5, "NCTH_Avg5", display=display.data_window)
+plot(ncth10, "NCTH_Avg10", display=display.data_window)
+plot(ncth20, "NCTH_Avg20", display=display.data_window)
+plot(ncth60, "NCTH_Avg60", display=display.data_window)
+plot(s5fi0, "S5FI_Now", display=display.data_window)
+plot(s5fi5, "S5FI_Avg5", display=display.data_window)
+plot(s5fi10, "S5FI_Avg10", display=display.data_window)
+plot(s5fi20, "S5FI_Avg20", display=display.data_window)
+plot(s5fi60, "S5FI_Avg60", display=display.data_window)
+plot(s5th0, "S5TH_Now", display=display.data_window)
+plot(s5th5, "S5TH_Avg5", display=display.data_window)
+plot(s5th10, "S5TH_Avg10", display=display.data_window)
+plot(s5th20, "S5TH_Avg20", display=display.data_window)
+plot(s5th60, "S5TH_Avg60", display=display.data_window)
+plot(mahq0, "MAHQ_Now", display=display.data_window)
+plot(mahq5, "MAHQ_Avg5", display=display.data_window)
+plot(mahq10, "MAHQ_Avg10", display=display.data_window)
+plot(mahq20, "MAHQ_Avg20", display=display.data_window)
+plot(mahq60, "MAHQ_Avg60", display=display.data_window)
+plot(malq0, "MALQ_Now", display=display.data_window)
+plot(malq5, "MALQ_Avg5", display=display.data_window)
+plot(malq10, "MALQ_Avg10", display=display.data_window)
+plot(malq20, "MALQ_Avg20", display=display.data_window)
+plot(malq60, "MALQ_Avg60", display=display.data_window)
+plot(mahp0, "MAHP_Now", display=display.data_window)
+plot(mahp5, "MAHP_Avg5", display=display.data_window)
+plot(mahp10, "MAHP_Avg10", display=display.data_window)
+plot(mahp20, "MAHP_Avg20", display=display.data_window)
+plot(mahp60, "MAHP_Avg60", display=display.data_window)
+plot(malp0, "MALP_Now", display=display.data_window)
+plot(malp5, "MALP_Avg5", display=display.data_window)
+plot(malp10, "MALP_Avg10", display=display.data_window)
+plot(malp20, "MALP_Avg20", display=display.data_window)
+plot(malp60, "MALP_Avg60", display=display.data_window)
+
+f_pc(float v) =>
+    na(v) ? "N/A" : str.tostring(v, "#.##") + "%"
+
+f_cnt(float v, bool daily) =>
+    na(v) ? "N/A" : daily and math.abs(v - math.round(v)) > 0.000001 ? str.tostring(v, "#.##") + "*" : str.tostring(v, "#.##")
+
+f_col(float v, bool green) =>
+    na(v) ? color.gray : green ? color.rgb(80, 213, 159) : color.rgb(255, 142, 138)
+
+f_header(table tb, int r, string c0, string c1, string c2, string c3, string c4) =>
+    table.cell(tb, 0, r, c0, text_color=color.white, bgcolor=color.rgb(40, 50, 65))
+    table.cell(tb, 1, r, c1, text_color=color.white, bgcolor=color.rgb(40, 50, 65))
+    table.cell(tb, 2, r, c2, text_color=color.white, bgcolor=color.rgb(40, 50, 65))
+    table.cell(tb, 3, r, c3, text_color=color.white, bgcolor=color.rgb(40, 50, 65))
+    table.cell(tb, 4, r, c4, text_color=color.white, bgcolor=color.rgb(40, 50, 65))
+
+f_ma_row(table tb, int r, string label, float a, float b, float c, float d) =>
+    table.cell(tb, 0, r, label, text_color=color.white, bgcolor=color.rgb(40, 50, 65))
+    table.cell(tb, 1, r, f_pc(a), text_color=f_col(a, a >= 50), bgcolor=color.rgb(23, 30, 41))
+    table.cell(tb, 2, r, f_pc(b), text_color=f_col(b, b >= 50), bgcolor=color.rgb(23, 30, 41))
+    table.cell(tb, 3, r, f_pc(c), text_color=f_col(c, c >= 50), bgcolor=color.rgb(23, 30, 41))
+    table.cell(tb, 4, r, f_pc(d), text_color=f_col(d, d >= 50), bgcolor=color.rgb(23, 30, 41))
+
+f_hl_row(table tb, int r, string label, bool isDaily, float a, float b, float c, float d) =>
+    table.cell(tb, 0, r, label, text_color=color.white, bgcolor=color.rgb(40, 50, 65))
+    table.cell(tb, 1, r, f_cnt(a, isDaily), text_color=f_col(a, true), bgcolor=color.rgb(23, 30, 41))
+    table.cell(tb, 2, r, f_cnt(b, isDaily), text_color=f_col(b, false), bgcolor=color.rgb(23, 30, 41))
+    table.cell(tb, 3, r, f_cnt(c, isDaily), text_color=f_col(c, true), bgcolor=color.rgb(23, 30, 41))
+    table.cell(tb, 4, r, f_cnt(d, isDaily), text_color=f_col(d, false), bgcolor=color.rgb(23, 30, 41))
+
+var table dash = table.new(position.top_right, 5, 13, border_width=1, frame_color=color.rgb(85, 95, 105))
+if barstate.islast
+    f_header(dash, 0, "% above MA", "Nasdaq 50", "Nasdaq 200", "S&P 50", "S&P 200")
+    f_ma_row(dash, 1, "Daily", ncfi0, ncth0, s5fi0, s5th0)
+    f_ma_row(dash, 2, "Avg 5D", ncfi5, ncth5, s5fi5, s5th5)
+    f_ma_row(dash, 3, "Avg 10D", ncfi10, ncth10, s5fi10, s5th10)
+    f_ma_row(dash, 4, "Avg 20D", ncfi20, ncth20, s5fi20, s5th20)
+    f_ma_row(dash, 5, "Avg 60D", ncfi60, ncth60, s5fi60, s5th60)
+    f_header(dash, 6, "52W issues", "Nasdaq NH", "Nasdaq NL", "S&P NH", "S&P NL")
+    f_hl_row(dash, 7, "Daily", true, mahq0, malq0, mahp0, malp0)
+    f_hl_row(dash, 8, "Avg 5D", false, mahq5, malq5, mahp5, malp5)
+    f_hl_row(dash, 9, "Avg 10D", false, mahq10, malq10, mahp10, malp10)
+    f_hl_row(dash, 10, "Avg 20D", false, mahq20, malq20, mahp20, malp20)
+    f_hl_row(dash, 11, "Avg 60D", false, mahq60, malq60, mahp60, malp60)
+    table.cell(dash, 0, 12, "Chart date", text_color=color.silver, bgcolor=color.rgb(30, 38, 48))
+    table.cell(dash, 1, 12, str.format_time(time, "yyyy-MM-dd"), text_color=color.silver, bgcolor=color.rgb(30, 38, 48))
+    table.cell(dash, 2, 12, "Nasdaq NH/NL=exchange", text_color=color.silver, bgcolor=color.rgb(30, 38, 48))
+    table.cell(dash, 3, 12, "*odd vendor count", text_color=color.silver, bgcolor=color.rgb(30, 38, 48))
+    table.cell(dash, 4, 12, "1D only", text_color=color.silver, bgcolor=color.rgb(30, 38, 48))
