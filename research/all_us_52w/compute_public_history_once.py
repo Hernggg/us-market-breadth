@@ -82,9 +82,29 @@ def main():
             data=response.read(9000001)
     if len(data)>9000000:raise ValueError("Public JSON exceeded 9MB safety limit")
     calendar=load_calendar(opt.calendar) if opt.calendar else None
-    report=calculate(json.loads(data),expected_date=opt.expected_date,calendar=calendar)
+    payload=json.loads(data)
+    report=calculate(payload,expected_date=opt.expected_date,calendar=calendar)
+    # The SAME real vendor file also contains separately dated Nasdaq-listed
+    # eligible ordinary-stock histories: this is an EXCHANGE risk proxy, not
+    # formal Nasdaq Composite PIT constituents nor all NASDAQ-listed securities.
+    nasdaq_rows=[]
+    for row in payload["data"]:
+        hi=row.get("nasdaq_new_highs")
+        lo=row.get("nasdaq_new_lows")
+        n=row.get("nasdaq_issues")
+        if all(type(v) is int for v in (hi,lo,n)):
+            nasdaq_rows.append({"date":row["date"],"new_highs":hi,
+                                "new_lows":lo,"total_issues":n,
+                                "nh_nl_diff":hi-lo})
+    if len(nasdaq_rows) != len(payload["data"]):
+        raise ValueError("Cannot claim complete NASDAQ exchange-scope history")
+    nasdaq=calculate({"data":nasdaq_rows,"last_updated":payload.get("last_updated")},
+                     expected_date=opt.expected_date,calendar=calendar)
+    nasdaq["universe"]="third-party NASDAQ-listed qualifying common stocks; NOT strict Nasdaq Composite members or vendor TradingView MAHQ/MALQ"
     print("REAL_ALL_US_52W_FIVE_WINDOWS_JSON_START")
-    print(json.dumps(report,ensure_ascii=False,indent=2))
+    print(json.dumps({"all_us_qualifying_common_stocks":report,
+                      "nasdaq_listed_qualifying_common_stocks":nasdaq},
+                     ensure_ascii=False,indent=2))
     print("REAL_ALL_US_52W_FIVE_WINDOWS_JSON_END")
 
 if __name__=="__main__":
