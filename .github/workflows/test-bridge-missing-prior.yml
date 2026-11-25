@@ -1,0 +1,27 @@
+name: Verify S&P500 missing-prior fallback safety (research-only)
+
+on:
+  push:
+    paths:
+      - 'bridge_latest_session.py'
+      - 'tests/test_bridge_missing_prior.py'
+      - '.github/workflows/test-bridge-missing-prior.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  offline-tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install -r requirements.txt
+      - name: Check audited 502/503 coverage, missing-SPY hard failure and gap limits
+        run: python -m unittest discover -s tests -p 'test_bridge_missing_prior.py' -v
+
+# Test workflow intentionally does not run market updates or publish any data.
