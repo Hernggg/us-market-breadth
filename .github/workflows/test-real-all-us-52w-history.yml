@@ -1,13 +1,12 @@
 name: Real All-US 52-week Highs Lows five-window test
 
 on:
-  push:
-    branches:
-      - research/all-us-52w-priority-nasdaq-exchange-proxy
-    paths:
-      - 'research/all_us_52w/compute_public_history_once.py'
-      - '.github/workflows/test-real-all-us-52w-history.yml'
   workflow_dispatch:
+    inputs:
+      expected_date:
+        description: 'Optional expected US trading date YYYY-MM-DD; empty uses actual vendor latest date'
+        required: false
+        type: string
 
 permissions:
   contents: read
@@ -21,16 +20,15 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Verify single-read public dataset vs independent S&P market sessions
-        shell: bash
+      - name: Verify one personal-research reading without republishing source history
+        env:
+          EXPECTED: \${{ inputs.expected_date }}
         run: |
-          python - <<'PY'
-          import json
-          from pathlib import Path
-          report=json.loads(Path('public/latest.json').read_text(encoding='utf-8'))
-          assert report['asof_actual']=='2026-11-24', report['asof_actual']
-          PY
-          python research/all_us_52w/compute_public_history_once.py --expected-date 2026-11-24 --calendar public/sp500_pit_daily.csv
+          if [ -n "$EXPECTED" ]; then
+            python research/all_us_52w/compute_public_history_once.py --expected-date "$EXPECTED"
+          else
+            python research/all_us_52w/compute_public_history_once.py
+          fi
 
 # One publicly offered JSON read, no raw vendor data retained and no public
 # derived-series commit; review site IP terms before scheduling or publishing.
