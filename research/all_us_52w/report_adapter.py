@@ -50,13 +50,18 @@ def report_payload(ad, ma, nh, sessions):
 
 def run(fetch=load_public_json, sessions=None):
     sessions = sessions if sessions is not None else latest_closed_sessions()
+    data = {}
+    actual_dates = {}
     try:
-        data = {k: fetch(v) for k, v in PATHS.items()}
+        for key, path in PATHS.items():
+            data[key] = fetch(path)
+            rows = data[key].get("data", [])
+            actual_dates[key] = rows[-1].get("date") if rows else None
         return report_payload(data["ad"], data["ma"], data["nhnl"], sessions)
     except Exception as exc:
         return {"schema_version": "us-market-v2.1-breadth-1",
                 "target_trade_date": sessions[-1], "status": "unavailable",
-                "error": str(exc), "source": "https://www.thetrading.tools/datasets",
+                "error": str(exc), "actual_source_dates": actual_dates, "source": "https://www.thetrading.tools/datasets",
                 "note": "Do not reuse an older result as current or fill missing sessions."}
 
 def main():
