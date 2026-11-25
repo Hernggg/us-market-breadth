@@ -1,11 +1,11 @@
-name: One-shot public US breadth JSON schema reconnaissance
+name: One-shot real All-US A-D / MA / NHNL five-window validation
 
 on:
   push:
     branches:
       - research/all-us-52w-priority-nasdaq-exchange-proxy
     paths:
-      - 'research/all_us_52w/inspect_related_public_json_once.py'
+      - 'research/all_us_52w/compute_full_breadth_three_json_once.py'
       - '.github/workflows/research-related-us-breadth-json-once.yml'
 
 permissions:
@@ -20,7 +20,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Inspect only JSON keys/date range, not underlying historical readings
-        run: python research/all_us_52w/inspect_related_public_json_once.py
+      - name: Recompute all US 60-day moving averages from three downloadable real vendor JSONs
+        run: python research/all_us_52w/compute_full_breadth_three_json_once.py
 
 # Research proof only. Must not be scheduled or republish raw third party data.
