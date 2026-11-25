@@ -1,6 +1,7 @@
 import unittest
+import datetime as dt
 from test_full_breadth_three_source import fixtures
-from research.all_us_52w.report_adapter import report_payload, run
+from research.all_us_52w.report_adapter import report_payload, run, latest_closed_sessions
 
 def complete():
     ad,ma,nh,days=fixtures()
@@ -36,6 +37,12 @@ class ReportAdapterTests(unittest.TestCase):
         h["data"][-1]["nasdaq_new_highs"]=2500
         with self.assertRaises(ValueError):
             report_payload(a,m,h,d)
+    def test_independent_calendar_preclose_and_thanksgiving(self):
+        before_close=dt.datetime(2026,11,25,19,0,tzinfo=dt.timezone.utc)
+        holiday=dt.datetime(2026,11,26,23,0,tzinfo=dt.timezone.utc)
+        self.assertEqual(latest_closed_sessions(before_close)[-1],"2026-11-24")
+        self.assertEqual(latest_closed_sessions(holiday)[-1],"2026-11-25")
+        self.assertEqual(len(latest_closed_sessions(holiday)),60)
     def test_source_failure_explicit(self):
         a,m,h,d=complete()
         def unavailable(path):
