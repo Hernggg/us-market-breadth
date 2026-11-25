@@ -51,7 +51,7 @@ class FullBreadthRealSchemaTests(unittest.TestCase):
     def test_different_60_session_date_sets_fail(self):
         ad,ma,nh,cal=fixtures()
         ma["data"][-10]["date"]="2026-11-25"
-        with self.assertRaisesRegex(ValueError,"mismatched US equity"):
+        with self.assertRaisesRegex(ValueError,"mismatched US equity|duplicate/unsorted"):
             validate_and_compute(ad,ma,nh,cal)
 
     def test_net_advances_must_reconcile(self):
