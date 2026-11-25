@@ -58,3 +58,27 @@ python research/all_us_52w/import_authorized_ma_hx_lx.py \
 4. **用户期望不手动操作**：暂不要求用户改 TradingView 脚本或下载 CSV；研究仍继续找可机器读取的授权方式。
 
 下一阶段技术验收只认：**真实60行 NH + 真实60行 NL + 完成期交易日 + 统计范围 + 使用权 + 计算窗口**。任何一项不满足，不把它并进 V2.1 4.3 正式主表。
+
+
+## 2026-11-25 重大进展：已实际取得并重算完整真实60日历史
+
+之前只看到 thetrading.tools 的图表及最新数值，后来在该网站公开研究附录中，**发现其主动公布、可供下载的完整原始汇总 JSON**：
+
+- 来源：https://www.thetrading.tools/data/market_breadth/nh_nl.json
+- 网站自己在 https://www.thetrading.tools/insights/bullish-percent-index-oversold-near-record-high 公开链接到此数据集。
+- 每日实际字段：`date`, `new_highs`, `new_lows`, `total_issues`, `nh_nl_diff`；同时包含 `nasdaq_new_highs`, `nasdaq_new_lows`, `nasdaq_issues` 等字段。
+- 已用 GitHub 云端程序 **在真实数据上成功读取、计算并交叉验证最近60个交易日**：
+  https://github.com/Hernggg/us-market-breadth/actions/runs/45544850467
+- 2026-11-24 全美股：当日 63/280，5日 36.20/468.80，10日 49.90/402.20，20日 96.65/321.75，60日 80.083/257.817（新高家数/新低家数）。样本当天4360只。
+- 2026-11-24 Nasdaq上市合资格普通股：当日38/187，5日22.2/304.8，10日28.8/266.8，20日53.45/221.75，60日41.833/168.25；当天样本2469只。
+- 真实数据源的最后交易日、每个交易日无重复、每行家数合法、净新高算术验证，并与现有 S&P 500 PIT 60日交易日历逐项比对全部通过。
+- 脚本：`research/all_us_52w/compute_public_history_once.py`，只读取一次公开发布的数据文件，在一次性 GitHub Actions 的日志中输出小量**统计均值**；不储存或重新发布原始厂商全部数据。未更动用户 TradingView 三合一脚本或 S&P 500 生产数据。
+
+### 一定不要误称已经完成的事项
+
+- 这条数据属于研究网站筛选的普通股，**并不是交易所官方“全美股”总量**。网站说明用当下现存股票构造历史，存在幸存者偏差，股票数量和其他来源不等同。
+- Nasdaq子集是该网站的**Nasdaq上市合资格普通股**，不等于TradingView ADVQ/DECQ/MAHQ/MALQ的全交易所口径，也不等于严格Nasdaq Composite成分股。
+- **每日自动触发、持久存储及默认@us-market直接读取仍未接通**。不能把研究分支里一次性 GitHub Actions 运行当成生产每日自动化。
+- 网站 [Terms of Service](https://www.thetrading.tools/terms) §7 指其计算输出为受版权保护的内容，个人非商业可注明出处分享／引用，系统性重新发布需要事先书面允许；§6 限制会干扰服务器的高频自动采集。**因此在确认长期使用/再发布许可前，不能把整份原始JSON或每天的批量历史数据镜像到公开GitHub，也不应直接开启无授权的系统性公开转载。**
+
+后续：先解决合法的每日调用与有限衍生结果发布范围，再把 4.3 A（全美股）和 Nasdaq 实用参考口径的真实五周期指标纳入正式 V2.1 执行链路；永远沿用实际日期和研究样本定义。
