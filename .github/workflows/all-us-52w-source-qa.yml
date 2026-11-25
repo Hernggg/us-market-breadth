@@ -22,6 +22,8 @@ jobs:
           python-version: '3.12'
       - name: Test real-input historical calendar windows and Barchart encoding
         run: python -m unittest discover -s tests -p 'test_all_us_52w_vendor_import.py' -v
+      - name: Verify actual public 52W history and S&P session-calendar overlap
+        run: python research/all_us_52w/compute_public_history_once.py --expected-date 2026-11-24 --calendar public/sp500_pit_daily.csv
 
 # No vendor web scraping, authentication, price storage, or GitHub main publishing.
 # Only deterministic sample fixtures exercise code; no fake market results emitted.
