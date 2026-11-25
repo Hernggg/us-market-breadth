@@ -148,9 +148,26 @@ def main():
     ap=argparse.ArgumentParser()
     ap.add_argument("--calendar",default="public/sp500_pit_daily.csv")
     op=ap.parse_args()
-    calendar=independent_calendar(op.calendar)
     data={k:load_public_json(v) for k,v in PATHS.items()}
-    out=validate_and_compute(data["ad"],data["ma"],data["nhnl"],calendar)
+    # A delayed PIT archive must NOT wipe already obtainable same-date market
+    # breadth. Use provider's latest 60 actual dated rows, validate all three
+    # series agree, and explicitly flag whether independent PIT calendar matches.
+    source_rows=data["ad"].get("data",[])
+    if len(source_rows)<60:
+        raise ValueError("No 60 dated A/D observations")
+    provider_calendar=[r["date"] for r in source_rows[-60:]]
+    try:
+        pit_calendar=independent_calendar(op.calendar)
+    except (FileNotFoundError,ValueError,KeyError):
+        pit_calendar=None
+    out=validate_and_compute(data["ad"],data["ma"],data["nhnl"],provider_calendar)
+    out["independent_session_calendar_match"]=pit_calendar==provider_calendar
+    out["independent_calendar_last_day"]=pit_calendar[-1] if pit_calendar else None
+    out["session_check_note"]=(
+        "INDEPENDENT_S_AND_P_PIT_60_DAY_DATE_MATCH"
+        if pit_calendar==provider_calendar else
+        "THREE_VENDOR_SERIES_AGREE_BUT_INDEPENDENT_S_AND_P_CALENDAR_STALE_OR_UNAVAILABLE"
+    )
     print("REAL_US_60DAY_BREADTH_START")
     print(json.dumps(out,ensure_ascii=False,indent=2))
     print("REAL_US_60DAY_BREADTH_END")
