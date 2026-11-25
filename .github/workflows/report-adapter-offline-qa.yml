@@ -1,0 +1,23 @@
+name: Report adapter offline QA
+on:
+  push:
+    branches:
+      - research/all-us-52w-priority-nasdaq-exchange-proxy
+    paths:
+      - research/all_us_52w/report_adapter.py
+      - tests/test_report_adapter.py
+      - .github/workflows/report-adapter-offline-qa.yml
+permissions:
+  contents: read
+jobs:
+  adapter-offline:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install 'exchange-calendars>=4.5,<5'
+      - run: python -m unittest discover -s tests -p test_report_adapter.py -v
+# No vendor requests, no raw data or report publishing.
