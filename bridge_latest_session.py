@@ -137,8 +137,21 @@ def main():
     if len(members) < 490 or len(members) > 510:
         raise RuntimeError("Unexpected PIT membership count")
     missing_prior = [s for s in needed if s not in old_prices]
+    if "SPY" in missing_prior:
+        raise RuntimeError("SPY benchmark previous-session close missing; cannot prove target session")
+    # The source data may have genuine prior-day gaps (e.g., a recent split).
+    # Its existing audit already records that absence: continue with only
+    # eligible securities with valid prior-day prices, and keep the current
+    # day missing for those names. NEVER invent a prior close, silently forward-
+    # fill, or publish coverage outside conservative bounds.
+    baseline_missing = int(baseline["expected_members"]) - int(baseline["priced_members"])
+    if len(missing_prior) > baseline_missing:
+        raise RuntimeError("Bridge gap exceeds audited prior-day missing-member count: "+str(missing_prior[:20]))
+    if len(missing_prior) > max(1, int(len(members) * 0.005)):
+        raise RuntimeError("Too many prior-day unavailable securities for guarded bridge: "+str(missing_prior[:20]))
     if missing_prior:
-        raise RuntimeError("Previous-day price missing: "+str(missing_prior[:20]))
+        print("AUDITED_PRIOR_DAY_MISSING_SKIP_NO_FABRICATION", missing_prior, flush=True)
+    needed = sorted(s for s in needed if s in old_prices)
 
     with ThreadPoolExecutor(max_workers=4) as pool:
         results = list(pool.map(yahoo_total_return, needed))
@@ -216,7 +229,8 @@ def main():
     with audit.open("a",encoding="utf-8") as stream:
         stream.write("BRIDGE: Yahoo Finance adjusted-close total-return ratios were applied ONLY on "+TARGET.isoformat()+".\n")
         stream.write("BRIDGE: Source before bridge was historical third-party PIT/adjusted-close prices through "+PRIOR.isoformat()+".\n")
-        stream.write("BRIDGE: Yahoo 503 member symbols plus SPY fetched; consecutive SPY session and prior-day recompute validated.\n")
+        stream.write("BRIDGE: Yahoo "+str(len(needed))+" prior-priced symbols (including SPY) fetched; missing prior member symbols were NOT fabricated: "+", ".join(missing_prior)+".\n")
+        stream.write("BRIDGE: Consecutive SPY session, audited previous-day gaps, prior-day recompute and coverage validated.\n")
         stream.write("BRIDGE: mixed-source 52W is adjusted-CLOSE-only; external vendor definitions may differ.\n")
         stream.write("BRIDGE: full separate-source and PIT-membership audits remain outstanding; all data are provisional, NOT official.\n")
     print("BRIDGE_ACCEPTED_AS_PROVISIONAL",TARGET,flush=True)
