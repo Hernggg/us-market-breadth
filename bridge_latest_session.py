@@ -61,6 +61,20 @@ def yahoo_total_return(ticker: str):
             errors.append(type(exc).__name__)
     return ticker, None, ",".join(errors)
 
+def select_priceable_members(members, old_prices, baseline):
+    """Skip only independently audited prior-session gaps; never make up closes."""
+    needed = sorted(set(members) | {"SPY"})
+    missing_prior = [s for s in needed if s not in old_prices]
+    if "SPY" in missing_prior:
+        raise RuntimeError("SPY benchmark previous-session close missing; cannot prove target session")
+    baseline_missing = int(baseline["expected_members"]) - int(baseline["priced_members"])
+    if len(missing_prior) > baseline_missing:
+        raise RuntimeError("Bridge gap exceeds audited prior-day missing-member count: "+str(missing_prior[:20]))
+    if len(missing_prior) > max(1, int(len(members) * 0.005)):
+        raise RuntimeError("Too many prior-day unavailable securities for guarded bridge: "+str(missing_prior[:20]))
+    return sorted(s for s in needed if s in old_prices), missing_prior
+
+
 def main():
     global TARGET, PRIOR, CACHE, OUT
     parser = argparse.ArgumentParser()
@@ -136,22 +150,9 @@ def main():
     print("MEMBERS", len(members), "PRIOR_PRICED", sum(s in old_prices for s in members), flush=True)
     if len(members) < 490 or len(members) > 510:
         raise RuntimeError("Unexpected PIT membership count")
-    missing_prior = [s for s in needed if s not in old_prices]
-    if "SPY" in missing_prior:
-        raise RuntimeError("SPY benchmark previous-session close missing; cannot prove target session")
-    # The source data may have genuine prior-day gaps (e.g., a recent split).
-    # Its existing audit already records that absence: continue with only
-    # eligible securities with valid prior-day prices, and keep the current
-    # day missing for those names. NEVER invent a prior close, silently forward-
-    # fill, or publish coverage outside conservative bounds.
-    baseline_missing = int(baseline["expected_members"]) - int(baseline["priced_members"])
-    if len(missing_prior) > baseline_missing:
-        raise RuntimeError("Bridge gap exceeds audited prior-day missing-member count: "+str(missing_prior[:20]))
-    if len(missing_prior) > max(1, int(len(members) * 0.005)):
-        raise RuntimeError("Too many prior-day unavailable securities for guarded bridge: "+str(missing_prior[:20]))
+    needed, missing_prior = select_priceable_members(members, old_prices, baseline)
     if missing_prior:
         print("AUDITED_PRIOR_DAY_MISSING_SKIP_NO_FABRICATION", missing_prior, flush=True)
-    needed = sorted(s for s in needed if s in old_prices)
 
     with ThreadPoolExecutor(max_workers=4) as pool:
         results = list(pool.map(yahoo_total_return, needed))
