@@ -3,7 +3,7 @@ Dataset: https://github.com/Johnbrick123/sp500-data
 Release: https://github.com/Johnbrick123/sp500-data/releases/tag/data
 IMPORTANT: Not official S&P Dow Jones Indices breadth.
 Requested asof: 2026-11-25 | price latest session: 2026-11-25
-Price source size: 80.3 MB
+Price source size: 80.4 MB
 Observed PIT members latest: 503
 Latest priced / expected: 502/503
 Latest A/D price-adjusted: 372/127, eligible 502
