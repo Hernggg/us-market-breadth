@@ -2,11 +2,11 @@
 Dataset: https://github.com/Johnbrick123/sp500-data
 Release: https://github.com/Johnbrick123/sp500-data/releases/tag/data
 IMPORTANT: Not official S&P Dow Jones Indices breadth.
-Requested asof: 2026-11-24 | price latest session: 2026-11-24
-Price source size: 80.4 MB
+Requested asof: 2026-11-25 | price latest session: 2026-11-25
+Price source size: 80.3 MB
 Observed PIT members latest: 503
 Latest priced / expected: 502/503
-Latest A/D price-adjusted: 348/153, eligible 502
+Latest A/D price-adjusted: 372/127, eligible 502
 Latest coverage: price 99.80%; A/D 99.80%; MA50 99.60%; MA200 99.20%; 52W 99.20%
 MA methodology: dividend+split-adjusted close; 50/200 include current day, uninterrupted market sessions.
 52W methodology: adjusted CLOSE-only extremes against prior 251 consecutive SPY market sessions.
@@ -14,11 +14,11 @@ IMPORTANT: 52W is NOT the same as intraday highs/lows or split-only price highs.
 A/D uses adjusted close, so dividend ex-days can differ from unadjusted exchange A/D.
 Carried/halting rows are not treated as genuine active price moves.
 Recycled symbols are excluded and counted as missing, not silently dropped.
-Coverage issues in the last 60 sessions: 5 member-day rows
+Coverage issues in the last 60 sessions: 6 member-day rows
 Status is only HIGH_COVERAGE_PROVISIONAL; separate-source and constituent verification still required.
 Statuses: 当日: HIGH_COVERAGE_PROVISIONAL, 5日平均: HIGH_COVERAGE_PROVISIONAL, 10日平均: HIGH_COVERAGE_PROVISIONAL, 20日平均: HIGH_COVERAGE_PROVISIONAL, 60日平均: HIGH_COVERAGE_PROVISIONAL
-BRIDGE: Yahoo Finance adjusted-close total-return ratios were applied ONLY on 2026-11-24.
-BRIDGE: Source before bridge was historical third-party PIT/adjusted-close prices through 2026-11-23.
+BRIDGE: Yahoo Finance adjusted-close total-return ratios were applied ONLY on 2026-11-25.
+BRIDGE: Source before bridge was historical third-party PIT/adjusted-close prices through 2026-11-24.
 BRIDGE: Yahoo 503 prior-priced symbols (including SPY) fetched; missing prior member symbols were NOT fabricated: SNDK.
 BRIDGE: Consecutive SPY session, audited previous-day gaps, prior-day recompute and coverage validated.
 BRIDGE: mixed-source 52W is adjusted-CLOSE-only; external vendor definitions may differ.

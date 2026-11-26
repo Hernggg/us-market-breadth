@@ -1,5 +1,5 @@
 # S&P 500 market breadth — @us-market V2.0
-Actual data date: **2026-11-24** | Freshness: **DATE_MATCHED**
+Actual data date: **2026-11-25** | Freshness: **DATE_MATCHED**
 
 **HIGH-COVERAGE PROVISIONAL. NOT official S&P Dow Jones Indices statistics.**
 
@@ -7,13 +7,13 @@ Actual data date: **2026-11-24** | Freshness: **DATE_MATCHED**
 
 | Metric | Today | 5 sessions | 10 sessions | 20 sessions | 60 sessions |
 |---|---:|---:|---:|---:|---:|
-| Avg advances | 348.0 | 233.0 | 216.3 | 244.5 | 245.783 |
-| Avg declines | 153.0 | 268.0 | 284.7 | 256.95 | 255.65 |
-| A/D | 2.27451 | 0.8694 | 0.75975 | 0.95155 | 0.96141 |
-| Above 50 DMA % | 55.6886 | 51.6141 | 59.6915 | 62.7774 | 46.5033 |
-| Above 200 DMA % | 55.7114 | 54.144 | 59.032 | 61.6791 | 56.7961 |
-| New 52W highs (adjusted close) | 22.0 | 5.4 | 13.1 | 21.25 | 15.717 |
-| New 52W lows (adjusted close) | 2.0 | 11.0 | 7.9 | 5.8 | 10.383 |
+| Avg advances | 372.0 | 260.0 | 220.3 | 250.65 | 249.317 |
+| Avg declines | 127.0 | 240.4 | 280.6 | 250.6 | 252.1 |
+| A/D | 2.92913 | 1.08153 | 0.7851 | 1.0002 | 0.98896 |
+| Above 50 DMA % | 59.6806 | 52.1956 | 58.4086 | 62.8132 | 46.7226 |
+| Above 200 DMA % | 58.517 | 54.2075 | 58.1637 | 61.5349 | 56.6769 |
+| New 52W highs (adjusted close) | 27.0 | 10.4 | 12.8 | 21.7 | 16.017 |
+| New 52W lows (adjusted close) | 1.0 | 9.6 | 7.9 | 5.4 | 10.217 |
 
 **Method:** historical third-party membership; price = split+dividend adjusted close. The 52W metric uses close, not intraday high/low.
 **Caution:** publication date and *actual market data date* may differ. If stale, do not interpret as the latest U.S. trading session.
