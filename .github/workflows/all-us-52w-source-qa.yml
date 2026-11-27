@@ -1,0 +1,35 @@
+name: All-US 52W source contract QA (research only)
+
+on:
+  push:
+    paths:
+      - 'research/all_us_52w/**'
+      - 'tests/test_all_us_52w_vendor_import.py'
+      - 'tests/test_all_us_52w_public_json.py'
+      - 'tests/test_full_breadth_three_source.py'
+      - 'research/all_us_52w/compute_full_breadth_three_json_once.py'
+      - 'research/all_us_52w/compute_public_history_once.py'
+      - '.github/workflows/all-us-52w-source-qa.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  offline-contract-tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Test real-input historical calendar windows and Barchart encoding
+        run: python -m unittest discover -s tests -p 'test_all_us_52w_vendor_import.py' -v
+      - name: Test public JSON schema without fetching vendor data
+        run: python -m unittest discover -s tests -p 'test_all_us_52w_public_json.py' -v
+      - name: Test three-file all US A-D / MA / NHNL real-input formats offline
+        run: python -m unittest discover -s tests -p 'test_full_breadth_three_source.py' -v
+
+# No vendor web scraping, authentication, price storage, or GitHub main publishing.
+# Only deterministic sample fixtures exercise code; no fake market results emitted.

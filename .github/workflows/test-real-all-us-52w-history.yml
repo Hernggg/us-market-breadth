@@ -1,0 +1,34 @@
+name: Real All-US 52-week Highs Lows five-window test
+
+on:
+  workflow_dispatch:
+    inputs:
+      expected_date:
+        description: 'Optional expected US trading date YYYY-MM-DD; empty uses actual vendor latest date'
+        required: false
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  check-real-vendor-history:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify one personal-research reading without republishing source history
+        env:
+          EXPECTED: ${{ inputs.expected_date }}
+        run: |
+          if [ -n "$EXPECTED" ]; then
+            python research/all_us_52w/compute_public_history_once.py --expected-date "$EXPECTED"
+          else
+            python research/all_us_52w/compute_public_history_once.py
+          fi
+
+# One publicly offered JSON read, no raw vendor data retained and no public
+# derived-series commit; review site IP terms before scheduling or publishing.
