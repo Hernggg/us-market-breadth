@@ -1,8 +1,8 @@
-Requested session: 2026-11-25
-Actual source last SPY price date: 2026-11-24
+Requested session: 2026-11-27
+Actual source last SPY price date: 2026-11-25
 FRESHNESS: DATE_MATCHED
 BRIDGE: YAHOO_ADJUSTED_RETURN_ONE_SESSION
-BRIDGED_PRICE_DATE: 2026-11-25
+BRIDGED_PRICE_DATE: 2026-11-27
 PRICE_COVERAGE: 502/503
 IMPORTANT: third-party PIT plus Yahoo adjusted-return bridge; NOT official index breadth.
 PIT output calculations: COMPLETED
